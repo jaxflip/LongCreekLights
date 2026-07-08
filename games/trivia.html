@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Christmas Trivia — Long Creek Lights</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: linear-gradient(180deg, #0b1f3a 0%, #12365e 100%);
+    color: #f5f7fa;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    font-size: 0.95rem;
+  }
+  header a { color: #ffd166; text-decoration: none; font-weight: 700; padding: 6px 10px; }
+  .hud { font-weight: 700; }
+  button.mute {
+    background: #142c4e;
+    border: 1px solid rgba(255,209,102,0.4);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1.05rem;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  main { flex: 1; padding: 10px 14px 24px; max-width: 460px; margin: 0 auto; width: 100%; }
+  .progress {
+    height: 8px; background: rgba(255,255,255,0.15);
+    border-radius: 4px; overflow: hidden; margin-bottom: 14px;
+  }
+  .progress > div { height: 100%; background: #ffd166; width: 0; transition: width 0.3s; }
+  .question {
+    background: #142c4e;
+    border: 2px solid rgba(255,209,102,0.35);
+    border-radius: 14px;
+    padding: 18px 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 14px;
+    min-height: 92px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .answers { display: grid; gap: 10px; }
+  .answers button {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+    color: #f5f7fa;
+    font-size: 1rem;
+    padding: 14px 12px;
+    min-height: 52px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .answers button.correct { background: #2a9d54; border-color: #2a9d54; }
+  .answers button.wrong { background: #e63946; border-color: #e63946; }
+  .answers button:disabled { opacity: 0.95; }
+  .center { text-align: center; }
+  .big-btn {
+    background: #e63946; color: #fff; border: none;
+    border-radius: 10px; font-size: 1.1rem; font-weight: 700;
+    padding: 14px 30px; cursor: pointer; margin-top: 16px;
+  }
+  h2 { color: #ffd166; margin: 20px 0 8px; }
+  .result-line { margin: 6px 0; font-size: 1rem; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html">‹ Games</a>
+  <span class="hud">❓ <span id="qNum">0</span>/10 &nbsp; ✔️ <span id="score">0</span></span>
+  <button class="mute" id="muteBtn" aria-label="Mute game sound">🔊</button>
+</header>
+<main>
+  <div id="startScreen" class="center">
+    <h2>❓ Christmas Trivia</h2>
+    <p>10 questions per round. How well do you know Christmas?</p>
+    <button class="big-btn" id="startBtn">Start</button>
+  </div>
+  <div id="quizScreen" class="hidden">
+    <div class="progress"><div id="bar"></div></div>
+    <div class="question" id="qText"></div>
+    <div class="answers" id="answers"></div>
+  </div>
+  <div id="endScreen" class="hidden center">
+    <h2 id="endTitle"></h2>
+    <div class="result-line">You got <b><span id="finalScore"></span> of 10</b> correct!</div>
+    <div class="result-line" id="endQuip"></div>
+    <button class="big-btn" id="againBtn">Play Again</button>
+  </div>
+</main>
+<script>
+(function () {
+  'use strict';
+
+  var AudioFX = (function () {
+    var ctx = null;
+    var muted = localStorage.getItem('lclMuted') === '1';
+    function ensure() {
+      if (!ctx) {
+        try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { ctx = null; }
+      }
+      if (ctx && ctx.state === 'suspended') ctx.resume();
+    }
+    function beep(freq, dur, type, vol) {
+      if (muted) return;
+      ensure();
+      if (!ctx) return;
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type || 'square';
+      o.frequency.value = freq;
+      g.gain.setValueAtTime(vol || 0.06, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + (dur || 0.12));
+      o.connect(g); g.connect(ctx.destination);
+      o.start(); o.stop(ctx.currentTime + (dur || 0.12));
+    }
+    return {
+      unlock: ensure,
+      right: function () { beep(784, 0.09, 'square'); setTimeout(function () { beep(1047, 0.14, 'square'); }, 90); },
+      wrong: function () { beep(196, 0.25, 'sawtooth', 0.07); },
+      fanfare: function () {
+        beep(659, 0.12, 'square');
+        setTimeout(function () { beep(784, 0.12, 'square'); }, 130);
+        setTimeout(function () { beep(1047, 0.25, 'square'); }, 260);
+      },
+      toggle: function () {
+        muted = !muted;
+        localStorage.setItem('lclMuted', muted ? '1' : '0');
+        return muted;
+      },
+      isMuted: function () { return muted; }
+    };
+  })();
+
+  var muteBtn = document.getElementById('muteBtn');
+  function paintMute() { muteBtn.textContent = AudioFX.isMuted() ? '🔇' : '🔊'; }
+  muteBtn.addEventListener('click', function () { AudioFX.toggle(); paintMute(); });
+  paintMute();
+
+  var QUESTIONS = [
+    { q: 'How many reindeer pull Santa\'s sleigh (counting Rudolph)?', a: ['9', '8', '10', '12'], c: 0 },
+    { q: 'In "Home Alone," where is the McCallister family going on vacation?', a: ['Paris', 'London', 'New York', 'Florida'], c: 0 },
+    { q: 'What is Frosty the Snowman\'s nose made of?', a: ['A button', 'A carrot', 'Coal', 'A cherry'], c: 0 },
+    { q: 'Which country started the tradition of putting up a Christmas tree?', a: ['Germany', 'USA', 'England', 'Norway'], c: 0 },
+    { q: 'What do naughty kids famously get in their stockings?', a: ['Coal', 'Socks', 'Onions', 'Homework'], c: 0 },
+    { q: 'In "The Grinch," what is the name of the Grinch\'s dog?', a: ['Max', 'Rex', 'Buddy', 'Comet'], c: 0 },
+    { q: 'How many gifts total are given in "The 12 Days of Christmas"?', a: ['364', '78', '144', '365'], c: 0 },
+    { q: 'What color are the berries on mistletoe?', a: ['White', 'Red', 'Blue', 'Green'], c: 0 },
+    { q: 'Which reindeer shares a name with a shooting star?', a: ['Comet', 'Blitzen', 'Dasher', 'Vixen'], c: 0 },
+    { q: 'In "Elf," what are the four main food groups according to Buddy?', a: ['Candy, candy canes, candy corn, syrup', 'Cookies, milk, candy, cake', 'Sugar, spice, syrup, sprinkles', 'Gum drops, taffy, fudge, cocoa'], c: 0 },
+    { q: 'What song holds the record for best-selling single of all time?', a: ['White Christmas', 'Jingle Bells', 'Silent Night', 'All I Want for Christmas Is You'], c: 0 },
+    { q: 'Where does Santa Claus live?', a: ['The North Pole', 'The South Pole', 'Iceland', 'Greenland'], c: 0 },
+    { q: 'What is traditionally left out for Santa in the USA?', a: ['Milk and cookies', 'Tea and toast', 'Cocoa and cake', 'Pie and coffee'], c: 0 },
+    { q: 'In "A Charlie Brown Christmas," what does Charlie Brown pick out?', a: ['A tiny real tree', 'A big aluminum tree', 'A wreath', 'A plastic snowman'], c: 0 },
+    { q: 'Which ballet features the Sugar Plum Fairy?', a: ['The Nutcracker', 'Swan Lake', 'Giselle', 'Sleeping Beauty'], c: 0 },
+    { q: 'What plant is known as the Christmas flower?', a: ['Poinsettia', 'Holly', 'Rose', 'Lily'], c: 0 },
+    { q: 'In "Rudolph the Red-Nosed Reindeer," what does Hermey the elf want to be?', a: ['A dentist', 'A doctor', 'A pilot', 'A toymaker'], c: 0 },
+    { q: 'What does "Feliz Navidad" mean in English?', a: ['Merry Christmas', 'Happy New Year', 'Good Tidings', 'Warm Wishes'], c: 0 },
+    { q: 'Which reindeer is mentioned FIRST in "Rudolph the Red-Nosed Reindeer"?', a: ['Dasher', 'Dancer', 'Comet', 'Cupid'], c: 0 },
+    { q: 'In "The Polar Express," what is the first gift of Christmas?', a: ['A silver bell', 'A toy train', 'A teddy bear', 'A candy cane'], c: 0 },
+    { q: 'What Christmas song was originally written for Thanksgiving?', a: ['Jingle Bells', 'Deck the Halls', 'Sleigh Ride', 'Let It Snow'], c: 0 },
+    { q: 'How does the Grinch\'s heart change at the end of the story?', a: ['It grows three sizes', 'It turns gold', 'It melts', 'It doubles'], c: 0 },
+    { q: 'What do you traditionally do under the mistletoe?', a: ['Kiss', 'Dance', 'Sing', 'Make a wish'], c: 0 },
+    { q: 'Which fictional character says "God bless us, every one!"?', a: ['Tiny Tim', 'Scrooge', 'Bob Cratchit', 'Marley'], c: 0 }
+  ];
+
+  var order = [], idx = 0, score = 0, locked = false;
+
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function show(id) {
+    ['startScreen', 'quizScreen', 'endScreen'].forEach(function (s) {
+      document.getElementById(s).classList.toggle('hidden', s !== id);
+    });
+  }
+
+  function start() {
+    order = shuffle(QUESTIONS.slice()).slice(0, 10);
+    idx = 0; score = 0;
+    document.getElementById('score').textContent = '0';
+    show('quizScreen');
+    render();
+  }
+
+  function render() {
+    locked = false;
+    var item = order[idx];
+    document.getElementById('qNum').textContent = String(idx + 1);
+    document.getElementById('bar').style.width = ((idx) / 10 * 100) + '%';
+    document.getElementById('qText').textContent = item.q;
+
+    /* shuffle answer positions, remember where correct lands */
+    var slots = shuffle([0, 1, 2, 3]);
+    var box = document.getElementById('answers');
+    box.innerHTML = '';
+    slots.forEach(function (srcIdx) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = item.a[srcIdx];
+      b.addEventListener('click', function () { answer(b, srcIdx === item.c, box); });
+      box.appendChild(b);
+    });
+  }
+
+  function answer(btn, correct, box) {
+    if (locked) return;
+    locked = true;
+    var buttons = box.querySelectorAll('button');
+    for (var i = 0; i < buttons.length; i++) buttons[i].disabled = true;
+    if (correct) {
+      btn.classList.add('correct');
+      score += 1;
+      document.getElementById('score').textContent = String(score);
+      AudioFX.right();
+    } else {
+      btn.classList.add('wrong');
+      /* highlight the right one */
+      var item = order[idx];
+      for (var k = 0; k < buttons.length; k++) {
+        if (buttons[k].textContent === item.a[item.c]) buttons[k].classList.add('correct');
+      }
+      AudioFX.wrong();
+    }
+    setTimeout(function () {
+      idx += 1;
+      if (idx >= order.length) finish();
+      else render();
+    }, 1100);
+  }
+
+  function finish() {
+    show('endScreen');
+    document.getElementById('finalScore').textContent = String(score);
+    var title, quip;
+    if (score >= 9) { title = '🏆 Christmas Genius!'; quip = 'Santa wants YOU on his trivia team.'; }
+    else if (score >= 7) { title = '🎄 Merry &amp; Bright!'; quip = 'Impressive holiday knowledge!'; }
+    else if (score >= 5) { title = '🎅 Nice List!'; quip = 'Solid effort — another round?'; }
+    else { title = '⚫ Bit of Coal...'; quip = 'The elves believe in you. Try again!'; }
+    document.getElementById('endTitle').innerHTML = title;
+    document.getElementById('endQuip').textContent = quip;
+    AudioFX.fanfare();
+  }
+
+  document.getElementById('startBtn').addEventListener('click', function () { AudioFX.unlock(); start(); });
+  document.getElementById('againBtn').addEventListener('click', function () { AudioFX.unlock(); start(); });
+})();
+</script>
+</body>
+</html>
