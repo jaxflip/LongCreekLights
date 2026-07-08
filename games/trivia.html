@@ -4,96 +4,195 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Christmas Trivia — Long Creek Lights</title>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { min-height: 100%; }
   body {
-    background: linear-gradient(180deg, #0b1f3a 0%, #12365e 100%);
+    background:
+      radial-gradient(ellipse at 50% -20%, #1d4a7a 0%, transparent 55%),
+      linear-gradient(180deg, #071426 0%, #0b2818 100%);
     color: #f5f7fa;
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    min-height: 100vh;
+    font-family: 'Nunito', system-ui, sans-serif;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
   }
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent),
+      radial-gradient(1px 1px at 32% 8%, #ffe9b0, transparent),
+      radial-gradient(1.5px 1.5px at 55% 22%, #fff, transparent),
+      radial-gradient(1px 1px at 71% 12%, #cfe8ff, transparent),
+      radial-gradient(1.5px 1.5px at 88% 28%, #fff, transparent),
+      radial-gradient(1px 1px at 44% 34%, #ffe9b0, transparent),
+      radial-gradient(1px 1px at 8% 42%, #cfe8ff, transparent),
+      radial-gradient(1.5px 1.5px at 79% 46%, #fff, transparent);
+    animation: twinkle 3.2s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle { from { opacity: 0.45; } to { opacity: 1; } }
+  .snowfall {
+    position: fixed; inset: -200px 0 0 0; pointer-events: none; z-index: 6;
+    background-image:
+      radial-gradient(2.5px 2.5px at 24px 36px, rgba(255,255,255,0.95), transparent),
+      radial-gradient(2px 2px at 96px 110px, rgba(255,255,255,0.8), transparent),
+      radial-gradient(3px 3px at 160px 66px, rgba(255,255,255,0.9), transparent),
+      radial-gradient(1.8px 1.8px at 60px 160px, rgba(255,255,255,0.7), transparent);
+    background-size: 210px 210px;
+    animation: snowdrift 9s linear infinite;
+  }
+  @keyframes snowdrift { to { background-position: 40px 210px; } }
   header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 10px;
+    padding: 8px 10px 4px;
     font-size: 0.95rem;
+    position: relative; z-index: 2;
   }
-  header a { color: #ffd166; text-decoration: none; font-weight: 700; padding: 6px 10px; }
-  .hud { font-weight: 700; }
+  header a { color: #ffd166; text-decoration: none; font-weight: 800; padding: 6px 10px; }
+  .hud { font-weight: 800; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
   button.mute {
-    background: #142c4e;
-    border: 1px solid rgba(255,209,102,0.4);
-    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,209,102,0.5);
+    border-radius: 10px;
     color: #fff;
     font-size: 1.05rem;
     padding: 6px 10px;
     cursor: pointer;
   }
-  main { flex: 1; padding: 10px 14px 24px; max-width: 460px; margin: 0 auto; width: 100%; }
+  .lights { display: flex; justify-content: center; gap: 12px; padding: 2px 0 6px; position: relative; z-index: 2; }
+  .lights i { width: 8px; height: 8px; border-radius: 50%; display: block; animation: bulb 1.6s ease-in-out infinite; }
+  .lights i:nth-child(5n+1) { background: #ff4d4d; box-shadow: 0 0 8px 2px rgba(255,77,77,0.9); }
+  .lights i:nth-child(5n+2) { background: #ffd166; box-shadow: 0 0 8px 2px rgba(255,209,102,0.9); animation-delay: 0.3s; }
+  .lights i:nth-child(5n+3) { background: #4dff88; box-shadow: 0 0 8px 2px rgba(77,255,136,0.9); animation-delay: 0.6s; }
+  .lights i:nth-child(5n+4) { background: #4dc3ff; box-shadow: 0 0 8px 2px rgba(77,195,255,0.9); animation-delay: 0.9s; }
+  .lights i:nth-child(5n+5) { background: #d24dff; box-shadow: 0 0 8px 2px rgba(210,77,255,0.9); animation-delay: 1.2s; }
+  @keyframes bulb { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.85); } }
+
+  main { flex: 1; padding: 10px 14px 28px; max-width: 460px; margin: 0 auto; width: 100%; position: relative; z-index: 2; }
   .progress {
-    height: 8px; background: rgba(255,255,255,0.15);
-    border-radius: 4px; overflow: hidden; margin-bottom: 14px;
+    height: 12px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    border: 1px solid rgba(255,255,255,0.15);
   }
-  .progress > div { height: 100%; background: #ffd166; width: 0; transition: width 0.3s; }
+  .progress > div {
+    height: 100%;
+    width: 0;
+    transition: width 0.35s ease;
+    background: repeating-linear-gradient(45deg, #e63946 0 10px, #f8f9fb 10px 20px);
+  }
   .question {
-    background: #142c4e;
-    border: 2px solid rgba(255,209,102,0.35);
-    border-radius: 14px;
-    padding: 18px 14px;
-    font-size: 1.05rem;
-    font-weight: 600;
+    background: linear-gradient(160deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.05) 100%);
+    border: 2px solid rgba(255, 209, 102, 0.45);
+    border-radius: 16px;
+    padding: 20px 14px;
+    font-size: 1.08rem;
+    font-weight: 700;
     text-align: center;
     margin-bottom: 14px;
-    min-height: 92px;
+    min-height: 96px;
     display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+    animation: qIn 0.3s ease;
   }
+  @keyframes qIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   .answers { display: grid; gap: 10px; }
   .answers button {
     background: rgba(255,255,255,0.08);
-    border: 2px solid rgba(255,255,255,0.25);
-    border-radius: 12px;
+    border: 2px solid rgba(255,255,255,0.28);
+    border-radius: 14px;
     color: #f5f7fa;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
     font-size: 1rem;
     padding: 14px 12px;
-    min-height: 52px;
+    min-height: 54px;
     cursor: pointer;
     text-align: center;
+    transition: transform 0.08s ease;
+    animation: qIn 0.3s ease backwards;
   }
-  .answers button.correct { background: #2a9d54; border-color: #2a9d54; }
-  .answers button.wrong { background: #e63946; border-color: #e63946; }
+  .answers button:nth-child(2) { animation-delay: 0.05s; }
+  .answers button:nth-child(3) { animation-delay: 0.1s; }
+  .answers button:nth-child(4) { animation-delay: 0.15s; }
+  .answers button:active { transform: scale(0.97); }
+  .answers button.correct {
+    background: linear-gradient(180deg, #34c06a, #1d7a3f);
+    border-color: #4dff88;
+    box-shadow: 0 0 18px rgba(77,255,136,0.45);
+  }
+  .answers button.wrong {
+    background: linear-gradient(180deg, #ff5b67, #b02330);
+    border-color: #ff7b85;
+    animation: shake 0.35s ease;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-4px); }
+  }
   .answers button:disabled { opacity: 0.95; }
   .center { text-align: center; }
   .big-btn {
-    background: #e63946; color: #fff; border: none;
-    border-radius: 10px; font-size: 1.1rem; font-weight: 700;
-    padding: 14px 30px; cursor: pointer; margin-top: 16px;
+    background: linear-gradient(180deg, #ff5b67, #d92637);
+    color: #fff; border: none;
+    border-radius: 12px; font-size: 1.15rem; font-weight: 800;
+    padding: 14px 34px; cursor: pointer; margin-top: 16px;
+    box-shadow: 0 5px 16px rgba(217,38,55,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
   }
-  h2 { color: #ffd166; margin: 20px 0 8px; }
+  h2 {
+    font-family: 'Mountains of Christmas', cursive;
+    color: #ffd166;
+    font-size: 1.8rem;
+    margin: 20px 0 8px;
+    text-shadow: 0 0 16px rgba(255,209,102,0.4);
+  }
+  .intro-emoji { font-size: 3rem; margin-top: 18px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
   .result-line { margin: 6px 0; font-size: 1rem; }
+  .streak { font-size: 0.85rem; color: #ffd166; font-weight: 800; min-height: 1.2em; margin-bottom: 8px; }
   .hidden { display: none !important; }
+  .confetti-bit {
+    position: fixed; top: -20px; z-index: 50; pointer-events: none;
+    font-size: 18px;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0.6; }
+  }
 </style>
 </head>
 <body>
+<div class="stars"></div>
+<div class="snowfall"></div>
 <header>
   <a href="index.html">‹ Games</a>
   <span class="hud">❓ <span id="qNum">0</span>/10 &nbsp; ✔️ <span id="score">0</span></span>
   <button class="mute" id="muteBtn" aria-label="Mute game sound">🔊</button>
 </header>
+<div class="lights"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <main>
   <div id="startScreen" class="center">
-    <h2>❓ Christmas Trivia</h2>
-    <p>10 questions per round. How well do you know Christmas?</p>
+    <div class="intro-emoji">🎅❓🎄</div>
+    <h2>Christmas Trivia</h2>
+    <p>10 questions per round.<br>Are you elf material or getting coal?</p>
     <button class="big-btn" id="startBtn">Start</button>
   </div>
   <div id="quizScreen" class="hidden">
     <div class="progress"><div id="bar"></div></div>
+    <div class="streak" id="streak"></div>
     <div class="question" id="qText"></div>
     <div class="answers" id="answers"></div>
   </div>
   <div id="endScreen" class="hidden center">
+    <div class="intro-emoji" id="endEmoji">🎄</div>
     <h2 id="endTitle"></h2>
     <div class="result-line">You got <b><span id="finalScore"></span> of 10</b> correct!</div>
     <div class="result-line" id="endQuip"></div>
@@ -104,6 +203,7 @@
 (function () {
   'use strict';
 
+  /* ---------- Audio (game-only mute; never touches device volume) ---------- */
   var AudioFX = (function () {
     var ctx = null;
     var muted = localStorage.getItem('lclMuted') === '1';
@@ -175,7 +275,7 @@
     { q: 'Which fictional character says "God bless us, every one!"?', a: ['Tiny Tim', 'Scrooge', 'Bob Cratchit', 'Marley'], c: 0 }
   ];
 
-  var order = [], idx = 0, score = 0, locked = false;
+  var order = [], idx = 0, score = 0, streak = 0, locked = false;
 
   function shuffle(arr) {
     for (var i = arr.length - 1; i > 0; i--) {
@@ -193,8 +293,9 @@
 
   function start() {
     order = shuffle(QUESTIONS.slice()).slice(0, 10);
-    idx = 0; score = 0;
+    idx = 0; score = 0; streak = 0;
     document.getElementById('score').textContent = '0';
+    document.getElementById('streak').textContent = '';
     show('quizScreen');
     render();
   }
@@ -204,9 +305,12 @@
     var item = order[idx];
     document.getElementById('qNum').textContent = String(idx + 1);
     document.getElementById('bar').style.width = ((idx) / 10 * 100) + '%';
-    document.getElementById('qText').textContent = item.q;
+    var q = document.getElementById('qText');
+    q.style.animation = 'none';
+    void q.offsetWidth; /* restart animation */
+    q.style.animation = '';
+    q.textContent = item.q;
 
-    /* shuffle answer positions, remember where correct lands */
     var slots = shuffle([0, 1, 2, 3]);
     var box = document.getElementById('answers');
     box.innerHTML = '';
@@ -227,11 +331,14 @@
     if (correct) {
       btn.classList.add('correct');
       score += 1;
+      streak += 1;
       document.getElementById('score').textContent = String(score);
+      document.getElementById('streak').textContent = streak >= 3 ? '🔥 ' + streak + ' in a row!' : '';
       AudioFX.right();
     } else {
       btn.classList.add('wrong');
-      /* highlight the right one */
+      streak = 0;
+      document.getElementById('streak').textContent = '';
       var item = order[idx];
       for (var k = 0; k < buttons.length; k++) {
         if (buttons[k].textContent === item.a[item.c]) buttons[k].classList.add('correct');
@@ -245,16 +352,31 @@
     }, 1100);
   }
 
+  function confetti(n) {
+    var bits = ['🎉', '❄️', '⭐', '🎁', '🔔'];
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement('span');
+      s.className = 'confetti-bit';
+      s.textContent = bits[Math.floor(Math.random() * bits.length)];
+      s.style.left = (Math.random() * 96) + 'vw';
+      s.style.animationDuration = (2.2 + Math.random() * 2.2) + 's';
+      s.style.animationDelay = (Math.random() * 0.8) + 's';
+      document.body.appendChild(s);
+      (function (el) { setTimeout(function () { el.remove(); }, 5500); })(s);
+    }
+  }
+
   function finish() {
     show('endScreen');
     document.getElementById('finalScore').textContent = String(score);
-    var title, quip;
-    if (score >= 9) { title = '🏆 Christmas Genius!'; quip = 'Santa wants YOU on his trivia team.'; }
-    else if (score >= 7) { title = '🎄 Merry &amp; Bright!'; quip = 'Impressive holiday knowledge!'; }
-    else if (score >= 5) { title = '🎅 Nice List!'; quip = 'Solid effort — another round?'; }
-    else { title = '⚫ Bit of Coal...'; quip = 'The elves believe in you. Try again!'; }
-    document.getElementById('endTitle').innerHTML = title;
+    var title, quip, emoji;
+    if (score >= 9) { title = 'Christmas Genius!'; quip = 'Santa wants YOU on his trivia team.'; emoji = '🏆'; confetti(36); }
+    else if (score >= 7) { title = 'Merry & Bright!'; quip = 'Impressive holiday knowledge!'; emoji = '🎄'; confetti(22); }
+    else if (score >= 5) { title = 'Nice List!'; quip = 'Solid effort — another round?'; emoji = '🎅'; confetti(10); }
+    else { title = 'Bit of Coal...'; quip = 'The elves believe in you. Try again!'; emoji = '⚫'; }
+    document.getElementById('endTitle').textContent = title;
     document.getElementById('endQuip').textContent = quip;
+    document.getElementById('endEmoji').textContent = emoji;
     AudioFX.fanfare();
   }
 

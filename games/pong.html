@@ -4,13 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Snowball Pong — Long Creek Lights</title>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; overflow: hidden; }
   body {
-    background: linear-gradient(180deg, #0b1f3a 0%, #12365e 100%);
+    background:
+      radial-gradient(ellipse at 50% -20%, #1d4a7a 0%, transparent 55%),
+      linear-gradient(180deg, #071426 0%, #0b2818 100%);
     color: #f5f7fa;
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Nunito', system-ui, sans-serif;
     display: flex;
     flex-direction: column;
     touch-action: none;
@@ -19,35 +22,51 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 10px;
+    padding: 8px 10px 4px;
     font-size: 0.95rem;
+    position: relative; z-index: 2;
   }
-  header a { color: #ffd166; text-decoration: none; font-weight: 700; padding: 6px 10px; }
-  .hud { font-weight: 700; }
+  header a { color: #ffd166; text-decoration: none; font-weight: 800; padding: 6px 10px; }
+  .hud { font-weight: 800; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
   button.mute {
-    background: #142c4e;
-    border: 1px solid rgba(255,209,102,0.4);
-    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,209,102,0.5);
+    border-radius: 10px;
     color: #fff;
     font-size: 1.05rem;
     padding: 6px 10px;
     cursor: pointer;
   }
+  .lights { display: flex; justify-content: center; gap: 12px; padding: 2px 0 6px; position: relative; z-index: 2; }
+  .lights i { width: 8px; height: 8px; border-radius: 50%; display: block; animation: bulb 1.6s ease-in-out infinite; }
+  .lights i:nth-child(5n+1) { background: #ff4d4d; box-shadow: 0 0 8px 2px rgba(255,77,77,0.9); }
+  .lights i:nth-child(5n+2) { background: #ffd166; box-shadow: 0 0 8px 2px rgba(255,209,102,0.9); animation-delay: 0.3s; }
+  .lights i:nth-child(5n+3) { background: #4dff88; box-shadow: 0 0 8px 2px rgba(77,255,136,0.9); animation-delay: 0.6s; }
+  .lights i:nth-child(5n+4) { background: #4dc3ff; box-shadow: 0 0 8px 2px rgba(77,195,255,0.9); animation-delay: 0.9s; }
+  .lights i:nth-child(5n+5) { background: #d24dff; box-shadow: 0 0 8px 2px rgba(210,77,255,0.9); animation-delay: 1.2s; }
+  @keyframes bulb { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.85); } }
   #stage { flex: 1; position: relative; }
   canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
   .overlay {
     position: absolute; inset: 0;
-    background: rgba(11, 31, 58, 0.88);
+    background: rgba(7, 20, 38, 0.9);
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     text-align: center; gap: 12px; padding: 20px;
+    z-index: 3;
   }
-  .overlay h2 { color: #ffd166; font-size: 1.4rem; }
-  .overlay p { font-size: 0.9rem; opacity: 0.9; max-width: 300px; }
+  .overlay h2 {
+    font-family: 'Mountains of Christmas', cursive;
+    color: #ffd166; font-size: 1.7rem;
+    text-shadow: 0 0 16px rgba(255,209,102,0.4);
+  }
+  .overlay p { font-size: 0.92rem; opacity: 0.9; max-width: 300px; line-height: 1.5; }
   .overlay button {
-    background: #e63946; color: #fff; border: none;
-    border-radius: 10px; font-size: 1.1rem; font-weight: 700;
-    padding: 12px 28px; cursor: pointer;
+    background: linear-gradient(180deg, #ff5b67, #d92637);
+    color: #fff; border: none;
+    border-radius: 12px; font-size: 1.15rem; font-weight: 800;
+    padding: 13px 34px; cursor: pointer;
+    box-shadow: 0 5px 16px rgba(217,38,55,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
   }
   .hidden { display: none !important; }
 </style>
@@ -58,11 +77,12 @@
   <span class="hud">You <span id="pScore">0</span> — <span id="eScore">0</span> Elf 🧝</span>
   <button class="mute" id="muteBtn" aria-label="Mute game sound">🔊</button>
 </header>
+<div class="lights"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <div id="stage">
   <canvas id="game"></canvas>
   <div class="overlay" id="startOverlay">
     <h2>⛄ Snowball Pong</h2>
-    <p>Drag to move your candy-cane paddle (bottom). First to 5 beats the Elf!</p>
+    <p>Drag to move your candy-cane paddle (bottom of the ice rink). <b>First to 5</b> beats the Elf!</p>
     <button id="startBtn">Play</button>
   </div>
   <div class="overlay hidden" id="gameOverOverlay">
@@ -75,6 +95,7 @@
 (function () {
   'use strict';
 
+  /* ---------- Audio (game-only mute; never touches device volume) ---------- */
   var AudioFX = (function () {
     var ctx = null;
     var muted = localStorage.getItem('lclMuted') === '1';
@@ -100,7 +121,7 @@
       unlock: ensure,
       hit: function () { beep(660, 0.06, 'square'); },
       wall: function () { beep(440, 0.05, 'square', 0.04); },
-      point: function () { beep(880, 0.12, 'square'); },
+      point: function () { beep(880, 0.12, 'square'); setTimeout(function () { beep(1175, 0.15, 'square'); }, 100); },
       lose: function () { beep(180, 0.25, 'sawtooth', 0.08); },
       toggle: function () {
         muted = !muted;
@@ -116,89 +137,110 @@
   muteBtn.addEventListener('click', function () { AudioFX.toggle(); paintMute(); });
   paintMute();
 
+  /* ---------- Setup ---------- */
   var canvas = document.getElementById('game');
   var g = canvas.getContext('2d');
   var stage = document.getElementById('stage');
   var W = 0, H = 0, DPR = 1;
+  var stars = [];
 
   function resize() {
     DPR = Math.min(window.devicePixelRatio || 1, 2);
     W = stage.clientWidth; H = stage.clientHeight;
     canvas.width = W * DPR; canvas.height = H * DPR;
     g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    stars = [];
+    for (var i = 0; i < 24; i++) {
+      stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.3 + 0.5, p: Math.random() * Math.PI * 2 });
+    }
   }
   window.addEventListener('resize', resize);
   resize();
 
-  var PADDLE_W = 86, PADDLE_H = 12, WIN = 5;
+  var PADDLE_W = 92, PADDLE_H = 14, WIN = 5;
   var running = false, raf = 0, lastT = 0, serveDelay = 0;
   var px, ex, ball, pScore, eScore;
+  var trail = [], particles = [], banner = null;
 
   function newBall(towardPlayer) {
-    var ang = (Math.random() * 0.6 - 0.3) + (towardPlayer ? Math.PI / 2 : -Math.PI / 2);
     var sp = 260;
-    ball = { x: W / 2, y: H / 2, vx: Math.sin(ang) * sp, vy: Math.cos(ang) * sp * (towardPlayer ? 1 : -1), r: 9, speed: sp };
-    /* normalize: ensure vertical dominance */
-    ball.vy = (towardPlayer ? 1 : -1) * Math.max(Math.abs(ball.vy), sp * 0.7);
+    var vx = (Math.random() * 1.2 - 0.6) * sp;
+    ball = { x: W / 2, y: H / 2, vx: vx, vy: (towardPlayer ? 1 : -1) * Math.max(sp * 0.7, Math.abs(vx)), r: 10, speed: sp };
+    trail = [];
   }
 
   function reset() {
     px = W / 2; ex = W / 2;
     pScore = 0; eScore = 0;
+    particles = []; banner = null;
     document.getElementById('pScore').textContent = '0';
     document.getElementById('eScore').textContent = '0';
     newBall(Math.random() < 0.5);
     serveDelay = 0.8;
   }
 
+  function burst(x, y, color, n) {
+    for (var i = 0; i < n; i++) {
+      var a = Math.random() * Math.PI * 2, sp = 40 + Math.random() * 120;
+      particles.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0.5 + Math.random() * 0.3, t: 0, c: color, r: 1.8 + Math.random() * 2.4 });
+    }
+  }
+
   function update(dt) {
+    if (banner) {
+      banner.t += dt;
+      if (banner.t > 1.0) banner = null;
+    }
     if (serveDelay > 0) { serveDelay -= dt; return; }
+
+    trail.push({ x: ball.x, y: ball.y });
+    if (trail.length > 10) trail.shift();
 
     ball.x += ball.vx * dt;
     ball.y += ball.vy * dt;
 
-    if (ball.x < ball.r) { ball.x = ball.r; ball.vx *= -1; AudioFX.wall(); }
-    if (ball.x > W - ball.r) { ball.x = W - ball.r; ball.vx *= -1; AudioFX.wall(); }
+    if (ball.x < ball.r) { ball.x = ball.r; ball.vx *= -1; AudioFX.wall(); burst(ball.x, ball.y, '#9fd0ff', 5); }
+    if (ball.x > W - ball.r) { ball.x = W - ball.r; ball.vx *= -1; AudioFX.wall(); burst(ball.x, ball.y, '#9fd0ff', 5); }
 
-    var py = H - 30, ey = 30;
+    var py = H - 34, ey = 34;
 
-    /* player paddle */
     if (ball.vy > 0 && ball.y + ball.r >= py - PADDLE_H / 2 && ball.y + ball.r <= py + PADDLE_H && Math.abs(ball.x - px) < PADDLE_W / 2 + ball.r) {
       ball.vy = -Math.abs(ball.vy);
-      var off = (ball.x - px) / (PADDLE_W / 2);
-      ball.vx += off * 160;
+      ball.vx += ((ball.x - px) / (PADDLE_W / 2)) * 160;
       ball.speed = Math.min(ball.speed + 14, 520);
       scaleSpeed();
       AudioFX.hit();
+      burst(ball.x, py - 8, '#ffffff', 8);
     }
-    /* elf paddle */
     if (ball.vy < 0 && ball.y - ball.r <= ey + PADDLE_H / 2 && ball.y - ball.r >= ey - PADDLE_H && Math.abs(ball.x - ex) < PADDLE_W / 2 + ball.r) {
       ball.vy = Math.abs(ball.vy);
-      var off2 = (ball.x - ex) / (PADDLE_W / 2);
-      ball.vx += off2 * 120;
+      ball.vx += ((ball.x - ex) / (PADDLE_W / 2)) * 120;
       scaleSpeed();
       AudioFX.hit();
+      burst(ball.x, ey + 8, '#ffffff', 8);
     }
 
-    /* elf AI — imperfect tracking */
+    /* elf AI — beatable */
     var target = ball.vy < 0 ? ball.x : W / 2;
     var maxV = 190 + pScore * 18;
     var diff = target - ex;
     ex += Math.max(-maxV * dt, Math.min(maxV * dt, diff));
 
-    /* scoring */
-    if (ball.y > H + 20) {
+    if (ball.y > H + 24) {
       eScore += 1;
       document.getElementById('eScore').textContent = String(eScore);
       AudioFX.lose();
+      banner = { txt: 'Elf scores! 🧝', c: '#ff7b85', t: 0 };
       if (eScore >= WIN) return end(false);
-      newBall(false); serveDelay = 0.8;
-    } else if (ball.y < -20) {
+      newBall(false); serveDelay = 0.9;
+    } else if (ball.y < -24) {
       pScore += 1;
       document.getElementById('pScore').textContent = String(pScore);
       AudioFX.point();
+      banner = { txt: 'You score! 🎉', c: '#ffd166', t: 0 };
+      burst(W / 2, H / 2, '#ffd166', 16);
       if (pScore >= WIN) return end(true);
-      newBall(true); serveDelay = 0.8;
+      newBall(true); serveDelay = 0.9;
     }
   }
 
@@ -212,38 +254,117 @@
     }
   }
 
+  /* ---------- Drawing ---------- */
+  function drawRink(t) {
+    var sky = g.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#0a1c33');
+    sky.addColorStop(1, '#0c2b1c');
+    g.fillStyle = sky;
+    g.fillRect(0, 0, W, H);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      g.globalAlpha = 0.35 + 0.65 * Math.abs(Math.sin(t / 900 + s.p));
+      g.fillStyle = '#ffffff';
+      g.beginPath(); g.arc(s.x, s.y, s.r, 0, Math.PI * 2); g.fill();
+    }
+    g.globalAlpha = 1;
+    /* ice sheet */
+    var ice = g.createLinearGradient(0, 0, W, H);
+    ice.addColorStop(0, 'rgba(140, 190, 240, 0.14)');
+    ice.addColorStop(0.5, 'rgba(190, 225, 255, 0.07)');
+    ice.addColorStop(1, 'rgba(140, 190, 240, 0.14)');
+    g.fillStyle = ice;
+    g.fillRect(6, 6, W - 12, H - 12);
+    g.strokeStyle = 'rgba(159, 208, 255, 0.5)';
+    g.lineWidth = 2;
+    g.strokeRect(7, 7, W - 14, H - 14);
+    /* center line + face-off circle */
+    g.strokeStyle = 'rgba(255, 209, 102, 0.4)';
+    g.setLineDash([10, 12]);
+    g.beginPath(); g.moveTo(10, H / 2); g.lineTo(W - 10, H / 2); g.stroke();
+    g.setLineDash([]);
+    g.beginPath(); g.arc(W / 2, H / 2, 34, 0, Math.PI * 2); g.stroke();
+  }
+
   function drawPaddle(x, y) {
     var seg = PADDLE_W / 6;
+    g.save();
+    g.shadowColor = 'rgba(255,255,255,0.5)';
+    g.shadowBlur = 10;
     for (var i = 0; i < 6; i++) {
-      g.fillStyle = i % 2 === 0 ? '#e63946' : '#f5f7fa';
-      g.fillRect(x - PADDLE_W / 2 + i * seg, y - PADDLE_H / 2, seg, PADDLE_H);
+      g.fillStyle = i % 2 === 0 ? '#e63946' : '#f8f9fb';
+      var rx = x - PADDLE_W / 2 + i * seg;
+      if (i === 0) {
+        g.beginPath();
+        g.moveTo(rx + seg, y - PADDLE_H / 2);
+        g.lineTo(rx + seg, y + PADDLE_H / 2);
+        g.arc(rx + PADDLE_H / 2, y, PADDLE_H / 2, Math.PI / 2, -Math.PI / 2);
+        g.closePath(); g.fill();
+      } else if (i === 5) {
+        g.beginPath();
+        g.moveTo(rx, y - PADDLE_H / 2);
+        g.arc(rx + seg - PADDLE_H / 2, y, PADDLE_H / 2, -Math.PI / 2, Math.PI / 2);
+        g.lineTo(rx, y + PADDLE_H / 2);
+        g.closePath(); g.fill();
+      } else {
+        g.fillRect(rx, y - PADDLE_H / 2, seg + 0.5, PADDLE_H);
+      }
+    }
+    g.restore();
+  }
+
+  function draw(t) {
+    drawRink(t);
+    /* puck trail */
+    for (var i = 0; i < trail.length; i++) {
+      g.globalAlpha = (i / trail.length) * 0.35;
+      g.fillStyle = '#cfe8ff';
+      g.beginPath(); g.arc(trail[i].x, trail[i].y, ball.r * (0.4 + 0.6 * i / trail.length), 0, Math.PI * 2); g.fill();
+    }
+    g.globalAlpha = 1;
+    /* paddles */
+    drawPaddle(px, H - 34);
+    drawPaddle(ex, 34);
+    g.font = '24px serif';
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('🧝', ex, 14);
+    g.fillText('⛄', px, H - 12);
+    /* snowball */
+    var halo = g.createRadialGradient(ball.x, ball.y, 2, ball.x, ball.y, ball.r * 2.6);
+    halo.addColorStop(0, 'rgba(255,255,255,0.5)');
+    halo.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = halo;
+    g.beginPath(); g.arc(ball.x, ball.y, ball.r * 2.6, 0, Math.PI * 2); g.fill();
+    var bg2 = g.createRadialGradient(ball.x - 3, ball.y - 3, 1, ball.x, ball.y, ball.r);
+    bg2.addColorStop(0, '#ffffff');
+    bg2.addColorStop(1, '#c9dcf2');
+    g.fillStyle = bg2;
+    g.beginPath(); g.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2); g.fill();
+    /* particles */
+    for (var p = 0; p < particles.length; p++) {
+      var pt = particles[p];
+      g.globalAlpha = 1 - pt.t / pt.life;
+      g.fillStyle = pt.c;
+      g.beginPath(); g.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2); g.fill();
+    }
+    g.globalAlpha = 1;
+    /* score banner */
+    if (banner) {
+      g.globalAlpha = Math.min(1, 2 - banner.t * 2);
+      g.font = "700 30px 'Mountains of Christmas', cursive";
+      g.fillStyle = banner.c;
+      g.fillText(banner.txt, W / 2, H / 2 - 60 - banner.t * 20);
+      g.globalAlpha = 1;
     }
   }
 
-  function draw() {
-    g.clearRect(0, 0, W, H);
-    /* center line */
-    g.strokeStyle = 'rgba(255,209,102,0.35)';
-    g.setLineDash([8, 10]);
-    g.beginPath();
-    g.moveTo(0, H / 2); g.lineTo(W, H / 2);
-    g.stroke();
-    g.setLineDash([]);
-    /* paddles */
-    drawPaddle(px, H - 30);
-    drawPaddle(ex, 30);
-    g.font = '22px serif';
-    g.textAlign = 'center'; g.textBaseline = 'middle';
-    g.fillText('🧝', ex, 12);
-    /* snowball */
-    g.fillStyle = '#ffffff';
-    g.beginPath();
-    g.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
-    g.fill();
-    g.fillStyle = 'rgba(180,200,255,0.6)';
-    g.beginPath();
-    g.arc(ball.x - 3, ball.y - 3, 3, 0, Math.PI * 2);
-    g.fill();
+  function stepFx(dt) {
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.t += dt;
+      if (p.t >= p.life) { particles.splice(i, 1); continue; }
+      p.x += p.vx * dt; p.y += p.vy * dt;
+    }
   }
 
   function loop(t) {
@@ -251,7 +372,8 @@
     var dt = Math.min((t - lastT) / 1000, 0.04);
     lastT = t;
     update(dt);
-    if (running) draw();
+    stepFx(dt);
+    if (running) draw(t);
     raf = requestAnimationFrame(loop);
   }
 
@@ -272,6 +394,7 @@
     document.getElementById('gameOverOverlay').classList.remove('hidden');
   }
 
+  /* ---------- Input ---------- */
   function moveTo(clientX) {
     var r = stage.getBoundingClientRect();
     px = Math.max(PADDLE_W / 2, Math.min(W - PADDLE_W / 2, clientX - r.left));

@@ -4,13 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Candy Cane Snake — Long Creek Lights</title>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; overflow: hidden; }
   body {
-    background: linear-gradient(180deg, #0b1f3a 0%, #12365e 100%);
+    background:
+      radial-gradient(ellipse at 50% -20%, #1d4a7a 0%, transparent 55%),
+      linear-gradient(180deg, #071426 0%, #0b2818 100%);
     color: #f5f7fa;
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Nunito', system-ui, sans-serif;
     display: flex;
     flex-direction: column;
     touch-action: none;
@@ -19,35 +22,51 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 10px;
+    padding: 8px 10px 4px;
     font-size: 0.95rem;
+    position: relative; z-index: 2;
   }
-  header a { color: #ffd166; text-decoration: none; font-weight: 700; padding: 6px 10px; }
-  .hud { font-weight: 700; }
+  header a { color: #ffd166; text-decoration: none; font-weight: 800; padding: 6px 10px; }
+  .hud { font-weight: 800; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
   button.mute {
-    background: #142c4e;
-    border: 1px solid rgba(255,209,102,0.4);
-    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,209,102,0.5);
+    border-radius: 10px;
     color: #fff;
     font-size: 1.05rem;
     padding: 6px 10px;
     cursor: pointer;
   }
+  .lights { display: flex; justify-content: center; gap: 12px; padding: 2px 0 6px; position: relative; z-index: 2; }
+  .lights i { width: 8px; height: 8px; border-radius: 50%; display: block; animation: bulb 1.6s ease-in-out infinite; }
+  .lights i:nth-child(5n+1) { background: #ff4d4d; box-shadow: 0 0 8px 2px rgba(255,77,77,0.9); }
+  .lights i:nth-child(5n+2) { background: #ffd166; box-shadow: 0 0 8px 2px rgba(255,209,102,0.9); animation-delay: 0.3s; }
+  .lights i:nth-child(5n+3) { background: #4dff88; box-shadow: 0 0 8px 2px rgba(77,255,136,0.9); animation-delay: 0.6s; }
+  .lights i:nth-child(5n+4) { background: #4dc3ff; box-shadow: 0 0 8px 2px rgba(77,195,255,0.9); animation-delay: 0.9s; }
+  .lights i:nth-child(5n+5) { background: #d24dff; box-shadow: 0 0 8px 2px rgba(210,77,255,0.9); animation-delay: 1.2s; }
+  @keyframes bulb { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.85); } }
   #stage { flex: 1; position: relative; }
   canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
   .overlay {
     position: absolute; inset: 0;
-    background: rgba(11, 31, 58, 0.88);
+    background: rgba(7, 20, 38, 0.9);
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     text-align: center; gap: 12px; padding: 20px;
+    z-index: 3;
   }
-  .overlay h2 { color: #ffd166; font-size: 1.4rem; }
-  .overlay p { font-size: 0.9rem; opacity: 0.9; max-width: 300px; }
+  .overlay h2 {
+    font-family: 'Mountains of Christmas', cursive;
+    color: #ffd166; font-size: 1.7rem;
+    text-shadow: 0 0 16px rgba(255,209,102,0.4);
+  }
+  .overlay p { font-size: 0.92rem; opacity: 0.9; max-width: 300px; line-height: 1.5; }
   .overlay button {
-    background: #e63946; color: #fff; border: none;
-    border-radius: 10px; font-size: 1.1rem; font-weight: 700;
-    padding: 12px 28px; cursor: pointer;
+    background: linear-gradient(180deg, #ff5b67, #d92637);
+    color: #fff; border: none;
+    border-radius: 12px; font-size: 1.15rem; font-weight: 800;
+    padding: 13px 34px; cursor: pointer;
+    box-shadow: 0 5px 16px rgba(217,38,55,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
   }
   .hidden { display: none !important; }
 </style>
@@ -58,16 +77,17 @@
   <span class="hud">🍬 <span id="score">0</span> &nbsp; 🏆 <span id="best">0</span></span>
   <button class="mute" id="muteBtn" aria-label="Mute game sound">🔊</button>
 </header>
+<div class="lights"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <div id="stage">
   <canvas id="game"></canvas>
   <div class="overlay" id="startOverlay">
     <h2>🍬 Candy Cane Snake</h2>
-    <p>Swipe anywhere to steer the snake toward the candy canes. Don't hit the walls or yourself!</p>
+    <p>Swipe anywhere to steer. Grab the <b>glowing candy</b> to grow longer — don't hit the walls or your own tail!</p>
     <button id="startBtn">Play</button>
   </div>
   <div class="overlay hidden" id="gameOverOverlay">
     <h2 id="overTitle">Ouch!</h2>
-    <p>You munched <span id="finalScore">0</span> candy canes.</p>
+    <p>You munched <b><span id="finalScore">0</span></b> candies.</p>
     <button id="restartBtn">Play Again</button>
   </div>
 </div>
@@ -75,6 +95,7 @@
 (function () {
   'use strict';
 
+  /* ---------- Audio (game-only mute; never touches device volume) ---------- */
   var AudioFX = (function () {
     var ctx = null;
     var muted = localStorage.getItem('lclMuted') === '1';
@@ -98,7 +119,7 @@
     }
     return {
       unlock: ensure,
-      eat: function () { beep(784, 0.09, 'square'); },
+      eat: function () { beep(784, 0.08, 'square'); setTimeout(function () { beep(1047, 0.1, 'square'); }, 70); },
       crash: function () { beep(150, 0.3, 'sawtooth', 0.09); },
       toggle: function () {
         muted = !muted;
@@ -114,24 +135,31 @@
   muteBtn.addEventListener('click', function () { AudioFX.toggle(); paintMute(); });
   paintMute();
 
+  /* ---------- Setup ---------- */
   var canvas = document.getElementById('game');
   var g = canvas.getContext('2d');
   var stage = document.getElementById('stage');
-  var COLS = 17, ROWS = 24, CELL = 20, OX = 0, OY = 0, DPR = 1;
+  var COLS = 15, ROWS = 22, CELL = 20, OX = 0, OY = 0, DPR = 1, VW = 0, VH = 0;
+  var stars = [];
 
   function resize() {
     DPR = Math.min(window.devicePixelRatio || 1, 2);
-    var w = stage.clientWidth, h = stage.clientHeight;
-    canvas.width = w * DPR; canvas.height = h * DPR;
+    VW = stage.clientWidth; VH = stage.clientHeight;
+    canvas.width = VW * DPR; canvas.height = VH * DPR;
     g.setTransform(DPR, 0, 0, DPR, 0, 0);
-    CELL = Math.floor(Math.min(w / COLS, h / ROWS));
-    OX = Math.floor((w - COLS * CELL) / 2);
-    OY = Math.floor((h - ROWS * CELL) / 2);
+    CELL = Math.floor(Math.min(VW / COLS, (VH - 8) / ROWS));
+    OX = Math.floor((VW - COLS * CELL) / 2);
+    OY = Math.floor((VH - ROWS * CELL) / 2);
+    stars = [];
+    for (var i = 0; i < 26; i++) {
+      stars.push({ x: Math.random() * VW, y: Math.random() * VH, r: Math.random() * 1.4 + 0.5, p: Math.random() * Math.PI * 2 });
+    }
   }
   window.addEventListener('resize', resize);
   resize();
 
   var snake, dir, nextDir, food, score, best, timer, speed, running = false;
+  var particles = [], floats = [], foodPulse = 0, animRaf = 0;
   best = parseInt(localStorage.getItem('lclSnakeBest') || '0', 10);
   document.getElementById('best').textContent = String(best);
 
@@ -144,13 +172,24 @@
   }
 
   function reset() {
-    snake = [{ x: 8, y: 12 }, { x: 7, y: 12 }, { x: 6, y: 12 }];
+    snake = [{ x: 7, y: 11 }, { x: 6, y: 11 }, { x: 5, y: 11 }];
     dir = { x: 1, y: 0 };
     nextDir = dir;
     score = 0;
-    speed = 7;
+    speed = 6.5;
+    particles = []; floats = [];
     document.getElementById('score').textContent = '0';
     placeFood();
+  }
+
+  function cellCX(c) { return OX + c * CELL + CELL / 2; }
+  function cellCY(r) { return OY + r * CELL + CELL / 2; }
+
+  function burst(x, y, color, n) {
+    for (var i = 0; i < n; i++) {
+      var a = Math.random() * Math.PI * 2, sp = 40 + Math.random() * 90;
+      particles.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0.6 + Math.random() * 0.3, t: 0, c: color, r: 2 + Math.random() * 2 });
+    }
   }
 
   function step() {
@@ -165,51 +204,163 @@
       score += 1;
       AudioFX.eat();
       document.getElementById('score').textContent = String(score);
-      if (score % 5 === 0 && speed < 14) speed += 1;
+      burst(cellCX(food.x), cellCY(food.y), '#ff5b67', 14);
+      burst(cellCX(food.x), cellCY(food.y), '#ffffff', 8);
+      floats.push({ x: cellCX(food.x), y: cellCY(food.y), t: 0, txt: '+1' });
+      if (score % 5 === 0 && speed < 13) speed += 1;
       placeFood();
     } else {
       snake.pop();
     }
-    draw();
     timer = setTimeout(step, 1000 / speed);
   }
 
-  function draw() {
-    g.clearRect(0, 0, canvas.width, canvas.height);
-    /* board */
-    g.fillStyle = 'rgba(255,255,255,0.05)';
-    g.fillRect(OX, OY, COLS * CELL, ROWS * CELL);
-    g.strokeStyle = 'rgba(255,209,102,0.5)';
-    g.strokeRect(OX + 0.5, OY + 0.5, COLS * CELL - 1, ROWS * CELL - 1);
-    /* food */
-    g.font = (CELL - 2) + 'px serif';
-    g.textAlign = 'center';
-    g.textBaseline = 'middle';
-    g.fillText('🍬', OX + food.x * CELL + CELL / 2, OY + food.y * CELL + CELL / 2 + 1);
-    /* snake — candy cane stripes */
-    for (var i = snake.length - 1; i >= 0; i--) {
-      g.fillStyle = i === 0 ? '#2a9d54' : (i % 2 === 0 ? '#e63946' : '#f5f7fa');
-      var s = snake[i];
+  /* ---------- Drawing ---------- */
+  function drawBackdrop(t) {
+    var sky = g.createLinearGradient(0, 0, 0, VH);
+    sky.addColorStop(0, '#0a1c33');
+    sky.addColorStop(1, '#0c2b1c');
+    g.fillStyle = sky;
+    g.fillRect(0, 0, VW, VH);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      g.globalAlpha = 0.4 + 0.6 * Math.abs(Math.sin(t / 900 + s.p));
+      g.fillStyle = '#ffffff';
       g.beginPath();
-      var r = CELL * 0.44;
-      g.arc(OX + s.x * CELL + CELL / 2, OY + s.y * CELL + CELL / 2, r, 0, Math.PI * 2);
+      g.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       g.fill();
     }
-    /* eyes on head */
-    var h = snake[0];
-    g.fillStyle = '#0b1f3a';
-    var ex = OX + h.x * CELL + CELL / 2, ey = OY + h.y * CELL + CELL / 2;
-    g.fillRect(ex - 5, ey - 4, 3, 3);
-    g.fillRect(ex + 2, ey - 4, 3, 3);
+    g.globalAlpha = 1;
+    /* board frame */
+    g.fillStyle = 'rgba(255,255,255,0.05)';
+    g.fillRect(OX, OY, COLS * CELL, ROWS * CELL);
+    g.strokeStyle = 'rgba(255,255,255,0.06)';
+    g.lineWidth = 1;
+    for (var c = 1; c < COLS; c++) {
+      g.beginPath(); g.moveTo(OX + c * CELL, OY); g.lineTo(OX + c * CELL, OY + ROWS * CELL); g.stroke();
+    }
+    for (var r = 1; r < ROWS; r++) {
+      g.beginPath(); g.moveTo(OX, OY + r * CELL); g.lineTo(OX + COLS * CELL, OY + r * CELL); g.stroke();
+    }
+    g.strokeStyle = 'rgba(255,209,102,0.65)';
+    g.lineWidth = 2;
+    g.strokeRect(OX + 1, OY + 1, COLS * CELL - 2, ROWS * CELL - 2);
   }
 
+  function drawFood(t) {
+    var x = cellCX(food.x), y = cellCY(food.y);
+    var pulse = 1 + 0.14 * Math.sin(t / 180);
+    var R = CELL * 0.42 * pulse;
+    /* glow halo — impossible to miss */
+    var halo = g.createRadialGradient(x, y, R * 0.4, x, y, R * 2.6);
+    halo.addColorStop(0, 'rgba(255,120,130,0.55)');
+    halo.addColorStop(1, 'rgba(255,120,130,0)');
+    g.fillStyle = halo;
+    g.beginPath(); g.arc(x, y, R * 2.6, 0, Math.PI * 2); g.fill();
+    /* peppermint candy: white disc + red wedges */
+    g.fillStyle = '#ffffff';
+    g.beginPath(); g.arc(x, y, R, 0, Math.PI * 2); g.fill();
+    g.fillStyle = '#e63946';
+    var spin = t / 1200;
+    for (var i = 0; i < 4; i++) {
+      var a0 = spin + i * Math.PI / 2, a1 = a0 + Math.PI / 5;
+      g.beginPath();
+      g.moveTo(x, y);
+      g.arc(x, y, R, a0, a1);
+      g.closePath();
+      g.fill();
+    }
+    g.strokeStyle = 'rgba(0,0,0,0.25)';
+    g.lineWidth = 1.5;
+    g.beginPath(); g.arc(x, y, R, 0, Math.PI * 2); g.stroke();
+    /* sparkle */
+    g.fillStyle = 'rgba(255,255,255,0.9)';
+    g.beginPath(); g.arc(x - R * 0.35, y - R * 0.35, R * 0.16, 0, Math.PI * 2); g.fill();
+  }
+
+  function drawSnake() {
+    /* body: candy-cane striped rounded segments */
+    for (var i = snake.length - 1; i >= 1; i--) {
+      var s = snake[i];
+      var x = cellCX(s.x), y = cellCY(s.y);
+      var r = CELL * 0.44;
+      g.fillStyle = i % 2 === 0 ? '#e63946' : '#f8f9fb';
+      g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+      g.strokeStyle = 'rgba(0,0,0,0.2)';
+      g.lineWidth = 1;
+      g.stroke();
+    }
+    /* head: green with Santa hat */
+    var h = snake[0];
+    var hx = cellCX(h.x), hy = cellCY(h.y), hr = CELL * 0.48;
+    var grad = g.createRadialGradient(hx - hr * 0.3, hy - hr * 0.3, hr * 0.2, hx, hy, hr);
+    grad.addColorStop(0, '#43c96e');
+    grad.addColorStop(1, '#1d7a3f');
+    g.fillStyle = grad;
+    g.beginPath(); g.arc(hx, hy, hr, 0, Math.PI * 2); g.fill();
+    /* eyes */
+    g.fillStyle = '#ffffff';
+    g.beginPath(); g.arc(hx - hr * 0.32, hy - hr * 0.1, hr * 0.2, 0, Math.PI * 2); g.fill();
+    g.beginPath(); g.arc(hx + hr * 0.32, hy - hr * 0.1, hr * 0.2, 0, Math.PI * 2); g.fill();
+    g.fillStyle = '#0b1f3a';
+    g.beginPath(); g.arc(hx - hr * 0.28, hy - hr * 0.08, hr * 0.1, 0, Math.PI * 2); g.fill();
+    g.beginPath(); g.arc(hx + hr * 0.36, hy - hr * 0.08, hr * 0.1, 0, Math.PI * 2); g.fill();
+    /* santa hat */
+    g.fillStyle = '#e63946';
+    g.beginPath();
+    g.moveTo(hx - hr * 0.7, hy - hr * 0.45);
+    g.quadraticCurveTo(hx, hy - hr * 1.7, hx + hr * 0.75, hy - hr * 0.45);
+    g.closePath();
+    g.fill();
+    g.fillStyle = '#ffffff';
+    g.beginPath(); g.arc(hx + hr * 0.72, hy - hr * 0.5, hr * 0.18, 0, Math.PI * 2); g.fill();
+    g.fillRect(hx - hr * 0.78, hy - hr * 0.58, hr * 1.56, hr * 0.22);
+  }
+
+  function drawFx(dt) {
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.t += dt;
+      if (p.t >= p.life) { particles.splice(i, 1); continue; }
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      p.vy += 120 * dt;
+      g.globalAlpha = 1 - p.t / p.life;
+      g.fillStyle = p.c;
+      g.beginPath(); g.arc(p.x, p.y, p.r, 0, Math.PI * 2); g.fill();
+    }
+    g.globalAlpha = 1;
+    g.font = '800 16px Nunito, sans-serif';
+    g.textAlign = 'center';
+    for (var j = floats.length - 1; j >= 0; j--) {
+      var f = floats[j];
+      f.t += dt;
+      if (f.t >= 0.9) { floats.splice(j, 1); continue; }
+      g.globalAlpha = 1 - f.t / 0.9;
+      g.fillStyle = '#ffd166';
+      g.fillText(f.txt, f.x, f.y - f.t * 40);
+    }
+    g.globalAlpha = 1;
+  }
+
+  var lastAnim = 0;
+  function animate(t) {
+    var dt = Math.min((t - lastAnim) / 1000, 0.05) || 0.016;
+    lastAnim = t;
+    drawBackdrop(t);
+    if (food) drawFood(t);
+    if (snake) drawSnake();
+    drawFx(dt);
+    animRaf = requestAnimationFrame(animate);
+  }
+  animRaf = requestAnimationFrame(animate);
+
+  /* ---------- Flow ---------- */
   function start() {
     clearTimeout(timer);
     reset();
     running = true;
     document.getElementById('startOverlay').classList.add('hidden');
     document.getElementById('gameOverOverlay').classList.add('hidden');
-    draw();
     timer = setTimeout(step, 1000 / speed);
   }
 
@@ -217,6 +368,7 @@
     running = false;
     clearTimeout(timer);
     AudioFX.crash();
+    burst(cellCX(snake[0].x), cellCY(snake[0].y), '#ffd166', 20);
     if (score > best) {
       best = score;
       localStorage.setItem('lclSnakeBest', String(best));
@@ -229,7 +381,7 @@
     document.getElementById('gameOverOverlay').classList.remove('hidden');
   }
 
-  /* swipe input */
+  /* ---------- Input ---------- */
   var sx = 0, sy = 0;
   stage.addEventListener('touchstart', function (e) {
     AudioFX.unlock();
@@ -264,6 +416,8 @@
       document.getElementById('startOverlay').classList.remove('hidden');
     }
   });
+
+  reset(); /* so backdrop shows snake+candy behind the start overlay */
 })();
 </script>
 </body>
