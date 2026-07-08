@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Candy Cane Snake — Long Creek Lights</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: linear-gradient(180deg, #0b1f3a 0%, #12365e 100%);
+    color: #f5f7fa;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    touch-action: none;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    font-size: 0.95rem;
+  }
+  header a { color: #ffd166; text-decoration: none; font-weight: 700; padding: 6px 10px; }
+  .hud { font-weight: 700; }
+  button.mute {
+    background: #142c4e;
+    border: 1px solid rgba(255,209,102,0.4);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1.05rem;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  #stage { flex: 1; position: relative; }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .overlay {
+    position: absolute; inset: 0;
+    background: rgba(11, 31, 58, 0.88);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; gap: 12px; padding: 20px;
+  }
+  .overlay h2 { color: #ffd166; font-size: 1.4rem; }
+  .overlay p { font-size: 0.9rem; opacity: 0.9; max-width: 300px; }
+  .overlay button {
+    background: #e63946; color: #fff; border: none;
+    border-radius: 10px; font-size: 1.1rem; font-weight: 700;
+    padding: 12px 28px; cursor: pointer;
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html">‹ Games</a>
+  <span class="hud">🍬 <span id="score">0</span> &nbsp; 🏆 <span id="best">0</span></span>
+  <button class="mute" id="muteBtn" aria-label="Mute game sound">🔊</button>
+</header>
+<div id="stage">
+  <canvas id="game"></canvas>
+  <div class="overlay" id="startOverlay">
+    <h2>🍬 Candy Cane Snake</h2>
+    <p>Swipe anywhere to steer the snake toward the candy canes. Don't hit the walls or yourself!</p>
+    <button id="startBtn">Play</button>
+  </div>
+  <div class="overlay hidden" id="gameOverOverlay">
+    <h2 id="overTitle">Ouch!</h2>
+    <p>You munched <span id="finalScore">0</span> candy canes.</p>
+    <button id="restartBtn">Play Again</button>
+  </div>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  var AudioFX = (function () {
+    var ctx = null;
+    var muted = localStorage.getItem('lclMuted') === '1';
+    function ensure() {
+      if (!ctx) {
+        try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { ctx = null; }
+      }
+      if (ctx && ctx.state === 'suspended') ctx.resume();
+    }
+    function beep(freq, dur, type, vol) {
+      if (muted) return;
+      ensure();
+      if (!ctx) return;
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type || 'square';
+      o.frequency.value = freq;
+      g.gain.setValueAtTime(vol || 0.06, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + (dur || 0.12));
+      o.connect(g); g.connect(ctx.destination);
+      o.start(); o.stop(ctx.currentTime + (dur || 0.12));
+    }
+    return {
+      unlock: ensure,
+      eat: function () { beep(784, 0.09, 'square'); },
+      crash: function () { beep(150, 0.3, 'sawtooth', 0.09); },
+      toggle: function () {
+        muted = !muted;
+        localStorage.setItem('lclMuted', muted ? '1' : '0');
+        return muted;
+      },
+      isMuted: function () { return muted; }
+    };
+  })();
+
+  var muteBtn = document.getElementById('muteBtn');
+  function paintMute() { muteBtn.textContent = AudioFX.isMuted() ? '🔇' : '🔊'; }
+  muteBtn.addEventListener('click', function () { AudioFX.toggle(); paintMute(); });
+  paintMute();
+
+  var canvas = document.getElementById('game');
+  var g = canvas.getContext('2d');
+  var stage = document.getElementById('stage');
+  var COLS = 17, ROWS = 24, CELL = 20, OX = 0, OY = 0, DPR = 1;
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var w = stage.clientWidth, h = stage.clientHeight;
+    canvas.width = w * DPR; canvas.height = h * DPR;
+    g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    CELL = Math.floor(Math.min(w / COLS, h / ROWS));
+    OX = Math.floor((w - COLS * CELL) / 2);
+    OY = Math.floor((h - ROWS * CELL) / 2);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var snake, dir, nextDir, food, score, best, timer, speed, running = false;
+  best = parseInt(localStorage.getItem('lclSnakeBest') || '0', 10);
+  document.getElementById('best').textContent = String(best);
+
+  function placeFood() {
+    while (true) {
+      var f = { x: Math.floor(Math.random() * COLS), y: Math.floor(Math.random() * ROWS) };
+      var clash = snake.some(function (s) { return s.x === f.x && s.y === f.y; });
+      if (!clash) { food = f; return; }
+    }
+  }
+
+  function reset() {
+    snake = [{ x: 8, y: 12 }, { x: 7, y: 12 }, { x: 6, y: 12 }];
+    dir = { x: 1, y: 0 };
+    nextDir = dir;
+    score = 0;
+    speed = 7;
+    document.getElementById('score').textContent = '0';
+    placeFood();
+  }
+
+  function step() {
+    dir = nextDir;
+    var head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+    if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS ||
+        snake.some(function (s) { return s.x === head.x && s.y === head.y; })) {
+      return gameOver();
+    }
+    snake.unshift(head);
+    if (head.x === food.x && head.y === food.y) {
+      score += 1;
+      AudioFX.eat();
+      document.getElementById('score').textContent = String(score);
+      if (score % 5 === 0 && speed < 14) speed += 1;
+      placeFood();
+    } else {
+      snake.pop();
+    }
+    draw();
+    timer = setTimeout(step, 1000 / speed);
+  }
+
+  function draw() {
+    g.clearRect(0, 0, canvas.width, canvas.height);
+    /* board */
+    g.fillStyle = 'rgba(255,255,255,0.05)';
+    g.fillRect(OX, OY, COLS * CELL, ROWS * CELL);
+    g.strokeStyle = 'rgba(255,209,102,0.5)';
+    g.strokeRect(OX + 0.5, OY + 0.5, COLS * CELL - 1, ROWS * CELL - 1);
+    /* food */
+    g.font = (CELL - 2) + 'px serif';
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.fillText('🍬', OX + food.x * CELL + CELL / 2, OY + food.y * CELL + CELL / 2 + 1);
+    /* snake — candy cane stripes */
+    for (var i = snake.length - 1; i >= 0; i--) {
+      g.fillStyle = i === 0 ? '#2a9d54' : (i % 2 === 0 ? '#e63946' : '#f5f7fa');
+      var s = snake[i];
+      g.beginPath();
+      var r = CELL * 0.44;
+      g.arc(OX + s.x * CELL + CELL / 2, OY + s.y * CELL + CELL / 2, r, 0, Math.PI * 2);
+      g.fill();
+    }
+    /* eyes on head */
+    var h = snake[0];
+    g.fillStyle = '#0b1f3a';
+    var ex = OX + h.x * CELL + CELL / 2, ey = OY + h.y * CELL + CELL / 2;
+    g.fillRect(ex - 5, ey - 4, 3, 3);
+    g.fillRect(ex + 2, ey - 4, 3, 3);
+  }
+
+  function start() {
+    clearTimeout(timer);
+    reset();
+    running = true;
+    document.getElementById('startOverlay').classList.add('hidden');
+    document.getElementById('gameOverOverlay').classList.add('hidden');
+    draw();
+    timer = setTimeout(step, 1000 / speed);
+  }
+
+  function gameOver() {
+    running = false;
+    clearTimeout(timer);
+    AudioFX.crash();
+    if (score > best) {
+      best = score;
+      localStorage.setItem('lclSnakeBest', String(best));
+      document.getElementById('best').textContent = String(best);
+      document.getElementById('overTitle').textContent = '🏆 New Best!';
+    } else {
+      document.getElementById('overTitle').textContent = 'Ouch!';
+    }
+    document.getElementById('finalScore').textContent = String(score);
+    document.getElementById('gameOverOverlay').classList.remove('hidden');
+  }
+
+  /* swipe input */
+  var sx = 0, sy = 0;
+  stage.addEventListener('touchstart', function (e) {
+    AudioFX.unlock();
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+  stage.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
+  stage.addEventListener('touchend', function (e) {
+    var dx = e.changedTouches[0].clientX - sx;
+    var dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < 18 && Math.abs(dy) < 18) return;
+    var d;
+    if (Math.abs(dx) > Math.abs(dy)) d = dx > 0 ? { x: 1, y: 0 } : { x: -1, y: 0 };
+    else d = dy > 0 ? { x: 0, y: 1 } : { x: 0, y: -1 };
+    if (d.x !== -dir.x || d.y !== -dir.y) nextDir = d;
+  });
+  document.addEventListener('keydown', function (e) {
+    var map = {
+      ArrowUp: { x: 0, y: -1 }, ArrowDown: { x: 0, y: 1 },
+      ArrowLeft: { x: -1, y: 0 }, ArrowRight: { x: 1, y: 0 }
+    };
+    var d = map[e.key];
+    if (d && (d.x !== -dir.x || d.y !== -dir.y)) nextDir = d;
+  });
+
+  document.getElementById('startBtn').addEventListener('click', function () { AudioFX.unlock(); start(); });
+  document.getElementById('restartBtn').addEventListener('click', function () { AudioFX.unlock(); start(); });
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && running) {
+      running = false;
+      clearTimeout(timer);
+      document.getElementById('startOverlay').classList.remove('hidden');
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Snowball Pong — Long Creek Lights</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: linear-gradient(180deg, #0b1f3a 0%, #12365e 100%);
+    color: #f5f7fa;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    touch-action: none;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    font-size: 0.95rem;
+  }
+  header a { color: #ffd166; text-decoration: none; font-weight: 700; padding: 6px 10px; }
+  .hud { font-weight: 700; }
+  button.mute {
+    background: #142c4e;
+    border: 1px solid rgba(255,209,102,0.4);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1.05rem;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  #stage { flex: 1; position: relative; }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .overlay {
+    position: absolute; inset: 0;
+    background: rgba(11, 31, 58, 0.88);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; gap: 12px; padding: 20px;
+  }
+  .overlay h2 { color: #ffd166; font-size: 1.4rem; }
+  .overlay p { font-size: 0.9rem; opacity: 0.9; max-width: 300px; }
+  .overlay button {
+    background: #e63946; color: #fff; border: none;
+    border-radius: 10px; font-size: 1.1rem; font-weight: 700;
+    padding: 12px 28px; cursor: pointer;
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html">‹ Games</a>
+  <span class="hud">You <span id="pScore">0</span> — <span id="eScore">0</span> Elf 🧝</span>
+  <button class="mute" id="muteBtn" aria-label="Mute game sound">🔊</button>
+</header>
+<div id="stage">
+  <canvas id="game"></canvas>
+  <div class="overlay" id="startOverlay">
+    <h2>⛄ Snowball Pong</h2>
+    <p>Drag to move your candy-cane paddle (bottom). First to 5 beats the Elf!</p>
+    <button id="startBtn">Play</button>
+  </div>
+  <div class="overlay hidden" id="gameOverOverlay">
+    <h2 id="overTitle">You Win!</h2>
+    <p id="overText"></p>
+    <button id="restartBtn">Play Again</button>
+  </div>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  var AudioFX = (function () {
+    var ctx = null;
+    var muted = localStorage.getItem('lclMuted') === '1';
+    function ensure() {
+      if (!ctx) {
+        try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { ctx = null; }
+      }
+      if (ctx && ctx.state === 'suspended') ctx.resume();
+    }
+    function beep(freq, dur, type, vol) {
+      if (muted) return;
+      ensure();
+      if (!ctx) return;
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type || 'square';
+      o.frequency.value = freq;
+      g.gain.setValueAtTime(vol || 0.06, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + (dur || 0.12));
+      o.connect(g); g.connect(ctx.destination);
+      o.start(); o.stop(ctx.currentTime + (dur || 0.12));
+    }
+    return {
+      unlock: ensure,
+      hit: function () { beep(660, 0.06, 'square'); },
+      wall: function () { beep(440, 0.05, 'square', 0.04); },
+      point: function () { beep(880, 0.12, 'square'); },
+      lose: function () { beep(180, 0.25, 'sawtooth', 0.08); },
+      toggle: function () {
+        muted = !muted;
+        localStorage.setItem('lclMuted', muted ? '1' : '0');
+        return muted;
+      },
+      isMuted: function () { return muted; }
+    };
+  })();
+
+  var muteBtn = document.getElementById('muteBtn');
+  function paintMute() { muteBtn.textContent = AudioFX.isMuted() ? '🔇' : '🔊'; }
+  muteBtn.addEventListener('click', function () { AudioFX.toggle(); paintMute(); });
+  paintMute();
+
+  var canvas = document.getElementById('game');
+  var g = canvas.getContext('2d');
+  var stage = document.getElementById('stage');
+  var W = 0, H = 0, DPR = 1;
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = stage.clientWidth; H = stage.clientHeight;
+    canvas.width = W * DPR; canvas.height = H * DPR;
+    g.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var PADDLE_W = 86, PADDLE_H = 12, WIN = 5;
+  var running = false, raf = 0, lastT = 0, serveDelay = 0;
+  var px, ex, ball, pScore, eScore;
+
+  function newBall(towardPlayer) {
+    var ang = (Math.random() * 0.6 - 0.3) + (towardPlayer ? Math.PI / 2 : -Math.PI / 2);
+    var sp = 260;
+    ball = { x: W / 2, y: H / 2, vx: Math.sin(ang) * sp, vy: Math.cos(ang) * sp * (towardPlayer ? 1 : -1), r: 9, speed: sp };
+    /* normalize: ensure vertical dominance */
+    ball.vy = (towardPlayer ? 1 : -1) * Math.max(Math.abs(ball.vy), sp * 0.7);
+  }
+
+  function reset() {
+    px = W / 2; ex = W / 2;
+    pScore = 0; eScore = 0;
+    document.getElementById('pScore').textContent = '0';
+    document.getElementById('eScore').textContent = '0';
+    newBall(Math.random() < 0.5);
+    serveDelay = 0.8;
+  }
+
+  function update(dt) {
+    if (serveDelay > 0) { serveDelay -= dt; return; }
+
+    ball.x += ball.vx * dt;
+    ball.y += ball.vy * dt;
+
+    if (ball.x < ball.r) { ball.x = ball.r; ball.vx *= -1; AudioFX.wall(); }
+    if (ball.x > W - ball.r) { ball.x = W - ball.r; ball.vx *= -1; AudioFX.wall(); }
+
+    var py = H - 30, ey = 30;
+
+    /* player paddle */
+    if (ball.vy > 0 && ball.y + ball.r >= py - PADDLE_H / 2 && ball.y + ball.r <= py + PADDLE_H && Math.abs(ball.x - px) < PADDLE_W / 2 + ball.r) {
+      ball.vy = -Math.abs(ball.vy);
+      var off = (ball.x - px) / (PADDLE_W / 2);
+      ball.vx += off * 160;
+      ball.speed = Math.min(ball.speed + 14, 520);
+      scaleSpeed();
+      AudioFX.hit();
+    }
+    /* elf paddle */
+    if (ball.vy < 0 && ball.y - ball.r <= ey + PADDLE_H / 2 && ball.y - ball.r >= ey - PADDLE_H && Math.abs(ball.x - ex) < PADDLE_W / 2 + ball.r) {
+      ball.vy = Math.abs(ball.vy);
+      var off2 = (ball.x - ex) / (PADDLE_W / 2);
+      ball.vx += off2 * 120;
+      scaleSpeed();
+      AudioFX.hit();
+    }
+
+    /* elf AI — imperfect tracking */
+    var target = ball.vy < 0 ? ball.x : W / 2;
+    var maxV = 190 + pScore * 18;
+    var diff = target - ex;
+    ex += Math.max(-maxV * dt, Math.min(maxV * dt, diff));
+
+    /* scoring */
+    if (ball.y > H + 20) {
+      eScore += 1;
+      document.getElementById('eScore').textContent = String(eScore);
+      AudioFX.lose();
+      if (eScore >= WIN) return end(false);
+      newBall(false); serveDelay = 0.8;
+    } else if (ball.y < -20) {
+      pScore += 1;
+      document.getElementById('pScore').textContent = String(pScore);
+      AudioFX.point();
+      if (pScore >= WIN) return end(true);
+      newBall(true); serveDelay = 0.8;
+    }
+  }
+
+  function scaleSpeed() {
+    var mag = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+    ball.vx = ball.vx / mag * ball.speed;
+    ball.vy = ball.vy / mag * ball.speed;
+    if (Math.abs(ball.vy) < ball.speed * 0.45) {
+      ball.vy = (ball.vy < 0 ? -1 : 1) * ball.speed * 0.45;
+      ball.vx = (ball.vx < 0 ? -1 : 1) * Math.sqrt(ball.speed * ball.speed - ball.vy * ball.vy);
+    }
+  }
+
+  function drawPaddle(x, y) {
+    var seg = PADDLE_W / 6;
+    for (var i = 0; i < 6; i++) {
+      g.fillStyle = i % 2 === 0 ? '#e63946' : '#f5f7fa';
+      g.fillRect(x - PADDLE_W / 2 + i * seg, y - PADDLE_H / 2, seg, PADDLE_H);
+    }
+  }
+
+  function draw() {
+    g.clearRect(0, 0, W, H);
+    /* center line */
+    g.strokeStyle = 'rgba(255,209,102,0.35)';
+    g.setLineDash([8, 10]);
+    g.beginPath();
+    g.moveTo(0, H / 2); g.lineTo(W, H / 2);
+    g.stroke();
+    g.setLineDash([]);
+    /* paddles */
+    drawPaddle(px, H - 30);
+    drawPaddle(ex, 30);
+    g.font = '22px serif';
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('🧝', ex, 12);
+    /* snowball */
+    g.fillStyle = '#ffffff';
+    g.beginPath();
+    g.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+    g.fill();
+    g.fillStyle = 'rgba(180,200,255,0.6)';
+    g.beginPath();
+    g.arc(ball.x - 3, ball.y - 3, 3, 0, Math.PI * 2);
+    g.fill();
+  }
+
+  function loop(t) {
+    if (!running) return;
+    var dt = Math.min((t - lastT) / 1000, 0.04);
+    lastT = t;
+    update(dt);
+    if (running) draw();
+    raf = requestAnimationFrame(loop);
+  }
+
+  function start() {
+    reset();
+    running = true;
+    lastT = performance.now();
+    document.getElementById('startOverlay').classList.add('hidden');
+    document.getElementById('gameOverOverlay').classList.add('hidden');
+    raf = requestAnimationFrame(loop);
+  }
+
+  function end(won) {
+    running = false;
+    cancelAnimationFrame(raf);
+    document.getElementById('overTitle').textContent = won ? '🎉 You Win!' : '🧝 Elf Wins!';
+    document.getElementById('overText').textContent = 'Final score ' + pScore + ' — ' + eScore + (won ? '. Santa is proud!' : '. Rematch?');
+    document.getElementById('gameOverOverlay').classList.remove('hidden');
+  }
+
+  function moveTo(clientX) {
+    var r = stage.getBoundingClientRect();
+    px = Math.max(PADDLE_W / 2, Math.min(W - PADDLE_W / 2, clientX - r.left));
+  }
+  stage.addEventListener('touchstart', function (e) { AudioFX.unlock(); moveTo(e.touches[0].clientX); }, { passive: true });
+  stage.addEventListener('touchmove', function (e) { moveTo(e.touches[0].clientX); e.preventDefault(); }, { passive: false });
+  stage.addEventListener('mousemove', function (e) { moveTo(e.clientX); });
+
+  document.getElementById('startBtn').addEventListener('click', function () { AudioFX.unlock(); start(); });
+  document.getElementById('restartBtn').addEventListener('click', function () { AudioFX.unlock(); start(); });
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && running) {
+      running = false;
+      cancelAnimationFrame(raf);
+      document.getElementById('startOverlay').classList.remove('hidden');
+    }
+  });
+})();
+</script>
+</body>
+</html>
