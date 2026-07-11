@@ -25,14 +25,30 @@
         }
     }
 
-    function songTitle(el) {
-        if (!el) return '';
-        var source = el;
-        var titleCell = el.querySelector ? el.querySelector('.cell-vote-playlist') : null;
-        if (titleCell) source = titleCell;
-        var clone = source.cloneNode(true);
+    function stripNoise(root) {
+        if (!root || !root.querySelectorAll) return;
+        root.querySelectorAll('.lcl-song-tags, .jukebox-list-artist, .cell-vote-playlist-artist, .sequence-image').forEach(function (n) {
+            n.remove();
+        });
+    }
+
+    function songTitle(row) {
+        if (!row) return '';
+
+        var titleCell = row.querySelector ? row.querySelector(':scope > .cell-vote-playlist') : null;
+        if (!titleCell && row.matches && row.matches('.cell-vote-playlist')) {
+            titleCell = row;
+        }
+        if (titleCell) {
+            var titled = titleCell.cloneNode(true);
+            stripNoise(titled);
+            return (titled.textContent || '').replace(/\s+/g, ' ').trim();
+        }
+
+        var clone = row.cloneNode(true);
+        stripNoise(clone);
         if (clone.querySelectorAll) {
-            clone.querySelectorAll('.lcl-song-tags, .jukebox-list-artist, .cell-vote-playlist-artist, .sequence-image').forEach(function (n) {
+            clone.querySelectorAll('.jukebox-queue, .next-up, .playing-now, .rf-titles, .queue-size, .queue-size-caption').forEach(function (n) {
                 n.remove();
             });
         }
@@ -43,7 +59,7 @@
         if (!el) return '';
         var key = el.getAttribute('data-key');
         if (key) return key;
-        var inner = el.querySelector ? el.querySelector('[data-key]') : null;
+        var inner = el.querySelector ? el.querySelector(':scope > [data-key], :scope > .cell-vote-playlist[data-key]') : null;
         return inner ? inner.getAttribute('data-key') || '' : '';
     }
 
@@ -51,6 +67,13 @@
         var artist = target.querySelector('.jukebox-list-artist, .cell-vote-playlist-artist');
         if (artist) target.insertBefore(wrap, artist);
         else target.appendChild(wrap);
+    }
+
+    function clearTags(row) {
+        if (!row || !row.querySelectorAll) return;
+        row.querySelectorAll('.lcl-song-tags--queue').forEach(function (n) {
+            n.remove();
+        });
     }
 
     function decorateRow(row) {
@@ -65,20 +88,24 @@
         if (!inQueue && !isNextUp && !isPlaying) return;
         if (inQueue && !isQueueRow) return;
 
+        clearTags(row);
+
         var title = dataKey(row) || songTitle(row);
         if (!title || title.indexOf('{') !== -1) return;
+
         var tagId = TAG_LOOKUP[norm(title)];
-        if (!tagId || row.querySelector('.lcl-song-tags')) return;
+        if (!tagId) return;
 
         var meta = TAG_META[tagId];
         var wrap = document.createElement('span');
         wrap.className = 'lcl-song-tags lcl-song-tags--queue';
+        wrap.setAttribute('data-lcl-tag', meta.text);
         var span = document.createElement('span');
         span.className = 'lcl-song-tag ' + meta.cls;
         span.textContent = meta.text;
         wrap.appendChild(span);
 
-        var target = row.querySelector('.cell-vote-playlist') || row;
+        var target = row.querySelector(':scope > .cell-vote-playlist') || row;
         insertTag(target, wrap);
     }
 
