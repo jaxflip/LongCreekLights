@@ -102,15 +102,23 @@
         }
     }
 
-    function readNowPlayingRoot(id) {
-        return document.getElementById(id);
+    function visibleCard(selector) {
+        var card = document.querySelector(selector);
+        if (!card) return null;
+        var style = window.getComputedStyle(card);
+        if (style.display === 'none' || style.visibility === 'hidden') return null;
+        return card;
+    }
+
+    function activeCard() {
+        return visibleCard('.lcl-now-card-jukebox') || visibleCard('.lcl-now-card-vote');
     }
 
     function readSongTitle(el) {
         if (!el) return null;
-        var titleEl = el.querySelector('.cell-vote-playlist');
+        var titleEl = el.querySelector('.cell-vote-playlist, .jukebox-list');
         var text = titleEl ? (titleEl.textContent || '') : (el.textContent || '');
-        text = text.trim();
+        text = text.replace(/\s+/g, ' ').trim();
         if (!text || text.indexOf('{') !== -1) return null;
         return text;
     }
@@ -138,8 +146,7 @@
         return ART_BASE + name.replace(/ /g, '%20') + '.jpg';
     }
 
-    function applyArt(id, url) {
-        var img = document.getElementById(id);
+    function applyArt(img, url) {
         if (!img) return;
         if (!url) {
             img.removeAttribute('src');
@@ -158,14 +165,17 @@
 
     var lastSong = null;
 
-    function tick() {
-        var nowEl = readNowPlayingRoot('lclNowPlaying') || readNowPlayingRoot('lclNowPlayingVote');
-        var song = readSongTitle(nowEl);
+    function refresh() {
+        var card = activeCard();
+        if (!card) return;
+
+        var nowEl = card.querySelector('.lcl-now-playing');
+        var artImg = card.querySelector('.lcl-now-art');
         var injected = readInjectedArt(nowEl);
+        var song = readSongTitle(nowEl);
         var url = injected || (song ? artUrl(song) : null);
 
-        applyArt('lclNowArt', url);
-        applyArt('lclNowArtVote', url);
+        applyArt(artImg, url);
 
         if (song && song !== lastSong) {
             lastSong = song;
@@ -175,6 +185,22 @@
         }
     }
 
-    tick();
-    setInterval(tick, 2000);
+    function watch(el) {
+        if (!el || el.__lclArtWatch) return;
+        el.__lclArtWatch = true;
+        var obs = new MutationObserver(refresh);
+        obs.observe(el, { childList: true, subtree: true, characterData: true });
+    }
+
+    function init() {
+        document.querySelectorAll('.lcl-now-playing').forEach(watch);
+        refresh();
+        setInterval(refresh, 2500);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 })();
