@@ -49,15 +49,26 @@
 
     function rowEl(el) {
         if (!el) return null;
-        if (el.classList && (el.classList.contains('jukebox-list') || el.classList.contains('cell-vote-playlist'))) {
+        if (el.classList && (el.classList.contains('jukebox-list') || el.classList.contains('cell-vote-playlist') || el.classList.contains('jukebox-queue'))) {
             return el;
         }
-        return el.closest ? el.closest('.jukebox-list, .cell-vote-playlist') : null;
+        return el.closest ? el.closest('.jukebox-list, .cell-vote-playlist, .jukebox-queue') : null;
+    }
+
+    function queueTitleEl(row) {
+        if (!row) return null;
+        if (row.classList && row.classList.contains('cell-vote-playlist')) return row;
+        return row.querySelector ? row.querySelector('.cell-vote-playlist') : null;
     }
 
     function songTitle(el) {
         if (!el) return '';
-        var clone = el.cloneNode(true);
+        var source = el;
+        if (el.classList && el.classList.contains('jukebox-queue')) {
+            var titleCell = queueTitleEl(el);
+            if (titleCell) source = titleCell;
+        }
+        var clone = source.cloneNode(true);
         if (clone.querySelectorAll) {
             clone.querySelectorAll('.lcl-song-tags, .jukebox-list-artist, .cell-vote-playlist-artist, .sequence-image, .cell-vote').forEach(function (n) {
                 n.remove();
@@ -86,18 +97,30 @@
     function decorateTags(el) {
         var row = rowEl(el);
         if (shouldSkip(row)) return;
-        if (dataKey(row)) return;
-        var title = songTitle(row);
+        var inQueue = isQueueRow(row);
+        if (!inQueue && dataKey(row)) return;
+        var title = dataKey(row) || songTitle(row);
         if (!title || title.indexOf('{') !== -1) return;
         var tagId = TAG_LOOKUP[norm(title)];
-        if (!tagId || row.querySelector('.lcl-song-tags')) return;
+        if (!tagId) return;
+        var target = row;
+        if (inQueue) {
+            target = queueTitleEl(row) || row;
+            if (target.querySelector('.lcl-song-tags')) return;
+        } else if (row.querySelector('.lcl-song-tags')) {
+            return;
+        }
         var meta = TAG_META[tagId];
         var wrap = doc.createElement('span');
-        wrap.className = 'lcl-song-tags';
+        wrap.className = inQueue ? 'lcl-song-tags lcl-song-tags--queue' : 'lcl-song-tags';
         var span = doc.createElement('span');
         span.className = 'lcl-song-tag ' + meta.cls;
         span.textContent = meta.text;
         wrap.appendChild(span);
+        if (inQueue) {
+            target.appendChild(wrap);
+            return;
+        }
         var img = row.querySelector('.sequence-image');
         if (img && img.nextSibling) row.insertBefore(wrap, img.nextSibling);
         else if (img) row.appendChild(wrap);
@@ -250,8 +273,8 @@
             doc.querySelectorAll(
                 '#playlists_container .jukebox-list, #playlists_container [data-key], ' +
                 '.rtable:not(.vote-header) .cell-vote-playlist, .rtable:not(.vote-header) [data-key], ' +
-                '#lclNowCard .jukebox-queue-container .cell-vote-playlist, #lclNowCard .jukebox-queue .cell-vote-playlist, ' +
-                '#lclNowCard .jukebox-queue-container [data-key], #lclNowCard .jukebox-queue [data-key]'
+                '#lclNowCard .jukebox-queue-container .jukebox-queue, #lclNowCard .jukebox-queue-container .cell-vote-playlist, ' +
+                '#lclNowCard .jukebox-queue-container [data-key]'
             ).forEach(decorateTags);
         } catch (e) { /* ignore */ }
     }
@@ -279,6 +302,8 @@
             doc.querySelectorAll('.rtable').forEach(function (rt) { watchRoot(rt, bootstrap); });
             var analytics = doc.querySelector('.lcl-analytics-card');
             if (analytics) watchRoot(analytics, bootstrap);
+            var queueContainer = doc.querySelector('#lclNowCard .jukebox-queue-container');
+            if (queueContainer) watchRoot(queueContainer, bootstrap);
             if (doc.body) watchRoot(doc.body, bootstrap);
             bootstrap();
             setInterval(bootstrap, 2000);
