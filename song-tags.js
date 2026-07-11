@@ -12,23 +12,11 @@
 
     /* Edit each season — keys must match RF sequence names (Title Case). */
     var SONG_TAGS = {
-        'Six Seven Christmas': ['new'],
-        'Christmas Tree Farm': ['new'],
-        'Kid on Christmas': ['new'],
-        'All I Want For Christmas is You': ['favorite', 'top'],
-        'Wizards in Winter': ['favorite', 'top'],
-        'Blinding Lights': ['top'],
-        'Uptown Funk': ['top'],
-        'Believer': ['top'],
-        'The Greatest Showman': ['favorite'],
-        'Harry Potter': ['favorite'],
-        'Carol Of The Bells': ['favorite'],
-        'Sleigh Ride by Pentatonix V1': ['favorite'],
-        'Encanto Compilation V1': ['favorite'],
-        'Danger Zone': ['favorite'],
-        'A Mad Russians Christmas': ['favorite'],
-        'Star Wars Suite': ['favorite'],
-        'Underneath the Tree': ['top']
+        'Sounding Joy': ['new'],
+        'He Shall Reign Forevermore': ['new'],
+        'Star Wars Funk': ['favorite'],
+        'Believer': ['favorite'],
+        'Little Drummer Boy by For King and Country': ['top']
     };
 
     var LOOKUP = {};
