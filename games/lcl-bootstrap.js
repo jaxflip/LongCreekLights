@@ -14,6 +14,14 @@
         return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
     }
 
+    function cleanTitle(s) {
+        return String(s || '').replace(/\s+/g, ' ').trim();
+    }
+
+    function canonicalTitle(s) {
+        return cleanTitle(s).replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
     function songAnchorId(key) {
         return 'lcl-song-' + norm(key);
     }
@@ -26,15 +34,31 @@
     var SONG_TAGS = {
         'Sounding Joy': 1,
         'He Shall Reign Forevermore': 1,
+        'He Shall Reign Forevermore (Live)': 1,
         'Star Wars Funk': 2,
         'Believer': 2,
         'All I Want For Christmas is You': 3
     };
-    var TAG_LOOKUP = {};
-    for (var t in SONG_TAGS) {
-        if (Object.prototype.hasOwnProperty.call(SONG_TAGS, t)) {
-            TAG_LOOKUP[norm(t)] = SONG_TAGS[t];
+    var TAG_KEYS = [];
+    var t;
+    for (t in SONG_TAGS) {
+        if (Object.prototype.hasOwnProperty.call(SONG_TAGS, t)) TAG_KEYS.push(t);
+    }
+    TAG_KEYS.sort(function (a, b) { return b.length - a.length; });
+
+    function tagIdForTitle(title) {
+        var raw = cleanTitle(title);
+        if (!raw || raw.indexOf('{') !== -1) return 0;
+        var nk = norm(raw);
+        var canon = norm(canonicalTitle(raw));
+        var i, key, nkKey;
+        for (i = 0; i < TAG_KEYS.length; i++) {
+            key = TAG_KEYS[i];
+            nkKey = norm(key);
+            if (nk === nkKey || canon === nkKey) return SONG_TAGS[key];
+            if (nk.indexOf(nkKey) === 0 || canon.indexOf(nkKey) === 0) return SONG_TAGS[key];
         }
+        return 0;
     }
 
     function dataKey(el) {
@@ -52,7 +76,7 @@
         if (el.classList && (el.classList.contains('jukebox-list') || el.classList.contains('cell-vote-playlist') || el.classList.contains('jukebox-queue'))) {
             return el;
         }
-        return el.closest ? el.closest('.jukebox-list, .cell-vote-playlist, .jukebox-queue') : null;
+        return el.closest ? el.closest('.jukebox-list, .cell-vote-playlist, .jukebox-queue, .playing-now, .next-up') : null;
     }
 
     function queueTitleEl(row) {
@@ -64,8 +88,8 @@
     function songTitle(el) {
         if (!el) return '';
         var source = el;
-        if (el.classList && el.classList.contains('jukebox-queue')) {
-            var titleCell = queueTitleEl(el);
+        if (el.classList && (el.classList.contains('jukebox-queue') || el.classList.contains('playing-now') || el.classList.contains('next-up'))) {
+            var titleCell = queueTitleEl(el) || el.querySelector('.jukebox-list, .cell-vote-playlist');
             if (titleCell) source = titleCell;
         }
         var clone = source.cloneNode(true);
@@ -74,57 +98,73 @@
                 n.remove();
             });
         }
-        return (clone.textContent || '').replace(/\s+/g, ' ').trim();
+        return cleanTitle(clone.textContent);
     }
 
     function isQueueRow(el) {
-        return !!(el && el.closest && (el.closest('.jukebox-queue-container') || el.closest('.jukebox-queue')));
+        return !!(el && el.closest && (el.closest('.jukebox-queue-container') || el.classList && el.classList.contains('jukebox-queue')));
+    }
+
+    function isNowCardRow(el) {
+        if (!el || !el.closest) return false;
+        if (!el.closest('#lclNowCard')) return false;
+        if (el.classList && (el.classList.contains('playing-now') || el.classList.contains('next-up') || el.classList.contains('jukebox-queue'))) {
+            return true;
+        }
+        return isQueueRow(el);
     }
 
     function shouldSkip(el) {
         if (!el) return true;
         if (el.closest && el.closest('.vote-header')) return true;
-        if (el.closest && el.closest('#lclNowCard')) {
-            if (el.closest('.playing-now') || el.closest('.next-up')) return true;
-            if (!isQueueRow(el)) return true;
-        }
+        if (el.closest && el.closest('#lclNowCard') && !isNowCardRow(el)) return true;
         if (el.classList && (el.classList.contains('jukebox-list-artist') || el.classList.contains('cell-vote-playlist-artist'))) {
             return true;
         }
+        if (el.classList && el.classList.contains('lcl-bootstrap-loader')) return true;
         return false;
+    }
+
+    function insertTagWrap(target, wrap, inNowCard) {
+        if (target.querySelector('.lcl-song-tags')) return;
+        if (inNowCard) {
+            var artist = target.querySelector('.jukebox-list-artist, .cell-vote-playlist-artist');
+            if (artist) target.insertBefore(wrap, artist);
+            else target.appendChild(wrap);
+            return;
+        }
+        var img = target.querySelector('.sequence-image');
+        if (img && img.nextSibling) target.insertBefore(wrap, img.nextSibling);
+        else if (img) target.appendChild(wrap);
+        else target.insertBefore(wrap, target.firstChild);
     }
 
     function decorateTags(el) {
         var row = rowEl(el);
         if (shouldSkip(row)) return;
-        var inQueue = isQueueRow(row);
-        if (!inQueue && dataKey(row)) return;
+
+        var inNowCard = isNowCardRow(row);
+        if (!inNowCard && dataKey(row)) return;
+
         var title = dataKey(row) || songTitle(row);
-        if (!title || title.indexOf('{') !== -1) return;
-        var tagId = TAG_LOOKUP[norm(title)];
+        var tagId = tagIdForTitle(title);
         if (!tagId) return;
+
         var target = row;
-        if (inQueue) {
+        if (inNowCard) {
             target = queueTitleEl(row) || row;
-            if (target.querySelector('.lcl-song-tags')) return;
-        } else if (row.querySelector('.lcl-song-tags')) {
-            return;
         }
+        if (target.querySelector('.lcl-song-tags')) return;
+
         var meta = TAG_META[tagId];
         var wrap = doc.createElement('span');
-        wrap.className = inQueue ? 'lcl-song-tags lcl-song-tags--queue' : 'lcl-song-tags';
+        wrap.className = inNowCard ? 'lcl-song-tags lcl-song-tags--queue' : 'lcl-song-tags';
+        wrap.setAttribute('data-lcl-tag', '1');
         var span = doc.createElement('span');
         span.className = 'lcl-song-tag ' + meta.cls;
         span.textContent = meta.text;
         wrap.appendChild(span);
-        if (inQueue) {
-            target.appendChild(wrap);
-            return;
-        }
-        var img = row.querySelector('.sequence-image');
-        if (img && img.nextSibling) row.insertBefore(wrap, img.nextSibling);
-        else if (img) row.appendChild(wrap);
-        else row.insertBefore(wrap, row.firstChild);
+        insertTagWrap(target, wrap, inNowCard);
     }
 
     function findSong(key) {
@@ -273,8 +313,7 @@
             doc.querySelectorAll(
                 '#playlists_container .jukebox-list, #playlists_container [data-key], ' +
                 '.rtable:not(.vote-header) .cell-vote-playlist, .rtable:not(.vote-header) [data-key], ' +
-                '#lclNowCard .jukebox-queue-container .jukebox-queue, #lclNowCard .jukebox-queue-container .cell-vote-playlist, ' +
-                '#lclNowCard .jukebox-queue-container [data-key]'
+                '#lclNowCard .playing-now, #lclNowCard .next-up, #lclNowCard .jukebox-queue-container .jukebox-queue'
             ).forEach(decorateTags);
         } catch (e) { /* ignore */ }
     }
@@ -285,10 +324,19 @@
         refreshArt();
     }
 
-    function watchRoot(root, fn) {
+    var bootTimer = 0;
+    function scheduleBootstrap() {
+        if (bootTimer) clearTimeout(bootTimer);
+        bootTimer = setTimeout(function () {
+            bootTimer = 0;
+            bootstrap();
+        }, 60);
+    }
+
+    function watchRoot(root) {
         if (!root || root.__lclWatch) return;
         root.__lclWatch = true;
-        new win.MutationObserver(fn).observe(root, { childList: true, subtree: true, characterData: true });
+        new win.MutationObserver(scheduleBootstrap).observe(root, { childList: true, subtree: true });
     }
 
     function init() {
@@ -298,15 +346,14 @@
                 doc.addEventListener('click', onCrowdFavoriteClick, true);
             }
             var playlist = doc.getElementById('playlists_container');
-            if (playlist) watchRoot(playlist, bootstrap);
-            doc.querySelectorAll('.rtable').forEach(function (rt) { watchRoot(rt, bootstrap); });
+            if (playlist) watchRoot(playlist);
+            doc.querySelectorAll('.rtable').forEach(watchRoot);
             var analytics = doc.querySelector('.lcl-analytics-card');
-            if (analytics) watchRoot(analytics, bootstrap);
-            var queueContainer = doc.querySelector('#lclNowCard .jukebox-queue-container');
-            if (queueContainer) watchRoot(queueContainer, bootstrap);
-            if (doc.body) watchRoot(doc.body, bootstrap);
+            if (analytics) watchRoot(analytics);
+            var nowCard = doc.getElementById('lclNowCard');
+            if (nowCard) watchRoot(nowCard);
             bootstrap();
-            setInterval(bootstrap, 2000);
+            setInterval(bootstrap, 3000);
         } catch (e) { /* ignore */ }
     }
 
