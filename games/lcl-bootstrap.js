@@ -66,10 +66,17 @@
         return (clone.textContent || '').replace(/\s+/g, ' ').trim();
     }
 
+    function isQueueRow(el) {
+        return !!(el && el.closest && (el.closest('.jukebox-queue-container') || el.closest('.jukebox-queue')));
+    }
+
     function shouldSkip(el) {
         if (!el) return true;
         if (el.closest && el.closest('.vote-header')) return true;
-        if (el.closest && el.closest('#lclNowCard')) return true;
+        if (el.closest && el.closest('#lclNowCard')) {
+            if (el.closest('.playing-now') || el.closest('.next-up')) return true;
+            if (!isQueueRow(el)) return true;
+        }
         if (el.classList && (el.classList.contains('jukebox-list-artist') || el.classList.contains('cell-vote-playlist-artist'))) {
             return true;
         }
@@ -240,7 +247,12 @@
 
     function scanTags() {
         try {
-            doc.querySelectorAll('#playlists_container .jukebox-list, #playlists_container [data-key], .rtable:not(.vote-header) .cell-vote-playlist, .rtable:not(.vote-header) [data-key]').forEach(decorateTags);
+            doc.querySelectorAll(
+                '#playlists_container .jukebox-list, #playlists_container [data-key], ' +
+                '.rtable:not(.vote-header) .cell-vote-playlist, .rtable:not(.vote-header) [data-key], ' +
+                '#lclNowCard .jukebox-queue-container .cell-vote-playlist, #lclNowCard .jukebox-queue .cell-vote-playlist, ' +
+                '#lclNowCard .jukebox-queue-container [data-key], #lclNowCard .jukebox-queue [data-key]'
+            ).forEach(decorateTags);
         } catch (e) { /* ignore */ }
     }
 
