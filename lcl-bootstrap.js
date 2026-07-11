@@ -1,35 +1,85 @@
 (function () {
     'use strict';
 
-    var win = (window.parent && window.parent !== window) ? window.parent : window;
-    var doc = win.document;
+    var win = window;
+    var doc = document;
+    try {
+        if (window.parent && window.parent !== window && window.parent.document) {
+            win = window.parent;
+            doc = win.document;
+        }
+    } catch (e) { /* ignore */ }
+
+    var ART_BASE = 'https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/';
+
+    /* LCL_ART_MAP_START */
+var ART_MAP = {};
+var ART_JSON_URL = 'https://jaxflip.github.io/LongCreekLights/song-art-urls.json';
+/* LCL_ART_MAP_END */
+
+    var SONG_TAGS = {
+        'Sounding Joy': 'new',
+        'He Shall Reign Forevermore': 'new',
+        'He Shall Reign Forevermore (Live)': 'new',
+        'Star Wars Funk': 'favorite',
+        'Believer': 'favorite',
+        'All I Want For Christmas is You': 'top'
+    };
+    var TAG_KEYS = [];
+    var tk;
+    for (tk in SONG_TAGS) {
+        if (Object.prototype.hasOwnProperty.call(SONG_TAGS, tk)) TAG_KEYS.push(tk);
+    }
+    TAG_KEYS.sort(function (a, b) { return b.length - a.length; });
+
+    var QUEUE_GUARD_MS = 2500;
 
     function norm(s) {
         return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
     }
 
-    function songAnchor(key) {
-        return 'lcl-song-' + norm(key);
+    function cleanTitle(s) {
+        return String(s || '').replace(/\s+/g, ' ').trim();
     }
 
-    /* ---- Song tags (fallback when CSS data-key rules miss) ---- */
-    var TAG_META = {
-        1: { cls: 'lcl-song-tag--new', label: 'New', text: 'New' },
-        2: { cls: 'lcl-song-tag--favorite', label: 'Favorite', text: 'Favorite' },
-        3: { cls: 'lcl-song-tag--top', label: 'Top Voted', text: 'Top Voted' }
-    };
-    var SONG_TAGS = {
-        'Sounding Joy': 1,
-        'He Shall Reign Forevermore': 1,
-        'Star Wars Funk': 2,
-        'Believer': 2,
-        'All I Want For Christmas is You': 3
-    };
-    var TAG_LOOKUP = {};
-    for (var t in SONG_TAGS) {
-        if (Object.prototype.hasOwnProperty.call(SONG_TAGS, t)) {
-            TAG_LOOKUP[norm(t)] = SONG_TAGS[t];
+    function canonicalTitle(s) {
+        return cleanTitle(s).replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    function tagKindForTitle(title) {
+        var raw = cleanTitle(title);
+        if (!raw || raw.indexOf('{') !== -1) return '';
+        var nk = norm(raw);
+        var canon = norm(canonicalTitle(raw));
+        var i, key, nkKey;
+        for (i = 0; i < TAG_KEYS.length; i++) {
+            key = TAG_KEYS[i];
+            nkKey = norm(key);
+            if (nk === nkKey || canon === nkKey) return SONG_TAGS[key];
+            if (nk.indexOf(nkKey) === 0 || canon.indexOf(nkKey) === 0) return SONG_TAGS[key];
         }
+        return '';
+    }
+
+    function mapLookup(title) {
+        var key = norm(title);
+        if (!key) return null;
+        if (ART_MAP[key]) return ART_MAP[key];
+        var canon = norm(canonicalTitle(title));
+        return canon && ART_MAP[canon] ? ART_MAP[canon] : null;
+    }
+
+    function excelArtUrls(title) {
+        var entry = mapLookup(title);
+        if (!entry) return [];
+        var out = [];
+        if (entry.rf) out.push(entry.rf);
+        if (entry.gh) out.push(entry.gh);
+        return out;
+    }
+
+    function songAnchorId(key) {
+        return 'lcl-song-' + norm(key);
     }
 
     function dataKey(el) {
@@ -50,71 +100,43 @@
         return el.closest ? el.closest('.jukebox-list, .cell-vote-playlist') : null;
     }
 
+    function stripNoise(root) {
+        if (!root || !root.querySelectorAll) return;
+        root.querySelectorAll('.lcl-song-tags, .jukebox-list-artist, .cell-vote-playlist-artist, .sequence-image, .lcl-injected-art, .cell-vote').forEach(function (n) {
+            n.remove();
+        });
+    }
+
     function songTitle(el) {
         if (!el) return '';
         var clone = el.cloneNode(true);
-        if (clone.querySelectorAll) {
-            clone.querySelectorAll('.lcl-song-tags, .jukebox-list-artist, .cell-vote-playlist-artist, .sequence-image, .cell-vote').forEach(function (n) {
-                n.remove();
-            });
-        }
-        return (clone.textContent || '').replace(/\s+/g, ' ').trim();
+        stripNoise(clone);
+        return cleanTitle(clone.textContent);
     }
 
-    function shouldSkipTag(el) {
+    function titlesMatch(a, b) {
+        var na = norm(a);
+        var nb = norm(b);
+        if (!na || !nb) return false;
+        if (na === nb) return true;
+        if (norm(canonicalTitle(a)) === norm(canonicalTitle(b))) return true;
+        return na.indexOf(nb) === 0 || nb.indexOf(na) === 0;
+    }
+
+    function shouldSkip(el) {
         if (!el) return true;
         if (el.closest && el.closest('.vote-header')) return true;
         if (el.closest && el.closest('#lclNowCard')) return true;
         if (el.classList && (el.classList.contains('jukebox-list-artist') || el.classList.contains('cell-vote-playlist-artist'))) {
             return true;
         }
+        if (el.classList && el.classList.contains('lcl-bootstrap-loader')) return true;
         return false;
     }
 
-    function decorateTags(el) {
-        var row = rowEl(el);
-        if (shouldSkipTag(row)) return;
-        if (dataKey(row)) return;
-        var title = songTitle(row);
-        if (!title || title.indexOf('{') !== -1) return;
-        var tagId = TAG_LOOKUP[norm(title)];
-        if (!tagId || row.querySelector('.lcl-song-tags')) return;
-        var meta = TAG_META[tagId];
-        var wrap = doc.createElement('span');
-        wrap.className = 'lcl-song-tags';
-        var span = doc.createElement('span');
-        span.className = 'lcl-song-tag ' + meta.cls;
-        span.textContent = meta.text;
-        wrap.appendChild(span);
-        var img = row.querySelector('.sequence-image');
-        if (img && img.nextSibling) row.insertBefore(wrap, img.nextSibling);
-        else if (img) row.appendChild(wrap);
-        else row.insertBefore(wrap, row.firstChild);
-    }
-
-    function scanTags() {
-        try {
-            doc.querySelectorAll('#playlists_container .jukebox-list, #playlists_container [data-key], .rtable:not(.vote-header) .cell-vote-playlist, .rtable:not(.vote-header) [data-key]').forEach(decorateTags);
-        } catch (e) { /* ignore */ }
-    }
-
-    /* ---- Anchor IDs on jukebox rows (scroll target for Crowd Favorites links) ---- */
-    function ensureSongAnchors() {
-        try {
-            doc.querySelectorAll('#playlists_container .jukebox-list, .rtable:not(.vote-header) .cell-vote-playlist').forEach(function (el) {
-                var row = rowEl(el);
-                if (!row || shouldSkipTag(row)) return;
-                var key = dataKey(row) || songTitle(row);
-                if (!key || key.indexOf('{') !== -1) return;
-                var id = songAnchor(key);
-                if (!row.id) row.id = id;
-            });
-        } catch (e) { /* ignore */ }
-    }
-
-    /* ---- Find jukebox / vote row for a song key ---- */
     function findSong(key) {
         var nk = norm(key);
+        var canon = norm(canonicalTitle(key));
         if (!nk) return null;
 
         var selectors = [
@@ -127,137 +149,118 @@
         for (i = 0; i < selectors.length; i++) {
             el = doc.querySelector(selectors[i]);
             row = rowEl(el);
-            if (row && !shouldSkipTag(row)) return row;
+            if (row && !shouldSkip(row)) return row;
         }
 
         var lists = doc.querySelectorAll('#playlists_container .jukebox-list, .rtable:not(.vote-header) .cell-vote-playlist');
         for (i = 0; i < lists.length; i++) {
             row = rowEl(lists[i]);
-            if (!row || shouldSkipTag(row)) continue;
-            if (norm(dataKey(row)) === nk) return row;
-            if (norm(songTitle(row)) === nk) return row;
+            if (!row || shouldSkip(row)) continue;
+            if (norm(dataKey(row)) === nk || norm(dataKey(row)) === canon) return row;
+            if (titlesMatch(songTitle(row), key)) return row;
         }
         return null;
     }
 
-    function flashTarget(el) {
-        doc.querySelectorAll('.lcl-queue-flash').forEach(function (x) {
-            x.classList.remove('lcl-queue-flash');
-        });
-        if (el) {
-            el.classList.add('lcl-queue-flash');
-            setTimeout(function () {
-                el.classList.remove('lcl-queue-flash');
-            }, 3200);
+    function playlistArtUrl(title) {
+        var row = findSong(title);
+        if (!row) return '';
+        var img = row.querySelector('.sequence-image');
+        return img && img.src ? img.src : '';
+    }
+
+    function githubArtUrl(title) {
+        return ART_BASE + title.replace(/ /g, '%20') + '.jpg';
+    }
+
+    function artUrlCandidates(title) {
+        var seen = {};
+        var out = [];
+        function add(url) {
+            if (!url || seen[url]) return;
+            seen[url] = 1;
+            out.push(url);
+        }
+        excelArtUrls(title).forEach(add);
+        add(playlistArtUrl(title));
+        add(githubArtUrl(title));
+        var canon = canonicalTitle(title);
+        if (canon && canon !== title) {
+            excelArtUrls(canon).forEach(add);
+            add(githubArtUrl(canon));
+        }
+        return out;
+    }
+
+    function artUrlForTitle(title) {
+        var list = artUrlCandidates(title);
+        return list.length ? list[0] : '';
+    }
+
+    function queueGuardKey(row) {
+        return dataKey(row) || songTitle(row);
+    }
+
+    function shouldBlockQueueAction(row) {
+        var key = queueGuardKey(row);
+        if (!key || key.indexOf('{') !== -1) return false;
+
+        if (row.__lclClickPending) return true;
+
+        var now = Date.now();
+        if (!doc.__lclQueueTap) doc.__lclQueueTap = {};
+        var last = doc.__lclQueueTap[key] || 0;
+        if (now - last < QUEUE_GUARD_MS) return true;
+
+        doc.__lclQueueTap[key] = now;
+        row.__lclClickPending = true;
+        setTimeout(function () {
+            row.__lclClickPending = false;
+        }, QUEUE_GUARD_MS);
+        return false;
+    }
+
+    function onJukeboxActionGuard(e) {
+        var row = rowEl(e.target);
+        if (!row || shouldSkip(row)) return;
+        if (shouldBlockQueueAction(row)) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
         }
     }
 
-    function toast(msg) {
-        var node = doc.getElementById('lcl-queue-toast');
-        if (!node) {
-            node = doc.createElement('div');
-            node.id = 'lcl-queue-toast';
-            node.className = 'lcl-queue-toast';
-            node.setAttribute('role', 'status');
-            node.setAttribute('aria-live', 'polite');
-            doc.body.appendChild(node);
-        }
-        node.textContent = msg;
-        node.classList.add('is-visible');
-        clearTimeout(node.__hide);
-        node.__hide = setTimeout(function () {
-            node.classList.remove('is-visible');
-        }, 2800);
+    function attachAnchorToRow(key, row) {
+        var aid = songAnchorId(key);
+        var placeholder = doc.getElementById(aid);
+        if (placeholder && placeholder !== row) placeholder.removeAttribute('id');
+        if (!row.id) row.id = aid;
     }
 
-    function fireClick(el) {
-        if (!el) return false;
-        var ok = false;
-
-        if (typeof el.onclick === 'function') {
-            try {
-                el.onclick.call(el);
-                ok = true;
-            } catch (e) { /* ignore */ }
-        }
-
-        var attrs = ['onclick', 'ng-click', 'data-action'];
-        attrs.forEach(function (attr) {
-            var val = el.getAttribute && el.getAttribute(attr);
-            if (val) {
-                try {
-                    /* eslint-disable no-new-func */
-                    new win.Function(val).call(el);
-                    ok = true;
-                } catch (e) { /* ignore */ }
-            }
-        });
-
-        ['pointerdown', 'mousedown', 'mouseup', 'pointerup', 'click', 'touchend'].forEach(function (type) {
-            try {
-                var Ctor = type.indexOf('touch') === 0 ? win.TouchEvent : win.MouseEvent;
-                if (Ctor) {
-                    el.dispatchEvent(new Ctor(type, { bubbles: true, cancelable: true, view: win, buttons: 1 }));
-                }
-            } catch (e) { /* ignore */ }
-        });
-
+    function ensureSongAnchors() {
         try {
-            el.click();
-            ok = true;
+            doc.querySelectorAll('#playlists_container .jukebox-list, .rtable:not(.vote-header) .cell-vote-playlist').forEach(function (el) {
+                var row = rowEl(el);
+                if (!row || shouldSkip(row)) return;
+                var key = dataKey(row) || songTitle(row);
+                if (!key || key.indexOf('{') !== -1) return;
+                attachAnchorToRow(key, row);
+            });
         } catch (e) { /* ignore */ }
-
-        return ok;
-    }
-
-    function queueSong(key, link) {
-        var target = findSong(key);
-        if (!target) {
-            if (link) link.classList.add('lcl-stat-row--missing');
-            setTimeout(function () {
-                if (link) link.classList.remove('lcl-stat-row--missing');
-            }, 1500);
-            toast('Song not in tonight\'s list — pick from the jukebox below');
-            return false;
-        }
-
-        try {
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } catch (e) { /* ignore */ }
-
-        flashTarget(target);
-        fireClick(target);
-
-        if (link) {
-            link.classList.add('lcl-stat-row--queued');
-            setTimeout(function () {
-                link.classList.remove('lcl-stat-row--queued');
-            }, 1200);
-        }
-
-        toast('Highlighted below — tap that song if it did not queue automatically');
-        return true;
     }
 
     function onCrowdFavoriteClick(e) {
         var link = e.target && e.target.closest ? e.target.closest('a.lcl-stat-row[data-song-key]') : null;
         if (!link) return;
-
         var key = link.getAttribute('data-song-key');
         if (!key) return;
-
         var target = findSong(key);
-        if (!target) {
-            /* Let the anchor href scroll if a matching id exists later */
-            return;
-        }
-
+        if (!target) return;
         e.preventDefault();
-        queueSong(key, link);
+        e.stopPropagation();
+        attachAnchorToRow(key, target);
+        try { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (err) { /* ignore */ }
+        try { target.click(); } catch (err2) { /* ignore */ }
     }
-
-    /* ---- Album art (parent document) ---- */
-    var ART_BASE = 'https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/';
 
     function visibleCard(selector) {
         var card = doc.querySelector(selector);
@@ -267,71 +270,137 @@
         return card;
     }
 
-    function activeCard() {
-        return visibleCard('.lcl-now-card-jukebox') || visibleCard('.lcl-now-card-vote');
+    function isNowRow(row) {
+        if (!row || !row.classList) return false;
+        if (row.classList.contains('playing-now') || row.classList.contains('next-up') || row.classList.contains('jukebox-queue')) return true;
+        var parent = row.parentElement;
+        return !!(parent && parent.classList && parent.classList.contains('jukebox-queue-container'));
     }
 
-    function refreshArt() {
+    function stampNowRow(row, title) {
+        if (!row || !title || title.indexOf('{') !== -1) return;
+        if (row.getAttribute('data-lcl-title') !== title) row.setAttribute('data-lcl-title', title);
+        var kind = tagKindForTitle(title);
+        if (kind) row.setAttribute('data-lcl-tag', kind);
+        else row.removeAttribute('data-lcl-tag');
+        row.classList.add('lcl-has-art');
+    }
+
+    function collectNowRows(card) {
+        var rows = [], seen = {}, list, box, i, ch;
+        list = card.querySelectorAll('.jukebox-queue, .next-up, .playing-now');
+        for (i = 0; i < list.length; i++) {
+            if (!seen[list[i]]) { seen[list[i]] = 1; rows.push(list[i]); }
+        }
+        box = card.querySelector('.jukebox-queue-container');
+        if (box) {
+            for (i = 0; i < box.children.length; i++) {
+                ch = box.children[i];
+                if (!isNowRow(ch) || seen[ch]) continue;
+                seen[ch] = 1;
+                rows.push(ch);
+            }
+        }
+        return rows;
+    }
+
+    function refreshNowCardArt() {
         try {
-            var card = activeCard();
-            if (!card) return;
-            var nowEl = card.querySelector('.lcl-now-playing');
-            var artImg = card.querySelector('.lcl-now-art');
+            var card = doc.getElementById('lclNowCard');
+            if (card) collectNowRows(card).forEach(function (row) {
+                stampNowRow(row, dataKey(row) || songTitle(row));
+            });
+
+            var visible = visibleCard('.lcl-now-card-jukebox') || visibleCard('.lcl-now-card-vote');
+            if (!visible) return;
+            var nowEl = visible.querySelector('.lcl-now-playing, .playing-now');
+            var artImg = visible.querySelector('.lcl-now-art');
             if (!nowEl || !artImg) return;
 
-            var inj = nowEl.querySelector('.sequence-image');
-            var url = inj && inj.src ? inj.src : '';
-            if (!url) {
-                var title = songTitle(nowEl.querySelector('.cell-vote-playlist, .jukebox-list') || nowEl);
-                if (!title || title.indexOf('{') !== -1) {
-                    artImg.classList.remove('is-visible');
-                    artImg.removeAttribute('src');
-                    return;
-                }
-                url = ART_BASE + title.replace(/ /g, '%20') + '.jpg';
+            var title = songTitle(nowEl.querySelector('.cell-vote-playlist, .jukebox-list') || nowEl);
+            if (!title || title.indexOf('{') !== -1) {
+                artImg.classList.remove('is-visible');
+                artImg.removeAttribute('src');
+                return;
             }
 
+            stampNowRow(nowEl, title);
+            var candidates = artUrlCandidates(title);
+            if (!candidates.length) {
+                artImg.classList.remove('is-visible');
+                artImg.removeAttribute('src');
+                return;
+            }
+            var idx = 0;
             artImg.onerror = function () {
+                idx += 1;
+                if (idx < candidates.length) {
+                    artImg.setAttribute('src', candidates[idx]);
+                    return;
+                }
                 artImg.classList.remove('is-visible');
             };
-            artImg.onload = function () {
-                artImg.classList.add('is-visible');
-            };
-            if (artImg.getAttribute('src') !== url) artImg.setAttribute('src', url);
+            artImg.onload = function () { artImg.classList.add('is-visible'); };
+            if (artImg.getAttribute('src') !== candidates[0]) artImg.setAttribute('src', candidates[0]);
         } catch (e) { /* ignore */ }
     }
 
-    function watchRoot(root, fn) {
-        if (!root || root.__lclWatch) return;
-        root.__lclWatch = true;
-        new win.MutationObserver(fn).observe(root, { childList: true, subtree: true, characterData: true });
+    function bootstrap() {
+        ensureSongAnchors();
+        refreshNowCardArt();
     }
 
-    function bootstrap() {
-        scanTags();
-        ensureSongAnchors();
-        refreshArt();
+    var bootTimer = 0;
+    function scheduleBootstrap() {
+        if (bootTimer) clearTimeout(bootTimer);
+        bootTimer = setTimeout(function () {
+            bootTimer = 0;
+            bootstrap();
+        }, 120);
+    }
 
-        if (!doc.__lclCrowdBound) {
-            doc.__lclCrowdBound = true;
-            doc.addEventListener('click', onCrowdFavoriteClick, true);
-        }
+    function watchRoot(root) {
+        if (!root || root.__lclWatch) return;
+        root.__lclWatch = true;
+        new win.MutationObserver(scheduleBootstrap).observe(root, { childList: true, subtree: true });
+    }
+
+    function bindGuards() {
+        if (doc.__lclCrowdBound) return;
+        doc.__lclCrowdBound = true;
+        doc.addEventListener('click', onJukeboxActionGuard, true);
+        doc.addEventListener('touchend', onJukeboxActionGuard, true);
+        doc.addEventListener('click', onCrowdFavoriteClick, true);
+    }
+
+    function start() {
+        try {
+            bindGuards();
+            var nowCard = doc.getElementById('lclNowCard');
+            if (nowCard) watchRoot(nowCard);
+            var analytics = doc.querySelector('.lcl-analytics-card');
+            if (analytics) watchRoot(analytics);
+            bootstrap();
+            win.setInterval(refreshNowCardArt, 2000);
+        } catch (e) { /* ignore */ }
+    }
+
+    function loadArtMap(done) {
+        if (!ART_JSON_URL) { done(); return; }
+        try {
+            win.fetch(ART_JSON_URL, { cache: 'no-cache' }).then(function (res) {
+                if (!res.ok) throw new Error('art map fetch failed');
+                return res.json();
+            }).then(function (data) {
+                if (data && data.keys) ART_MAP = data.keys;
+                done();
+            }).catch(function () { done(); });
+        } catch (e) { done(); }
     }
 
     function init() {
-        try {
-            var playlist = doc.getElementById('playlists_container');
-            if (playlist) watchRoot(playlist, bootstrap);
-            doc.querySelectorAll('.rtable').forEach(function (rt) {
-                watchRoot(rt, bootstrap);
-            });
-            var analytics = doc.querySelector('.lcl-analytics-card');
-            if (analytics) watchRoot(analytics, bootstrap);
-            if (doc.body) watchRoot(doc.body, bootstrap);
-
-            bootstrap();
-            setInterval(bootstrap, 2000);
-        } catch (e) { /* cross-origin safety */ }
+        bindGuards();
+        loadArtMap(start);
     }
 
     if (doc.readyState === 'loading') {
