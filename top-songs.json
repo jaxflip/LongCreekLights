@@ -1,0 +1,149 @@
+{
+  "updated": "2026-07-11T09:45:57",
+  "seasons": [
+    {
+      "year": 2024,
+      "label": "Christmas 2024",
+      "totalRequests": 381,
+      "uniqueVisitors": 219,
+      "pageVisits": 315,
+      "peakDay": "2024-12-25",
+      "peakRequests": 32,
+      "topSong": "You are a Mean One Mr Grinch",
+      "songs": [
+        {
+          "rank": 1,
+          "name": "You are a Mean One Mr Grinch",
+          "requests": 19,
+          "pct": 4.99
+        },
+        {
+          "rank": 2,
+          "name": "Let It Go - Broadway Musical",
+          "requests": 16,
+          "pct": 4.2
+        },
+        {
+          "rank": 3,
+          "name": "The Polar Express",
+          "requests": 15,
+          "pct": 3.94
+        },
+        {
+          "rank": 4,
+          "name": "You are Welcome",
+          "requests": 14,
+          "pct": 3.67
+        },
+        {
+          "rank": 5,
+          "name": "I Just Cannot Wait to Be King",
+          "requests": 12,
+          "pct": 3.15
+        },
+        {
+          "rank": 6,
+          "name": "The Greatest Showman",
+          "requests": 12,
+          "pct": 3.15
+        },
+        {
+          "rank": 7,
+          "name": "Dance of the Sugar Plum Fairy",
+          "requests": 10,
+          "pct": 2.62
+        },
+        {
+          "rank": 8,
+          "name": "The Avengers Theme Remix",
+          "requests": 10,
+          "pct": 2.62
+        },
+        {
+          "rank": 9,
+          "name": "Harry Potter",
+          "requests": 10,
+          "pct": 2.62
+        },
+        {
+          "rank": 10,
+          "name": "Carol of the Bells by Pentatonix",
+          "requests": 10,
+          "pct": 2.62
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "label": "Christmas 2025",
+      "totalRequests": 391,
+      "uniqueVisitors": 240,
+      "pageVisits": 615,
+      "peakDay": "2025-12-14",
+      "peakRequests": 39,
+      "topSong": "All I Want For Christmas is You",
+      "songs": [
+        {
+          "rank": 1,
+          "name": "All I Want For Christmas is You",
+          "requests": 26,
+          "pct": 6.65
+        },
+        {
+          "rank": 2,
+          "name": "Blinding Lights",
+          "requests": 15,
+          "pct": 3.84
+        },
+        {
+          "rank": 3,
+          "name": "Encanto Compilation V1",
+          "requests": 13,
+          "pct": 3.32
+        },
+        {
+          "rank": 4,
+          "name": "God Bless the USA",
+          "requests": 13,
+          "pct": 3.32
+        },
+        {
+          "rank": 5,
+          "name": "Harry Potter",
+          "requests": 13,
+          "pct": 3.32
+        },
+        {
+          "rank": 6,
+          "name": "Uptown Funk",
+          "requests": 12,
+          "pct": 3.07
+        },
+        {
+          "rank": 7,
+          "name": "You are a Mean One Mr Grinch",
+          "requests": 12,
+          "pct": 3.07
+        },
+        {
+          "rank": 8,
+          "name": "Danger Zone",
+          "requests": 12,
+          "pct": 3.07
+        },
+        {
+          "rank": 9,
+          "name": "Pirates of the Carribean",
+          "requests": 12,
+          "pct": 3.07
+        },
+        {
+          "rank": 10,
+          "name": "The Greatest Showman",
+          "requests": 11,
+          "pct": 2.81
+        }
+      ]
+    }
+  ]
+}
