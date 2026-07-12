@@ -434,73 +434,6 @@ a:link, a:visited { color: var(--lcl-gold); }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Queue/next-up thumbnails + hero art applied by inline boot JS (keeps RF HTML small) */
-#lclNowCard .jukebox-queue[data-lcl-title],
-#lclNowCard .next-up[data-lcl-title] {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 10px;
-    text-align: left;
-    max-width: 100%;
-}
-
-#lclNowCard .jukebox-queue[data-lcl-title] .jukebox-list-artist,
-#lclNowCard .jukebox-queue[data-lcl-title] .cell-vote-playlist-artist,
-#lclNowCard .next-up[data-lcl-title] .jukebox-list-artist,
-#lclNowCard .next-up[data-lcl-title] .cell-vote-playlist-artist {
-    flex: 0 0 100%;
-    order: 2;
-    display: block;
-    margin-top: 0;
-    text-align: left;
-}
-
-#lclNowCard .lcl-row-thumb {
-    display: block;
-    width: 52px;
-    height: 52px;
-    flex: 0 0 52px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 10px;
-    border: 1px solid var(--lcl-card-border);
-    pointer-events: none;
-    order: 0;
-}
-
 .vote-header .cell-vote-playlist,
 .vote-header .cell-vote-playlist-artist {
     font-weight: 700;
@@ -907,6 +840,43 @@ a:link, a:visited { color: var(--lcl-gold); }
     display: none;
 }
 
+/* Queue/next-up thumbnails + hero art applied by inline boot JS (keeps RF HTML small) */
+#lclNowCard .jukebox-queue[data-lcl-title],
+#lclNowCard .next-up[data-lcl-title] {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    text-align: left;
+    max-width: 100%;
+}
+
+#lclNowCard .jukebox-queue[data-lcl-title] .jukebox-list-artist,
+#lclNowCard .jukebox-queue[data-lcl-title] .cell-vote-playlist-artist,
+#lclNowCard .next-up[data-lcl-title] .jukebox-list-artist,
+#lclNowCard .next-up[data-lcl-title] .cell-vote-playlist-artist {
+    flex: 0 0 100%;
+    order: 2;
+    display: block;
+    margin-top: 0;
+    text-align: left;
+}
+
+#lclNowCard .lcl-row-thumb {
+    display: block;
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    border: 1px solid var(--lcl-card-border);
+    pointer-events: none;
+    order: 0;
+}
+
 /* Now card - flex layout; tag pills via CSS only (survives RF queue refresh) */
 #lclNowCard .playing-now,
 #lclNowCard .next-up,
@@ -1015,19 +985,6 @@ a:link, a:visited { color: var(--lcl-gold); }
     color: #ffe08a;
     box-shadow: 0 0 8px rgba(255, 209, 102, 0.18);
     pointer-events: none;
-}
-
-.cell-vote-playlist {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 4px 6px;
-}
-
-.vote-header .cell-vote-playlist {
-    display: block;
-    text-align: center;
 }
 
 /* ============================================================
