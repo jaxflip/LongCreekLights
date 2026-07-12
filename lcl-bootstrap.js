@@ -14,6 +14,7 @@
 
     /* LCL_ART_MAP_START */
 var ART_MAP = {};
+var ART_TITLES = [];
 var ART_JSON_URL = 'https://jaxflip.github.io/LongCreekLights/song-art-urls.json';
 /* LCL_ART_MAP_END */
 
@@ -107,11 +108,40 @@ var ART_JSON_URL = 'https://jaxflip.github.io/LongCreekLights/song-art-urls.json
         });
     }
 
+    function rowArtist(el) {
+        if (!el) return '';
+        var artist = el.querySelector('.jukebox-list-artist, .cell-vote-playlist-artist');
+        return artist ? cleanTitle(artist.textContent) : '';
+    }
+
     function songTitle(el) {
         if (!el) return '';
         var clone = el.cloneNode(true);
         stripNoise(clone);
         return cleanTitle(clone.textContent);
+    }
+
+    function resolveRowTitle(row) {
+        var key = dataKey(row);
+        if (key) return key;
+        var base = songTitle(row);
+        var artist = rowArtist(row);
+        if (!base || base.indexOf('{') !== -1) return '';
+        var nb = norm(base);
+        var na = norm(artist);
+        var i, t, by, partial = [];
+        for (i = 0; i < ART_TITLES.length; i++) {
+            t = ART_TITLES[i];
+            if (norm(t) === nb) return t;
+            by = t.indexOf(' by ');
+            if (by < 0) continue;
+            if (norm(t.slice(0, by)) !== nb) continue;
+            if (!na) return t;
+            var ta = norm(t.slice(by + 4));
+            if (ta === na || ta.indexOf(na) >= 0 || na.indexOf(ta) >= 0) return t;
+            partial.push(t);
+        }
+        return partial.length === 1 ? partial[0] : base;
     }
 
     function titlesMatch(a, b) {
@@ -277,8 +307,10 @@ var ART_JSON_URL = 'https://jaxflip.github.io/LongCreekLights/song-art-urls.json
         return !!(parent && parent.classList && parent.classList.contains('jukebox-queue-container'));
     }
 
-    function stampNowRow(row, title) {
-        if (!row || !title || title.indexOf('{') !== -1) return;
+    function stampNowRow(row) {
+        if (!row) return;
+        var title = resolveRowTitle(row);
+        if (!title || title.indexOf('{') !== -1) return;
         if (row.getAttribute('data-lcl-title') !== title) row.setAttribute('data-lcl-title', title);
         var kind = tagKindForTitle(title);
         if (kind) row.setAttribute('data-lcl-tag', kind);
@@ -307,9 +339,7 @@ var ART_JSON_URL = 'https://jaxflip.github.io/LongCreekLights/song-art-urls.json
     function refreshNowCardArt() {
         try {
             var card = doc.getElementById('lclNowCard');
-            if (card) collectNowRows(card).forEach(function (row) {
-                stampNowRow(row, dataKey(row) || songTitle(row));
-            });
+            if (card) collectNowRows(card).forEach(stampNowRow);
 
             var visible = visibleCard('.lcl-now-card-jukebox') || visibleCard('.lcl-now-card-vote');
             if (!visible) return;
@@ -317,14 +347,13 @@ var ART_JSON_URL = 'https://jaxflip.github.io/LongCreekLights/song-art-urls.json
             var artImg = visible.querySelector('.lcl-now-art');
             if (!nowEl || !artImg) return;
 
-            var title = songTitle(nowEl.querySelector('.cell-vote-playlist, .jukebox-list') || nowEl);
+            stampNowRow(nowEl);
+            var title = resolveRowTitle(nowEl);
             if (!title || title.indexOf('{') !== -1) {
                 artImg.classList.remove('is-visible');
                 artImg.removeAttribute('src');
                 return;
             }
-
-            stampNowRow(nowEl, title);
             var candidates = artUrlCandidates(title);
             if (!candidates.length) {
                 artImg.classList.remove('is-visible');
@@ -393,6 +422,7 @@ var ART_JSON_URL = 'https://jaxflip.github.io/LongCreekLights/song-art-urls.json
                 return res.json();
             }).then(function (data) {
                 if (data && data.keys) ART_MAP = data.keys;
+                if (data && data.titles) ART_TITLES = Object.keys(data.titles);
                 done();
             }).catch(function () { done(); });
         } catch (e) { done(); }
