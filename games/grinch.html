@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Whack-a-Grinch — Long Creek Lights</title>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background:
+      radial-gradient(ellipse at 50% -20%, #1d4a7a 0%, transparent 55%),
+      linear-gradient(180deg, #071426 0%, #0b2818 100%);
+    color: #f5f7fa;
+    font-family: 'Nunito', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px 4px;
+    font-size: 0.95rem;
+    position: relative; z-index: 2;
+  }
+  header a { color: #ffd166; text-decoration: none; font-weight: 800; padding: 6px 10px; }
+  .hud { font-weight: 800; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
+  button.mute {
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,209,102,0.5);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1.05rem;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .lights { display: flex; justify-content: center; gap: 12px; padding: 2px 0 6px; position: relative; z-index: 2; }
+  .lights i { width: 8px; height: 8px; border-radius: 50%; display: block; animation: bulb 1.6s ease-in-out infinite; }
+  .lights i:nth-child(5n+1) { background: #ff4d4d; box-shadow: 0 0 8px 2px rgba(255,77,77,0.9); }
+  .lights i:nth-child(5n+2) { background: #ffd166; box-shadow: 0 0 8px 2px rgba(255,209,102,0.9); animation-delay: 0.3s; }
+  .lights i:nth-child(5n+3) { background: #4dff88; box-shadow: 0 0 8px 2px rgba(77,255,136,0.9); animation-delay: 0.6s; }
+  .lights i:nth-child(5n+4) { background: #4dc3ff; box-shadow: 0 0 8px 2px rgba(77,195,255,0.9); animation-delay: 0.9s; }
+  .lights i:nth-child(5n+5) { background: #d24dff; box-shadow: 0 0 8px 2px rgba(210,77,255,0.9); animation-delay: 1.2s; }
+  @keyframes bulb { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.85); } }
+
+  #stage {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px 14px;
+  }
+  .timerbar {
+    width: 92%;
+    max-width: 380px;
+    height: 12px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .timerbar > div {
+    height: 100%;
+    width: 100%;
+    background: repeating-linear-gradient(45deg, #e63946 0 10px, #f8f9fb 10px 20px);
+    transition: width 0.25s linear;
+  }
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 92%;
+    max-width: 380px;
+  }
+  .hole {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #6d2f2f 0%, #4a1f1f 100%);
+    border: 2px solid rgba(255, 209, 102, 0.35);
+    box-shadow: inset 0 -14px 18px rgba(0,0,0,0.5), 0 4px 10px rgba(0,0,0,0.4);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  /* brick pattern */
+  .hole::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.22) 1.5px, transparent 1.5px),
+      linear-gradient(90deg, rgba(0,0,0,0.22) 1.5px, transparent 1.5px);
+    background-size: 100% 22%, 33% 100%;
+    pointer-events: none;
+  }
+  /* snow cap */
+  .hole::after {
+    content: '';
+    position: absolute; top: -2px; left: -2px; right: -2px;
+    height: 16%;
+    background: #eef4fb;
+    border-radius: 12px 12px 40% 40%;
+    pointer-events: none;
+  }
+  .peep {
+    position: absolute;
+    left: 50%;
+    bottom: 6%;
+    transform: translate(-50%, 110%);
+    font-size: clamp(2.2rem, 12vw, 3.2rem);
+    line-height: 1;
+    transition: transform 0.14s ease-out;
+    filter: drop-shadow(0 3px 5px rgba(0,0,0,0.55));
+    pointer-events: none;
+  }
+  .hole.up .peep { transform: translate(-50%, 0%); }
+  .hole.whacked .peep { transform: translate(-50%, 14%) scale(1.15, 0.6); transition-duration: 0.08s; }
+  .pop {
+    position: absolute;
+    left: 50%; top: 12%;
+    transform: translateX(-50%);
+    font-weight: 800;
+    font-size: 1rem;
+    color: #ffd166;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+    animation: popUp 0.6s ease-out forwards;
+    pointer-events: none;
+  }
+  @keyframes popUp { to { transform: translate(-50%, -26px); opacity: 0; } }
+  .caption {
+    margin-top: 12px;
+    font-size: 0.82rem;
+    opacity: 0.85;
+    text-align: center;
+    max-width: 340px;
+    line-height: 1.45;
+  }
+  .overlay {
+    position: absolute; inset: 0;
+    background: rgba(7, 20, 38, 0.92);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; gap: 12px; padding: 20px;
+    z-index: 3;
+  }
+  .overlay h2 {
+    font-family: 'Mountains of Christmas', cursive;
+    color: #ffd166; font-size: 1.7rem;
+    text-shadow: 0 0 16px rgba(255,209,102,0.4);
+  }
+  .overlay p { font-size: 0.92rem; opacity: 0.9; max-width: 310px; line-height: 1.5; }
+  .overlay button {
+    background: linear-gradient(180deg, #ff5b67, #d92637);
+    color: #fff; border: none;
+    border-radius: 12px; font-size: 1.15rem; font-weight: 800;
+    padding: 13px 34px; cursor: pointer;
+    box-shadow: 0 5px 16px rgba(217,38,55,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html">‹ Games</a>
+  <span class="hud">🎯 <span id="score">0</span> &nbsp; 🏆 <span id="best">0</span> &nbsp; ⏱️ <span id="clock">45</span></span>
+  <button class="mute" id="muteBtn" aria-label="Mute game sound">🔊</button>
+</header>
+<div class="lights"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div id="stage">
+  <div class="timerbar"><div id="timerFill"></div></div>
+  <div class="board" id="board"></div>
+  <div class="caption">
+    Whack the <b>Grinch 🧌 (+1)</b> and grab dropped <b>gifts 🎁 (+2)</b> —
+    but never bop an <b>elf 🧝 (−2)</b>!
+  </div>
+  <div class="overlay" id="startOverlay">
+    <h2>🧌 Whack-a-Grinch</h2>
+    <p>The Grinches are popping out of the chimneys to steal gifts!
+       Tap them before they duck back down. <b>45 seconds</b> — how many can you bop?<br>
+       <b>🧌 +1 &nbsp; 🎁 +2 &nbsp; 🧝 −2 (don't!)</b></p>
+    <button id="startBtn">Play</button>
+  </div>
+  <div class="overlay hidden" id="gameOverOverlay">
+    <h2 id="overTitle">Time's Up!</h2>
+    <p><b><span id="finalScore">0</span> points</b> — <span id="overQuip"></span></p>
+    <button id="restartBtn">Play Again</button>
+  </div>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Audio (game-only mute; never touches device volume) ---------- */
+  var AudioFX = (function () {
+    var ctx = null;
+    var muted = localStorage.getItem('lclMuted') === '1';
+    function ensure() {
+      if (!ctx) {
+        try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { ctx = null; }
+      }
+      if (ctx && ctx.state === 'suspended') ctx.resume();
+    }
+    function beep(freq, dur, type, vol) {
+      if (muted) return;
+      ensure();
+      if (!ctx) return;
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type || 'square';
+      o.frequency.value = freq;
+      g.gain.setValueAtTime(vol || 0.06, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + (dur || 0.12));
+      o.connect(g); g.connect(ctx.destination);
+      o.start(); o.stop(ctx.currentTime + (dur || 0.12));
+    }
+    return {
+      unlock: ensure,
+      bop: function () { beep(523, 0.06, 'square'); setTimeout(function () { beep(784, 0.08, 'square'); }, 50); },
+      gift: function () { beep(988, 0.08, 'square'); setTimeout(function () { beep(1319, 0.12, 'square'); }, 70); },
+      oops: function () { beep(170, 0.28, 'sawtooth', 0.08); },
+      tick: function () { beep(880, 0.04, 'square', 0.03); },
+      over: function () { beep(659, 0.12, 'square'); setTimeout(function () { beep(784, 0.12, 'square'); }, 130); setTimeout(function () { beep(1047, 0.25, 'square'); }, 260); },
+      toggle: function () {
+        muted = !muted;
+        localStorage.setItem('lclMuted', muted ? '1' : '0');
+        return muted;
+      },
+      isMuted: function () { return muted; }
+    };
+  })();
+
+  var muteBtn = document.getElementById('muteBtn');
+  function paintMute() { muteBtn.textContent = AudioFX.isMuted() ? '🔇' : '🔊'; }
+  muteBtn.addEventListener('click', function () { AudioFX.toggle(); paintMute(); });
+  paintMute();
+
+  /* ---------- Game ---------- */
+  var ROUND = 45;              /* seconds */
+  var HOLES = 9;
+  var board = document.getElementById('board');
+  var holes = [];
+  var running = false;
+  var score = 0, timeLeft = ROUND;
+  var best = parseInt(localStorage.getItem('lclGrinchBest') || '0', 10);
+  var spawnTimer = null, clockTimer = null;
+  document.getElementById('best').textContent = String(best);
+
+  /* character types: weight, emoji, points */
+  function pickType(elapsed) {
+    var r = Math.random();
+    if (r < 0.14) return { kind: 'elf', emoji: '🧝', pts: -2 };
+    if (r < 0.26) return { kind: 'gift', emoji: '🎁', pts: 2 };
+    return { kind: 'grinch', emoji: '🧌', pts: 1 };
+  }
+
+  for (var i = 0; i < HOLES; i++) {
+    (function (idx) {
+      var hole = document.createElement('div');
+      hole.className = 'hole';
+      var peep = document.createElement('span');
+      peep.className = 'peep';
+      hole.appendChild(peep);
+      hole.addEventListener('pointerdown', function () { whack(idx); });
+      board.appendChild(hole);
+      holes.push({ el: hole, peep: peep, type: null, hideAt: 0, cooldown: 0 });
+    })(i);
+  }
+
+  function popRandom() {
+    if (!running) return;
+    var free = holes.filter(function (h) { return !h.type && Date.now() > h.cooldown; });
+    if (free.length) {
+      var h = free[Math.floor(Math.random() * free.length)];
+      var t = pickType(ROUND - timeLeft);
+      h.type = t;
+      h.peep.textContent = t.emoji;
+      h.el.classList.remove('whacked');
+      h.el.classList.add('up');
+      /* visible window shrinks as round progresses: 1.15s -> 0.6s */
+      var visible = Math.max(600, 1150 - (ROUND - timeLeft) * 13);
+      h.hideAt = setTimeout(function () { hide(h); }, visible);
+    }
+    /* spawn cadence speeds up: 750ms -> 380ms */
+    var next = Math.max(380, 750 - (ROUND - timeLeft) * 9);
+    spawnTimer = setTimeout(popRandom, next);
+  }
+
+  function hide(h) {
+    clearTimeout(h.hideAt);
+    h.type = null;
+    h.el.classList.remove('up');
+    h.cooldown = Date.now() + 250;
+  }
+
+  function floatText(hole, txt, color) {
+    var s = document.createElement('span');
+    s.className = 'pop';
+    s.textContent = txt;
+    if (color) s.style.color = color;
+    hole.el.appendChild(s);
+    setTimeout(function () { s.remove(); }, 650);
+  }
+
+  function whack(idx) {
+    if (!running) return;
+    var h = holes[idx];
+    if (!h.type) return;
+    var t = h.type;
+    score = Math.max(0, score + t.pts);
+    document.getElementById('score').textContent = String(score);
+    if (t.kind === 'grinch') { AudioFX.bop(); floatText(h, '+1'); }
+    else if (t.kind === 'gift') { AudioFX.gift(); floatText(h, '+2', '#4dff88'); }
+    else { AudioFX.oops(); floatText(h, '−2', '#ff7b85'); }
+    h.el.classList.add('whacked');
+    h.type = null;
+    setTimeout(function () { h.el.classList.remove('up', 'whacked'); }, 130);
+    h.cooldown = Date.now() + 300;
+  }
+
+  function tickClock() {
+    timeLeft -= 1;
+    document.getElementById('clock').textContent = String(timeLeft);
+    document.getElementById('timerFill').style.width = (timeLeft / ROUND * 100) + '%';
+    if (timeLeft <= 5 && timeLeft > 0) AudioFX.tick();
+    if (timeLeft <= 0) return end();
+    clockTimer = setTimeout(tickClock, 1000);
+  }
+
+  function start() {
+    running = true;
+    score = 0; timeLeft = ROUND;
+    document.getElementById('score').textContent = '0';
+    document.getElementById('clock').textContent = String(ROUND);
+    document.getElementById('timerFill').style.width = '100%';
+    holes.forEach(function (h) { clearTimeout(h.hideAt); h.type = null; h.el.classList.remove('up', 'whacked'); h.cooldown = 0; });
+    document.getElementById('startOverlay').classList.add('hidden');
+    document.getElementById('gameOverOverlay').classList.add('hidden');
+    popRandom();
+    clockTimer = setTimeout(tickClock, 1000);
+  }
+
+  function end() {
+    running = false;
+    clearTimeout(spawnTimer); clearTimeout(clockTimer);
+    holes.forEach(function (h) { clearTimeout(h.hideAt); h.type = null; h.el.classList.remove('up'); });
+    AudioFX.over();
+    var quip;
+    if (score > best) {
+      best = score;
+      localStorage.setItem('lclGrinchBest', String(best));
+      document.getElementById('best').textContent = String(best);
+      document.getElementById('overTitle').textContent = '🏆 New Best!';
+      quip = 'The Grinch fears you now.';
+    } else {
+      document.getElementById('overTitle').textContent = "Time's Up!";
+      quip = score >= 30 ? 'Who-ville salutes you!' : score >= 15 ? 'Not bad — the gifts are mostly safe.' : 'The Grinch got away with a few...';
+    }
+    document.getElementById('finalScore').textContent = String(score);
+    document.getElementById('overQuip').textContent = quip;
+    document.getElementById('gameOverOverlay').classList.remove('hidden');
+  }
+
+  document.getElementById('startBtn').addEventListener('click', function () { AudioFX.unlock(); start(); });
+  document.getElementById('restartBtn').addEventListener('click', function () { AudioFX.unlock(); start(); });
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && running) {
+      running = false;
+      clearTimeout(spawnTimer); clearTimeout(clockTimer);
+      holes.forEach(function (h) { clearTimeout(h.hideAt); h.type = null; h.el.classList.remove('up'); });
+      document.getElementById('startOverlay').classList.remove('hidden');
+    }
+  });
+})();
+</script>
+</body>
+</html>
