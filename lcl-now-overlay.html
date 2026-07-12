@@ -50,7 +50,7 @@
   }
   .lcl-ovl-next-row {
     width: 100%;
-    min-height: 52px;
+    min-height: 0;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -60,6 +60,7 @@
     visibility: hidden;
   }
   body.lcl-ovl-has-next .lcl-ovl-next-row {
+    min-height: 52px;
     visibility: visible;
   }
   #lcl-ovl-next {
@@ -69,36 +70,10 @@
     border-radius: 10px;
     border: 1px solid rgba(255, 209, 102, 0.35);
     flex: 0 0 52px;
-  }
-  .lcl-ovl-gap-mid {
-    height: clamp(4.5rem, 16vw, 6rem);
-    width: 100%;
-  }
-  .lcl-ovl-queue {
-    width: 92%;
-    max-width: 420px;
-    margin: 0 auto;
-  }
-  .lcl-ovl-queue-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 10px;
-    min-height: 52px;
-    margin: 10px 0;
-    padding-left: 4%;
-  }
-  .lcl-ovl-thumb {
-    width: 52px;
-    height: 52px;
-    object-fit: cover;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 209, 102, 0.35);
-    flex: 0 0 52px;
-  }
-  .lcl-ovl-thumb--empty {
-    display: inline-block;
     visibility: hidden;
+  }
+  body.lcl-ovl-has-next #lcl-ovl-next {
+    visibility: visible;
   }
 </style>
 </head>
@@ -112,8 +87,6 @@
     <div class="lcl-ovl-next-row">
       <img id="lcl-ovl-next" alt="">
     </div>
-    <div class="lcl-ovl-gap-mid" aria-hidden="true"></div>
-    <div class="lcl-ovl-queue" id="lcl-ovl-queue"></div>
   </div>
   <script src="lcl-now-overlay.js"></script>
 </body>
