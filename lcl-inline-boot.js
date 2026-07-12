@@ -164,6 +164,24 @@
         });
     }
 
+    function stampPlaylist(row) {
+        if (!row || !row.closest || !row.closest('#playlists_container')) return;
+        var title = resolveTitle(row);
+        if (!title || title.indexOf('{') !== -1) {
+            row.removeAttribute('data-lcl-tag');
+            return;
+        }
+        var tag = tagFor(title);
+        if (tag) row.setAttribute('data-lcl-tag', tag);
+        else row.removeAttribute('data-lcl-tag');
+    }
+
+    function scanPlaylists() {
+        var box = doc.getElementById('playlists_container');
+        if (!box) return;
+        box.querySelectorAll('.jukebox-list').forEach(stampPlaylist);
+    }
+
     function scanNow() {
         var card = doc.getElementById('lclNowCard');
         if (!card) return;
@@ -173,6 +191,7 @@
             for (var i = 0; i < box.children.length; i++) stamp(box.children[i]);
         }
         syncHero();
+        scanPlaylists();
     }
 
     function rowEl(el) {
@@ -224,6 +243,11 @@
         if (card && !card.__lclNowWatch) {
             card.__lclNowWatch = true;
             new win.MutationObserver(scanNow).observe(card, { childList: true, subtree: true, characterData: true, attributes: true });
+        }
+        var lists = doc.getElementById('playlists_container');
+        if (lists && !lists.__lclListWatch) {
+            lists.__lclListWatch = true;
+            new win.MutationObserver(scanPlaylists).observe(lists, { childList: true, subtree: true, characterData: true, attributes: true });
         }
     }
 
