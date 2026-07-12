@@ -159,7 +159,7 @@
             art.style.backgroundRepeat = 'no-repeat';
             art.style.minHeight = 'min(58vw, 230px)';
             art.style.backgroundImage = 'url("' + url + '")';
-            art.classList.remove('is-visible');
+            art.classList.add('is-visible');
             art.removeAttribute('src');
         });
     }
