@@ -1,0 +1,5 @@
+{
+  "_howto": "Add visitor photos: 1) save the photo from Facebook, 2) upload the jpg/png into this fan-photos folder on GitHub, 3) add an entry below with the exact filename and a short caption, 4) commit. The gallery on the viewer page updates automatically. Newest first.",
+  "photos": [
+  ]
+}

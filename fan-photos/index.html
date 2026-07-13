@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visitor Photos — Long Creek Lights</title>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: transparent;
+    color: #f5f7fa;
+    font-family: 'Nunito', system-ui, sans-serif;
+    text-align: center;
+    padding: 4px 2px 10px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }
+  figure {
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,209,102,0.4);
+    border-radius: 12px;
+    overflow: hidden;
+    animation: fadeIn 0.4s ease backwards;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; } }
+  figure img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+  }
+  figcaption {
+    font-size: 0.7rem;
+    padding: 6px 6px 8px;
+    opacity: 0.9;
+    line-height: 1.35;
+  }
+  .empty {
+    border: 2px dashed rgba(255,209,102,0.45);
+    border-radius: 14px;
+    padding: 26px 16px;
+    margin: 4px;
+  }
+  .empty .big { font-size: 2rem; display: block; margin-bottom: 8px; }
+  .empty p { font-size: 0.85rem; opacity: 0.9; line-height: 1.5; }
+  .empty b { color: #ffd166; }
+</style>
+</head>
+<body>
+  <div id="gallery"></div>
+<script>
+(function () {
+  'use strict';
+  var gallery = document.getElementById('gallery');
+
+  function showEmpty() {
+    gallery.innerHTML =
+      '<div class="empty"><span class="big">🤳✨</span>' +
+      '<p><b>Your photo could be here!</b><br>' +
+      'Post your best shot of the lights to our Facebook page ' +
+      'and we may feature it right here as the season goes on.</p></div>';
+  }
+
+  fetch('photos.json', { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var photos = (data && data.photos) || [];
+      if (!photos.length) return showEmpty();
+      var grid = document.createElement('div');
+      grid.className = 'grid';
+      photos.forEach(function (p, i) {
+        if (!p || !p.file) return;
+        var fig = document.createElement('figure');
+        fig.style.animationDelay = (i * 0.05) + 's';
+        var img = document.createElement('img');
+        img.loading = 'lazy';
+        img.src = encodeURI(p.file);
+        img.alt = p.caption || 'Visitor photo of Long Creek Lights';
+        img.onerror = function () { fig.remove(); };
+        fig.appendChild(img);
+        if (p.caption) {
+          var cap = document.createElement('figcaption');
+          cap.textContent = p.caption;
+          fig.appendChild(cap);
+        }
+        grid.appendChild(fig);
+      });
+      gallery.appendChild(grid);
+    })
+    .catch(showEmpty);
+})();
+</script>
+</body>
+</html>
