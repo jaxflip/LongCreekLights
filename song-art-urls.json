@@ -1,86 +1,330 @@
 {
   "generated_by": "update_site_from_summary.py",
+  "primary": "gh",
   "titles": {
-    "12 Days of Christmas": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/12%20Days%20of%20Christmas.jpg",
-    "12 Pains of Christmas": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/12%20Pains%20of%20Christmas.jpg",
-    "A Mad Russians Christmas": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/A%20Mad%20Russians%20Christmas.jpg",
-    "All I Want For Christmas is You": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/All%20I%20Want%20For%20Christmas%20is%20You.jpg",
-    "Believer": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Believer.jpg",
-    "Blinding Lights": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Blinding%20Lights.jpg",
-    "Cant Stop the Feeling": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cant%20Stop%20the%20Feeling.jpg",
-    "Carol of the Bells by Pentatonix": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20of%20the%20Bells%20by%20Pentatonix.jpg",
-    "Carol Of The Bells": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20Of%20The%20Bells.jpg",
-    "Cartoon Network Mashup": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cartoon%20Network%20Mashup.jpg",
-    "Christmas Canon": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Canon.jpg",
-    "Christmas Everyday": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Everyday.jpg",
-    "Christmas Medley": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Medley.jpg",
-    "Christmas Tree Farm": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Tree%20Farm.jpg",
-    "Christmas Wrapping": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Wrapping.jpg",
-    "Cozy Little Christmas": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cozy%20Little%20Christmas.jpg",
-    "Dance of the Sugar Plum Fairy": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Dance%20of%20the%20Sugar%20Plum%20Fairy.jpg",
-    "Danger Zone": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Danger%20Zone.jpg",
-    "Deck the Halls - Mario": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Deck%20the%20Halls%20-%20Mario.jpg",
-    "Defying Gravity": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Defying%20Gravity.jpg",
-    "Disney Princesses": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Disney%20Princesses.jpg",
-    "Encanto Compilation V1": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Encanto%20Compilation%20V1.jpg",
-    "Encanto Compilation V10": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Encanto%20Compilation%20V10.jpg",
-    "Encanto Compilation V2": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Encanto%20Compilation%20V2.jpg",
-    "Encanto Compilation V9": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Encanto%20Compilation%20V9.jpg",
-    "Feliz Navidad": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Feliz%20Navidad.jpg",
-    "For Good": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/For%20Good.jpg",
-    "God Bless the USA": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/God%20Bless%20the%20USA.jpg",
-    "Hark! The Herald Angels Sing": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Hark!%20The%20Herald%20Angels%20Sing.jpg",
-    "Harry Potter": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Harry%20Potter.jpg",
-    "He Shall Reign Forevermore": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/He%20Shall%20Reign%20Forevermore.jpg",
-    "Here Comes Santa Claus": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Here%20Comes%20Santa%20Claus.jpg",
-    "How Far I will Go": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/How%20Far%20I%20will%20Go.jpg",
-    "I Just Cannot Wait to Be King": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/I%20Just%20Cannot%20Wait%20to%20Be%20King.jpg",
-    "Into the Unknown": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Into%20the%20Unknown.jpg",
-    "Its Beginning To Look a Lot Like Christmas": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Its%20Beginning%20To%20Look%20a%20Lot%20Like%20Christmas.jpg",
-    "Its the Most Wonderful Time of the Year": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Its%20the%20Most%20Wonderful%20Time%20of%20the%20Year.jpg",
-    "Jingle Bells": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Jingle%20Bells.jpg",
-    "Kid on Christmas": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Kid%20on%20Christmas.jpg",
-    "Let It Go - Broadway Musical": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Let%20It%20Go%20-%20Broadway%20Musical.jpg",
-    "Let It Snow": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Let%20It%20Snow.jpg",
-    "Light of Christmas": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Light%20of%20Christmas.jpg",
-    "Little Drummer Boy by For King and Country": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20For%20King%20and%20Country.jpg",
-    "Little Drummer Boy by Pentatonix": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20Pentatonix.jpg",
-    "Little Drummer Boy by TobyMac": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20Toby%20Mac.jpg",
-    "Magic": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Magic.jpg",
-    "Mary Did You Know": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Mary%20Did%20You%20Know.jpg",
-    "Melei Kelikimaka": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Melei%20Kelikimaka.jpg",
-    "My Favorite Things": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/My%20Favorite%20Things.jpg",
-    "Never Ending Story": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Never%20Ending%20Story.jpg",
-    "Oh Holy Night - South Park": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Oh%20Holy%20Night%20-%20South%20Park.jpg",
-    "Pirates of the Carribean": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Pirates%20of%20the%20Carribean.jpg",
-    "Queen of the Winter Night": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Queen%20of%20the%20Winter%20Night.jpg",
-    "Raining Tacos": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Raining%20Tacos.jpg",
-    "Remember": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Remember.jpg",
-    "Sarajevo": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sarajevo.jpg",
-    "September": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/September.jpg",
-    "Shake Up Christmas": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Shake%20Up%20Christmas.jpg",
-    "Shiny": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Shiny.jpg",
-    "Six Seven Christmas": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Six%20Seven%20Christmas.jpg",
-    "Sleigh Ride (Instrumental)": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sleigh%20Ride%20(Instrumental).jpg",
-    "Sleigh Ride by Pentatonix V1": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sleigh%20Ride%20by%20Pentatonix%20V1.jpg",
-    "Sleigh Ride by Pentatonix V2": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sleigh%20Ride%20by%20Pentatonix%20V2.jpg",
-    "Sounding Joy": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sounding%20Joy.jpg",
-    "Star Wars Funk": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Star%20Wars%20Funk.jpg",
-    "Star Wars Suite": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Star%20Wars%20Suite.jpg",
-    "Take On Me": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Take%20On%20Me.jpg",
-    "The Avengers Theme Remix": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Avengers%20Theme%20Remix.jpg",
-    "The Christmas Can Can": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Christmas%20Can%20Can.jpg",
-    "The Greatest Showman": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Greatest%20Showman.jpg",
-    "The Polar Express": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Polar%20Express.jpg",
-    "Trolls 2 Medley": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Trolls%202%20Medley.jpg",
-    "Trolls Wanna Have Good Times": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Trolls%20Wanna%20Have%20Good%20Times.jpg",
-    "Underneath the Tree": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Underneath%20the%20Tree.jpg",
-    "Uptown Funk": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Uptown%20Funk.jpg",
-    "What Is This Feeling": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/What%20Is%20This%20Feeling.jpg",
-    "Winter Wonderland": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Winter%20Wonderland.jpg",
-    "Wizards in Winter": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Wizards%20in%20Winter.jpg",
-    "You are a Mean One Mr Grinch": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20are%20a%20Mean%20One%20Mr%20Grinch.jpg",
-    "You are Welcome": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20are%20Welcome.jpg",
-    "You Make It Feel Like Christmas": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20Make%20It%20Feel%20Like%20Christmas.jpg"
+    "12 Days of Christmas": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/12%20Days%20of%20Christmas.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/12%20days%20of%20christmas.jpg"
+    },
+    "12 Pains of Christmas": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/12%20Pains%20of%20Christmas.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/12%20pains%20of%20christmas.jpg"
+    },
+    "A Mad Russians Christmas": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/A%20Mad%20Russians%20Christmas.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/a%20mad%20russians%20christmas.jpg"
+    },
+    "All I Want For Christmas is You": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/All%20I%20Want%20For%20Christmas%20is%20You.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/all%20i%20want%20for%20christmas%20is%20you.jpg"
+    },
+    "Believer": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Believer.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/believer.jpg"
+    },
+    "Blinding Lights": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Blinding%20Lights.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/blinding%20lights.jpg"
+    },
+    "Cant Stop the Feeling": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cant%20Stop%20the%20Feeling.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/cant%20stop%20the%20feeling.jpg"
+    },
+    "Carol of the Bells by Pentatonix": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20of%20the%20Bells%20by%20Pentatonix.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/carol%20of%20the%20bells%20by%20pentatonix.jpg"
+    },
+    "Carol Of The Bells": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20Of%20The%20Bells.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/carol%20of%20the%20bells.jpg"
+    },
+    "Cartoon Network Mashup": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cartoon%20Network%20Mashup.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/cartoon%20network%20mashup.jpg"
+    },
+    "Christmas Canon": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Canon.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/christmas%20canon.jpg"
+    },
+    "Christmas Everyday": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Everyday.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/christmas%20everyday.jpg"
+    },
+    "Christmas Medley": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Medley.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/christmas%20medley.jpg"
+    },
+    "Christmas Tree Farm": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Tree%20Farm.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/christmas%20tree%20farm.jpg"
+    },
+    "Christmas Wrapping": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Wrapping.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/christmas%20wrapping.jpg"
+    },
+    "Cozy Little Christmas": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cozy%20Little%20Christmas.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/cozy%20little%20christmas.jpg"
+    },
+    "Dance of the Sugar Plum Fairy": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Dance%20of%20the%20Sugar%20Plum%20Fairy.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/dance%20of%20the%20sugar%20plum%20fairy.jpg"
+    },
+    "Danger Zone": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Danger%20Zone.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/danger%20zone.jpg"
+    },
+    "Deck the Halls - Mario": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Deck%20the%20Halls%20-%20Mario.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/deck%20the%20halls%20-%20mario.jpg"
+    },
+    "Defying Gravity": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Defying%20Gravity.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/defying%20gravity.jpg"
+    },
+    "Disney Princesses": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Disney%20Princesses.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/disney%20princesses.jpg"
+    },
+    "Encanto Compilation V1": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Encanto%20Compilation%20V1.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/encanto%20compilation%20v1.jpg"
+    },
+    "Encanto Compilation V10": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Encanto%20Compilation%20V10.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/encanto%20compilation%20v10.jpg"
+    },
+    "Encanto Compilation V2": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Encanto%20Compilation%20V2.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/encanto%20compilation%20v2.jpg"
+    },
+    "Encanto Compilation V9": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Encanto%20Compilation%20V9.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/encanto%20compilation%20v9.jpg"
+    },
+    "Feliz Navidad": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Feliz%20Navidad.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/feliz%20navidad.jpg"
+    },
+    "For Good": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/For%20Good.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/for%20good.jpg"
+    },
+    "God Bless the USA": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/God%20Bless%20the%20USA.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/god%20bless%20the%20usa.jpg"
+    },
+    "Hark! The Herald Angels Sing": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Hark!%20The%20Herald%20Angels%20Sing.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/hark!%20the%20herald%20angels%20sing.jpg"
+    },
+    "Harry Potter": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Harry%20Potter.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/harry%20potter.jpg"
+    },
+    "He Shall Reign Forevermore": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/He%20Shall%20Reign%20Forevermore.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/he%20shall%20reign%20forevermore.jpg"
+    },
+    "Here Comes Santa Claus": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Here%20Comes%20Santa%20Claus.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/here%20comes%20santa%20claus.jpg"
+    },
+    "How Far I will Go": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/How%20Far%20I%20will%20Go.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/how%20far%20i%20will%20go.jpg"
+    },
+    "I Just Cannot Wait to Be King": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/I%20Just%20Cannot%20Wait%20to%20Be%20King.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/i%20just%20cannot%20wait%20to%20be%20king.jpg"
+    },
+    "Into the Unknown": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Into%20the%20Unknown.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/into%20the%20unknown.jpg"
+    },
+    "Its Beginning To Look a Lot Like Christmas": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Its%20Beginning%20To%20Look%20a%20Lot%20Like%20Christmas.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/its%20beginning%20to%20look%20a%20lot%20like%20christmas.jpg"
+    },
+    "Its the Most Wonderful Time of the Year": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Its%20the%20Most%20Wonderful%20Time%20of%20the%20Year.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/its%20the%20most%20wonderful%20time%20of%20the%20year.jpg"
+    },
+    "Jingle Bells": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Jingle%20Bells.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/jingle%20bells.jpg"
+    },
+    "Kid on Christmas": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Kid%20on%20Christmas.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/kid%20on%20christmas.jpg"
+    },
+    "Let It Go - Broadway Musical": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Let%20It%20Go%20-%20Broadway%20Musical.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/let%20it%20go%20-%20broadway%20musical.jpg"
+    },
+    "Let It Snow": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Let%20It%20Snow.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/let%20it%20snow.jpg"
+    },
+    "Light of Christmas": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Light%20of%20Christmas.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/light%20of%20christmas.jpg"
+    },
+    "Little Drummer Boy by For King and Country": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20For%20King%20and%20Country.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/little%20drummer%20boy%20by%20for%20king%20and%20country.jpg"
+    },
+    "Little Drummer Boy by Pentatonix": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20Pentatonix.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/little%20drummer%20boy%20by%20pentatonix.jpg"
+    },
+    "Little Drummer Boy by TobyMac": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20Toby%20Mac.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/little%20drummer%20boy%20by%20toby%20mac.jpg"
+    },
+    "Magic": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Magic.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/magic.jpg"
+    },
+    "Mary Did You Know": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Mary%20Did%20You%20Know.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/mary%20did%20you%20know.jpg"
+    },
+    "Melei Kelikimaka": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Melei%20Kelikimaka.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/melei%20kelikimaka.jpg"
+    },
+    "My Favorite Things": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/My%20Favorite%20Things.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/my%20favorite%20things.jpg"
+    },
+    "Never Ending Story": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Never%20Ending%20Story.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/never%20ending%20story.jpg"
+    },
+    "Oh Holy Night - South Park": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Oh%20Holy%20Night%20-%20South%20Park.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/oh%20holy%20night%20-%20south%20park.jpg"
+    },
+    "Pirates of the Carribean": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Pirates%20of%20the%20Carribean.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/pirates%20of%20the%20carribean.jpg"
+    },
+    "Queen of the Winter Night": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Queen%20of%20the%20Winter%20Night.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/queen%20of%20the%20winter%20night.jpg"
+    },
+    "Raining Tacos": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Raining%20Tacos.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/raining%20tacos.jpg"
+    },
+    "Remember": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Remember.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/remember.jpg"
+    },
+    "Sarajevo": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sarajevo.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/sarajevo.jpg"
+    },
+    "September": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/September.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/september.jpg"
+    },
+    "Shake Up Christmas": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Shake%20Up%20Christmas.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/shake%20up%20christmas.jpg"
+    },
+    "Shiny": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Shiny.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/shiny.jpg"
+    },
+    "Six Seven Christmas": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Six%20Seven%20Christmas.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/six%20seven%20christmas.jpg"
+    },
+    "Sleigh Ride (Instrumental)": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sleigh%20Ride%20(Instrumental).jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/sleigh%20ride%20(instrumental).jpg"
+    },
+    "Sleigh Ride by Pentatonix V1": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sleigh%20Ride%20by%20Pentatonix%20V1.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/sleigh%20ride%20by%20pentatonix%20v1.jpg"
+    },
+    "Sleigh Ride by Pentatonix V2": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sleigh%20Ride%20by%20Pentatonix%20V2.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/sleigh%20ride%20by%20pentatonix%20v2.jpg"
+    },
+    "Sounding Joy": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sounding%20Joy.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/sounding%20joy.jpg"
+    },
+    "Star Wars Funk": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Star%20Wars%20Funk.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/star%20wars%20funk.jpg"
+    },
+    "Star Wars Suite": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Star%20Wars%20Suite.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/star%20wars%20suite.jpg"
+    },
+    "Take On Me": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Take%20On%20Me.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/take%20on%20me.jpg"
+    },
+    "The Avengers Theme Remix": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Avengers%20Theme%20Remix.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/the%20avengers%20theme%20remix.jpg"
+    },
+    "The Christmas Can Can": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Christmas%20Can%20Can.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/the%20christmas%20can%20can.jpg"
+    },
+    "The Greatest Showman": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Greatest%20Showman.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/the%20greatest%20showman.jpg"
+    },
+    "The Polar Express": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Polar%20Express.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/the%20polar%20express.jpg"
+    },
+    "Trolls 2 Medley": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Trolls%202%20Medley.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/trolls%202%20medley.jpg"
+    },
+    "Trolls Wanna Have Good Times": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Trolls%20Wanna%20Have%20Good%20Times.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/trolls%20wanna%20have%20good%20times.jpg"
+    },
+    "Underneath the Tree": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Underneath%20the%20Tree.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/underneath%20the%20tree.jpg"
+    },
+    "Uptown Funk": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Uptown%20Funk.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/uptown%20funk.jpg"
+    },
+    "What Is This Feeling": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/What%20Is%20This%20Feeling.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/what%20is%20this%20feeling.jpg"
+    },
+    "Winter Wonderland": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Winter%20Wonderland.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/winter%20wonderland.jpg"
+    },
+    "Wizards in Winter": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Wizards%20in%20Winter.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/wizards%20in%20winter.jpg"
+    },
+    "You are a Mean One Mr Grinch": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20are%20a%20Mean%20One%20Mr%20Grinch.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/you%20are%20a%20mean%20one%20mr%20grinch.jpg"
+    },
+    "You are Welcome": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20are%20Welcome.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/you%20are%20welcome.jpg"
+    },
+    "You Make It Feel Like Christmas": {
+      "gh": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20Make%20It%20Feel%20Like%20Christmas.jpg",
+      "rf": "https://remote-falcon-uploads.nyc3.cdn.digitaloceanspaces.com/longcreeklights/you%20make%20it%20feel%20like%20christmas.jpg"
+    }
   }
 }

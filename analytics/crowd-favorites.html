@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Long Creek Lights — Crowd Favorites</title>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&amp;family=Nunito:wght@400;700;800&amp;display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { min-height: 100%; }
+html.embed, html.embed body { height: 100%; overflow: hidden; }
+body {
+    background: #0b1f3a;
+    color: #f5f7fa;
+    font-family: 'Nunito', system-ui, sans-serif;
+    text-align: center;
+    padding: 10px 12px 14px;
+}
+.lcl-section-title {
+    font-family: 'Mountains of Christmas', 'Nunito', cursive;
+    color: #ffd166;
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+    margin: 0 auto 6px;
+}
+.lcl-sub {
+    color: rgba(245, 247, 250, 0.75);
+    font-size: 0.88rem;
+    line-height: 1.45;
+    margin: 4px auto 10px;
+    max-width: 520px;
+}
+.lcl-analytics-anchor {
+    display: block;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.lcl-analytics-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 8px auto 12px;
+}
+.lcl-analytics-tab {
+    display: inline-block;
+    padding: 7px 16px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 209, 102, 0.35);
+    background: rgba(0, 0, 0, 0.25);
+    color: #ffd166;
+    font-weight: 800;
+    font-size: 0.88rem;
+    text-decoration: none;
+}
+.lcl-analytics-kpi {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 16px;
+    margin: 0 auto 8px;
+    font-size: 0.82rem;
+    color: rgba(245, 247, 250, 0.75);
+}
+.lcl-analytics-kpi strong { color: #f5f7fa; }
+.lcl-analytics-panel--2024 { display: none; }
+.lcl-analytics-panel--2025 { display: block; }
+.lcl-analytics-tab[href="#lcl-analytics-2025"] {
+    background: #e63946;
+    border-color: #e63946;
+    color: #fff;
+}
+#lcl-analytics-2024:target ~ .lcl-analytics-tabs .lcl-analytics-tab[href="#lcl-analytics-2025"] {
+    background: rgba(0, 0, 0, 0.25);
+    border-color: rgba(255, 209, 102, 0.35);
+    color: #ffd166;
+}
+#lcl-analytics-2024:target ~ .lcl-analytics-tabs .lcl-analytics-tab[href="#lcl-analytics-2024"],
+#lcl-analytics-2025:target ~ .lcl-analytics-tabs .lcl-analytics-tab[href="#lcl-analytics-2025"] {
+    background: #e63946;
+    border-color: #e63946;
+    color: #fff;
+}
+#lcl-analytics-2024:target ~ .lcl-analytics-panels .lcl-analytics-panel--2024 { display: block; }
+#lcl-analytics-2024:target ~ .lcl-analytics-panels .lcl-analytics-panel--2025 { display: none; }
+#lcl-analytics-2025:target ~ .lcl-analytics-panels .lcl-analytics-panel--2025 { display: block; }
+#lcl-analytics-2025:target ~ .lcl-analytics-panels .lcl-analytics-panel--2024 { display: none; }
+.lcl-stat-row {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr auto;
+    gap: 8px;
+    align-items: center;
+    margin: 8px auto;
+    width: 100%;
+    max-width: 520px;
+    text-align: left;
+    border-radius: 10px;
+    padding: 6px 8px;
+    text-decoration: none;
+    color: inherit;
+}
+.lcl-stat-rank {
+    font-weight: 800;
+    color: #ffd166;
+    font-size: 0.95rem;
+}
+.lcl-stat-name {
+    font-weight: 800;
+    font-size: 0.92rem;
+    line-height: 1.25;
+}
+.lcl-stat-track {
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    margin-top: 4px;
+    overflow: hidden;
+}
+.lcl-stat-bar {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #e63946, #ffd166);
+}
+.lcl-stat-pct {
+    font-weight: 800;
+    font-size: 0.82rem;
+    color: #ffd166;
+}
+</style>
+</head>
+<body>
+<h2 class="lcl-section-title">📊 Crowd Favorites</h2>
+<p class="lcl-sub">Top jukebox picks by season (% of all requests). Scroll up on the main page to queue a song.</p>
+<div class="lcl-analytics-card">
+    
+    <p class="lcl-sub">Top jukebox picks by season (% of all requests). Updated after each Christmas run.</p>
+    <div class="lcl-analytics" data-default-year="2025">
+        <span id="lcl-analytics-2024" class="lcl-analytics-anchor"></span>
+        <span id="lcl-analytics-2025" class="lcl-analytics-anchor"></span>
+        <div class="lcl-analytics-tabs">
+            <a href="#lcl-analytics-2025" class="lcl-analytics-tab">2025</a>
+            <a href="#lcl-analytics-2024" class="lcl-analytics-tab">2024</a>
+        </div>
+        <div class="lcl-analytics-panels">
+    <div class="lcl-analytics-panel lcl-analytics-panel--2025">
+        <p class="lcl-analytics-kpi">
+            <span><strong>391</strong> requests</span>
+            <span><strong>240</strong> visitors</span>
+            <span>Peak <strong>12/14/25</strong></span>
+        </p>
+        <p class="lcl-sub" style="margin:0 0 10px;">Tap a row — matching song glows gold in the list above</p>
+        <a class="lcl-stat-row" href="#lcl-song-alliwantforchristmasisyou" data-song-key="All I Want For Christmas is You" aria-label="Queue All I Want For Christmas is You">
+            <div class="lcl-stat-rank">1</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">All I Want For Christmas is You</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:100%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">6.7%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-blindinglights" data-song-key="Blinding Lights" aria-label="Queue Blinding Lights">
+            <div class="lcl-stat-rank">2</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">Blinding Lights</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:58%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.8%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-encantocompilationv1" data-song-key="Encanto Compilation V1" aria-label="Queue Encanto Compilation V1">
+            <div class="lcl-stat-rank">3</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">Encanto Compilation V1</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:50%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.3%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-godblesstheusa" data-song-key="God Bless the USA" aria-label="Queue God Bless the USA">
+            <div class="lcl-stat-rank">4</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">God Bless the USA</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:50%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.3%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-harrypotter" data-song-key="Harry Potter" aria-label="Queue Harry Potter">
+            <div class="lcl-stat-rank">5</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">Harry Potter</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:50%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.3%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-uptownfunk" data-song-key="Uptown Funk" aria-label="Queue Uptown Funk">
+            <div class="lcl-stat-rank">6</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">Uptown Funk</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:46%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.1%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-youareameanonemrgrinch" data-song-key="You are a Mean One Mr Grinch" aria-label="Queue You are a Mean One Mr Grinch">
+            <div class="lcl-stat-rank">7</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">You are a Mean One Mr Grinch</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:46%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.1%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-dangerzone" data-song-key="Danger Zone" aria-label="Queue Danger Zone">
+            <div class="lcl-stat-rank">8</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">Danger Zone</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:46%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.1%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-piratesofthecarribean" data-song-key="Pirates of the Carribean" aria-label="Queue Pirates of the Carribean">
+            <div class="lcl-stat-rank">9</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">Pirates of the Carribean</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:46%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.1%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-thegreatestshowman" data-song-key="The Greatest Showman" aria-label="Queue The Greatest Showman">
+            <div class="lcl-stat-rank">10</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">The Greatest Showman</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:42%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">2.8%</span></div>
+        </a>
+    </div>
+    <div class="lcl-analytics-panel lcl-analytics-panel--2024">
+        <p class="lcl-analytics-kpi">
+            <span><strong>381</strong> requests</span>
+            <span><strong>219</strong> visitors</span>
+            <span>Peak <strong>12/25/24</strong></span>
+        </p>
+        <p class="lcl-sub" style="margin:0 0 10px;">Tap a row — matching song glows gold in the list above</p>
+        <a class="lcl-stat-row" href="#lcl-song-youareameanonemrgrinch" data-song-key="You are a Mean One Mr Grinch" aria-label="Queue You are a Mean One Mr Grinch">
+            <div class="lcl-stat-rank">1</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">You are a Mean One Mr Grinch</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:100%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">5.0%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-letitgobroadwaymusical" data-song-key="Let It Go - Broadway Musical" aria-label="Queue Let It Go - Broadway Musical">
+            <div class="lcl-stat-rank">2</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">Let It Go - Broadway Musical</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:84%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">4.2%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-thepolarexpress" data-song-key="The Polar Express" aria-label="Queue The Polar Express">
+            <div class="lcl-stat-rank">3</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">The Polar Express</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:79%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.9%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-youarewelcome" data-song-key="You are Welcome" aria-label="Queue You are Welcome">
+            <div class="lcl-stat-rank">4</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">You are Welcome</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:74%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.7%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-ijustcannotwaittobeking" data-song-key="I Just Cannot Wait to Be King" aria-label="Queue I Just Cannot Wait to Be King">
+            <div class="lcl-stat-rank">5</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">I Just Cannot Wait to Be King</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:63%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.1%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-thegreatestshowman" data-song-key="The Greatest Showman" aria-label="Queue The Greatest Showman">
+            <div class="lcl-stat-rank">6</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">The Greatest Showman</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:63%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">3.1%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-danceofthesugarplumfairy" data-song-key="Dance of the Sugar Plum Fairy" aria-label="Queue Dance of the Sugar Plum Fairy">
+            <div class="lcl-stat-rank">7</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">Dance of the Sugar Plum Fairy</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:53%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">2.6%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-theavengersthemeremix" data-song-key="The Avengers Theme Remix" aria-label="Queue The Avengers Theme Remix">
+            <div class="lcl-stat-rank">8</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">The Avengers Theme Remix</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:53%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">2.6%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-harrypotter" data-song-key="Harry Potter" aria-label="Queue Harry Potter">
+            <div class="lcl-stat-rank">9</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">Harry Potter</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:53%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">2.6%</span></div>
+        </a>
+        <a class="lcl-stat-row" href="#lcl-song-carolofthebellsbypentatonix" data-song-key="Carol of the Bells by Pentatonix" aria-label="Queue Carol of the Bells by Pentatonix">
+            <div class="lcl-stat-rank">10</div>
+            <div class="lcl-stat-body">
+                <div class="lcl-stat-name">Carol of the Bells by Pentatonix</div>
+                <div class="lcl-stat-track"><div class="lcl-stat-bar" style="width:53%"></div></div>
+            </div>
+            <div class="lcl-stat-meta"><span class="lcl-stat-pct">2.6%</span></div>
+        </a>
+    </div>
+        </div>
+    </div>
+</div>
+<script>
+if (window.self !== window.top) document.documentElement.classList.add('embed');
+</script>
+</body>
+</html>
