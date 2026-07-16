@@ -241,6 +241,8 @@
             var d = new Date(row[iWhen]);
             if (!isNaN(d.getTime())) {
               when = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            } else {
+              when = String(row[iWhen]).split(' ')[0]; /* fallback: raw date part */
             }
           }
           out.push({
