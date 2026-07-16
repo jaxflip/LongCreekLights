@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guest Book — Long Creek Lights</title>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: transparent;
+    color: #f5f7fa;
+    font-family: 'Nunito', system-ui, sans-serif;
+    text-align: center;
+    padding: 2px;
+    overflow: hidden;
+  }
+  .stage { position: relative; min-height: 190px; }
+  .card {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 18px 22px;
+    background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%);
+    border: 2px solid rgba(255, 209, 102, 0.45);
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+    pointer-events: none;
+  }
+  .card.show { opacity: 1; }
+  .quote-mark {
+    font-family: 'Mountains of Christmas', cursive;
+    color: #ffd166;
+    font-size: 2rem;
+    line-height: 0.5;
+    text-shadow: 0 0 12px rgba(255,209,102,0.4);
+  }
+  .msg {
+    font-size: clamp(0.95rem, 3.8vw, 1.1rem);
+    line-height: 1.5;
+    font-weight: 700;
+    max-width: 460px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+  .who {
+    font-family: 'Mountains of Christmas', cursive;
+    color: #ffd166;
+    font-size: 1.15rem;
+    text-shadow: 0 0 10px rgba(255,209,102,0.35);
+  }
+  .dots { position: absolute; bottom: 6px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; }
+  .dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: background 0.3s; }
+  .dots i.on { background: #ffd166; }
+  .empty {
+    border: 2px dashed rgba(255, 209, 102, 0.45);
+    border-radius: 16px;
+    padding: 30px 18px;
+  }
+  .empty .big { font-size: 2rem; display: block; margin-bottom: 8px; }
+  .empty p { font-size: 0.9rem; opacity: 0.9; line-height: 1.5; }
+  .empty b { color: #ffd166; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+(function () {
+  'use strict';
+
+  /* ==========================================================
+     SETUP (one time):
+     1. Google Form (Name, Message, optional Hometown) linked to
+        a response Sheet.
+     2. In the Sheet, add a column headed "Approved".
+     3. File -> Share -> Publish to web -> select the responses
+        tab -> CSV -> Publish, and paste that URL below.
+     4. To approve a message (works from the Sheets phone app):
+        type  yes  in its Approved cell. Appears here in ~5 min.
+     ========================================================== */
+  var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQWafLAj9capbRc8KKv3UBmaKVWKBwTqsfULz8gW_zMo0TWDLeQxSnRvFzCh3_J6yGSaHUqpzHB2y2-/pub?gid=1889411103&single=true&output=csv';
+
+  var MAX_MESSAGES = 30;      /* newest N approved messages rotate */
+  var ROTATE_MS = 7000;
+
+  var root = document.getElementById('root');
+
+  function showEmpty(setupMode) {
+    root.innerHTML = setupMode
+      ? '<div class="empty"><span class="big">🛠️</span><p><b>Guest book almost ready!</b><br>' +
+        'Paste the published Sheet CSV URL into guestbook/index.html (see setup notes inside the file).</p></div>'
+      : '<div class="empty"><span class="big">📖✨</span><p><b>Be the first to sign our guest book!</b><br>' +
+        'Leave us a note below — we read every single one. 🎄</p></div>';
+  }
+
+  /* small RFC-4180 CSV parser (handles quoted commas + newlines) */
+  function parseCSV(text) {
+    var rows = [], row = [], cur = '', inQ = false;
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      if (inQ) {
+        if (c === '"') {
+          if (text[i + 1] === '"') { cur += '"'; i++; }
+          else inQ = false;
+        } else cur += c;
+      } else if (c === '"') inQ = true;
+      else if (c === ',') { row.push(cur); cur = ''; }
+      else if (c === '\n' || c === '\r') {
+        if (c === '\r' && text[i + 1] === '\n') i++;
+        row.push(cur); cur = '';
+        if (row.length > 1 || row[0] !== '') rows.push(row);
+        row = [];
+      } else cur += c;
+    }
+    if (cur !== '' || row.length) { row.push(cur); rows.push(row); }
+    return rows;
+  }
+
+  function colIndex(headers, words) {
+    for (var i = 0; i < headers.length; i++) {
+      var h = headers[i].toLowerCase();
+      for (var w = 0; w < words.length; w++) {
+        if (h.indexOf(words[w]) !== -1) return i;
+      }
+    }
+    return -1;
+  }
+
+  function render(messages) {
+    if (!messages.length) return showEmpty(false);
+    var stage = document.createElement('div');
+    stage.className = 'stage';
+    var dots = document.createElement('div');
+    dots.className = 'dots';
+    var cards = [];
+    messages.forEach(function (m, idx) {
+      var card = document.createElement('div');
+      card.className = 'card';
+      var who = m.name || 'A visitor';
+      if (m.town) who += ' · ' + m.town;
+      card.innerHTML = '<div class="quote-mark">“</div>';
+      var msgEl = document.createElement('div');
+      msgEl.className = 'msg';
+      msgEl.textContent = m.msg;          /* textContent = safe, no HTML injection */
+      var whoEl = document.createElement('div');
+      whoEl.className = 'who';
+      whoEl.textContent = '— ' + who;
+      card.appendChild(msgEl);
+      card.appendChild(whoEl);
+      stage.appendChild(card);
+      cards.push(card);
+      var dot = document.createElement('i');
+      dots.appendChild(dot);
+    });
+    stage.appendChild(dots);
+    root.appendChild(stage);
+
+    var cur = 0;
+    function show(n) {
+      cards.forEach(function (c, i) { c.classList.toggle('show', i === n); });
+      var ds = dots.children;
+      for (var i = 0; i < ds.length; i++) ds[i].classList.toggle('on', i === n);
+    }
+    show(0);
+    if (cards.length > 1) {
+      setInterval(function () {
+        cur = (cur + 1) % cards.length;
+        show(cur);
+      }, ROTATE_MS);
+    }
+  }
+
+  if (SHEET_CSV_URL.indexOf('http') !== 0) return showEmpty(true);
+
+  fetch(SHEET_CSV_URL, { cache: 'no-store' })
+    .then(function (r) { return r.text(); })
+    .then(function (text) {
+      var rows = parseCSV(text);
+      if (rows.length < 2) return showEmpty(false);
+      var headers = rows[0];
+      var iApproved = colIndex(headers, ['approve']);
+      var iName = colIndex(headers, ['name']);
+      var iMsg = colIndex(headers, ['message', 'note', 'comment']);
+      var iTown = colIndex(headers, ['hometown', 'town', 'city', 'from', 'neighborhood']);
+      if (iMsg === -1) return showEmpty(false);
+      var out = [];
+      for (var r = rows.length - 1; r >= 1 && out.length < MAX_MESSAGES; r--) { /* newest first */
+        var row = rows[r];
+        var ok = iApproved !== -1 && /^(yes|y|true|1|approved?)$/i.test((row[iApproved] || '').trim());
+        var msg = (row[iMsg] || '').trim();
+        if (ok && msg) {
+          out.push({
+            msg: msg.length > 280 ? msg.slice(0, 277) + '…' : msg,
+            name: iName !== -1 ? (row[iName] || '').trim().slice(0, 40) : '',
+            town: iTown !== -1 ? (row[iTown] || '').trim().slice(0, 40) : ''
+          });
+        }
+      }
+      render(out);
+    })
+    .catch(function () { showEmpty(false); });
+})();
+</script>
+</body>
+</html>
