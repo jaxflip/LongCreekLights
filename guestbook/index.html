@@ -6,7 +6,12 @@
 <title>Guest Book — Long Creek Lights</title>
 <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
 <style>
+  /* v3 (2026-11-23): long messages are no longer cut off. The card fills whatever
+     height the host iframe gives it; a message shows 6 lines, and if there is more,
+     a "Read more" button expands it (scrolling inside the card if needed) and pauses
+     the rotation. ‹ › arrows step through messages. */
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body, #root { height: 100%; }
   body {
     background: transparent;
     color: #f5f7fa;
@@ -15,7 +20,7 @@
     padding: 2px;
     overflow: hidden;
   }
-  .stage { position: relative; min-height: 150px; transition: height 0.5s ease; }
+  .stage { position: relative; height: 100%; min-height: 150px; }
   .card {
     position: absolute;
     inset: 0;
@@ -23,8 +28,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 20px 24px 26px;
+    gap: 6px;
+    padding: 18px 22px 30px;
     background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%);
     border: 2px solid rgba(255, 209, 102, 0.45);
     border-radius: 16px;
@@ -33,7 +38,7 @@
     pointer-events: none;
     overflow: hidden;
   }
-  .card.show { opacity: 1; }
+  .card.show { opacity: 1; pointer-events: auto; }
   /* decorative open-quote pinned to the corner (clearly intentional, out of the text flow) */
   .quote-mark {
     position: absolute;
@@ -50,27 +55,85 @@
     font-size: clamp(0.95rem, 3.8vw, 1.1rem);
     line-height: 1.5;
     font-weight: 700;
+    width: 100%;
     max-width: 460px;
+    min-height: 0;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 8;   /* safety net only; 280-char cap ≈ 6-7 lines at phone width */
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
+    overflow-wrap: anywhere;
   }
+  /* expanded: no clamp; if the full text is taller than the card, it scrolls inside the card
+     (the host iframe has a fixed height and cannot grow) */
+  .card.open .msg {
+    display: block;
+    -webkit-line-clamp: none;
+    overflow-y: auto;
+    flex: 0 1 auto;
+    padding: 0 6px;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,209,102,0.55) transparent;
+  }
+  .card.open .msg::-webkit-scrollbar { width: 6px; }
+  /* soft edges hint that the text continues; each fade disappears at that end of the scroll */
+  .card.open .msg { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%); }
+  .card.open .msg.at-start { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 16px), transparent 100%); mask-image: linear-gradient(to bottom, #000 calc(100% - 16px), transparent 100%); }
+  .card.open .msg.at-end { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16px); mask-image: linear-gradient(to bottom, transparent 0, #000 16px); }
+  .card.open .msg.at-start.at-end { -webkit-mask-image: none; mask-image: none; }
+  .card.open .msg::-webkit-scrollbar-thumb { background: rgba(255,209,102,0.55); border-radius: 3px; }
+  .more {
+    display: none;
+    border: 0;
+    background: none;
+    color: #ffd166;
+    font: inherit;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    padding: 2px 8px;
+    flex: 0 0 auto;
+  }
+  .card.long .more { display: inline-block; }
   .who {
     font-family: 'Mountains of Christmas', cursive;
     color: #ffd166;
     font-size: 1.15rem;
     text-shadow: 0 0 10px rgba(255,209,102,0.35);
+    flex: 0 0 auto;
   }
   .when {
     font-size: 0.72rem;
     font-weight: 700;
     opacity: 0.65;
     letter-spacing: 0.04em;
+    flex: 0 0 auto;
   }
-  .dots { position: absolute; bottom: 6px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; }
+  .dots { position: absolute; bottom: 8px; left: 44px; right: 44px; display: flex; justify-content: center; gap: 6px; pointer-events: none; }
   .dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: background 0.3s; }
   .dots i.on { background: #ffd166; }
+  .count { position: absolute; bottom: 4px; left: 44px; right: 44px; font-size: 0.7rem; font-weight: 800; opacity: 0.6; letter-spacing: 0.06em; pointer-events: none; }
+  .nav {
+    position: absolute;
+    bottom: 0;
+    width: 40px;
+    height: 30px;
+    border: 0;
+    background: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .nav:hover, .nav:focus-visible { color: #ffd166; outline: none; }
+  .nav.prev { left: 2px; }
+  .nav.next { right: 2px; }
+  .nav[hidden] { display: none; }
   .empty {
     border: 2px dashed rgba(255, 209, 102, 0.45);
     border-radius: 16px;
@@ -79,6 +142,7 @@
   .empty .big { font-size: 2rem; display: block; margin-bottom: 8px; }
   .empty p { font-size: 0.9rem; opacity: 0.9; line-height: 1.5; }
   .empty b { color: #ffd166; }
+  @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
 </style>
 </head>
 <body>
@@ -100,7 +164,10 @@
   var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQWafLAj9capbRc8KKv3UBmaKVWKBwTqsfULz8gW_zMo0TWDLeQxSnRvFzCh3_J6yGSaHUqpzHB2y2-/pub?gid=1889411103&single=true&output=csv';
 
   var MAX_MESSAGES = 30;      /* newest N approved messages rotate */
+  var MAX_CHARS = 1500;       /* safety net only — you approve every message anyway */
   var ROTATE_MS = 7000;
+  var DOTS_MAX = 12;          /* more messages than this -> "3 / 27" counter instead of dots */
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var root = document.getElementById('root');
 
@@ -149,10 +216,10 @@
     if (!messages.length) return showEmpty(false);
     var stage = document.createElement('div');
     stage.className = 'stage';
-    var dots = document.createElement('div');
-    dots.className = 'dots';
-    var cards = [];
-    messages.forEach(function (m, idx) {
+    var cards = [], msgEls = [], moreBtns = [];
+    var cur = 0, timer = null;
+
+    messages.forEach(function (m) {
       var card = document.createElement('div');
       card.className = 'card';
       var who = m.name || 'A visitor';
@@ -161,10 +228,16 @@
       var msgEl = document.createElement('div');
       msgEl.className = 'msg';
       msgEl.textContent = m.msg;          /* textContent = safe, no HTML injection */
+      var more = document.createElement('button');
+      more.className = 'more';
+      more.type = 'button';
+      more.textContent = 'Read more ▾';
+      more.setAttribute('aria-expanded', 'false');
       var whoEl = document.createElement('div');
       whoEl.className = 'who';
       whoEl.textContent = '— ' + who;
       card.appendChild(msgEl);
+      card.appendChild(more);
       card.appendChild(whoEl);
       if (m.when) {
         var whenEl = document.createElement('div');
@@ -172,48 +245,89 @@
         whenEl.textContent = m.when;
         card.appendChild(whenEl);
       }
+      more.addEventListener('click', function () { toggle(card, more, !card.classList.contains('open')); });
+      msgEl.addEventListener('scroll', function () { edges(msgEl); }, { passive: true });
       stage.appendChild(card);
-      cards.push(card);
-      var dot = document.createElement('i');
-      dots.appendChild(dot);
+      cards.push(card); msgEls.push(msgEl); moreBtns.push(more);
     });
-    stage.appendChild(dots);
+
+    /* dots (few messages) or a "n / N" counter (many) */
+    var dots = null, count = null;
+    if (messages.length <= DOTS_MAX) {
+      dots = document.createElement('div');
+      dots.className = 'dots';
+      messages.forEach(function () { dots.appendChild(document.createElement('i')); });
+      stage.appendChild(dots);
+    } else {
+      count = document.createElement('div');
+      count.className = 'count';
+      stage.appendChild(count);
+    }
+
+    var prev = document.createElement('button');
+    prev.className = 'nav prev'; prev.type = 'button'; prev.textContent = '‹';
+    prev.setAttribute('aria-label', 'Previous message');
+    var next = document.createElement('button');
+    next.className = 'nav next'; next.type = 'button'; next.textContent = '›';
+    next.setAttribute('aria-label', 'Next message');
+    if (messages.length < 2) { prev.hidden = true; next.hidden = true; }
+    prev.addEventListener('click', function () { show(cur - 1); restart(); });
+    next.addEventListener('click', function () { show(cur + 1); restart(); });
+    stage.appendChild(prev);
+    stage.appendChild(next);
     root.appendChild(stage);
 
-    /* size the stage to the tallest card so no message is ever cut off:
-       measure each card's natural height, take the max, apply it */
-    function fitStage() {
-      var maxH = 0;
-      cards.forEach(function (c) {
-        c.style.position = 'static';
-        c.style.visibility = 'hidden';
-        var h = c.offsetHeight;
-        if (h > maxH) maxH = h;
-        c.style.position = '';
-        c.style.visibility = '';
+    /* a message is "long" when the 6-line clamp hides part of it */
+    function measure() {
+      msgEls.forEach(function (el, i) {
+        var wasOpen = cards[i].classList.contains('open');
+        if (wasOpen) cards[i].classList.remove('open');
+        cards[i].classList.toggle('long', el.scrollHeight > el.clientHeight + 2);
+        if (wasOpen) cards[i].classList.add('open');
       });
-      stage.style.height = (maxH + 22) + 'px';   /* + room for the dots */
     }
-    fitStage();
+    function edges(el) {
+      el.classList.toggle('at-start', el.scrollTop <= 1);
+      el.classList.toggle('at-end', el.scrollTop + el.clientHeight >= el.scrollHeight - 1);
+    }
+    function toggle(card, btn, open) {
+      var el = card.querySelector('.msg');
+      card.classList.toggle('open', open);
+      btn.textContent = open ? 'Show less ▴' : 'Read more ▾';
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) { stop(); el.scrollTop = 0; edges(el); }
+      else { el.scrollTop = 0; restart(); }
+    }
+    function show(n) {
+      cur = (n + cards.length) % cards.length;
+      cards.forEach(function (c, i) {
+        var on = i === cur;
+        c.classList.toggle('show', on);
+        if (!on && c.classList.contains('open')) toggle(c, moreBtns[i], false);
+      });
+      if (dots) {
+        var ds = dots.children;
+        for (var i = 0; i < ds.length; i++) ds[i].classList.toggle('on', i === cur);
+      }
+      if (count) count.textContent = (cur + 1) + ' / ' + cards.length;
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function restart() {
+      stop();
+      if (cards.length > 1 && !reduceMotion) {
+        timer = setInterval(function () { show(cur + 1); }, ROTATE_MS);
+      }
+    }
+
+    measure();
+    show(0);
+    restart();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
     var resizeT;
     window.addEventListener('resize', function () {
       clearTimeout(resizeT);
-      resizeT = setTimeout(fitStage, 150);
+      resizeT = setTimeout(measure, 150);
     });
-
-    var cur = 0;
-    function show(n) {
-      cards.forEach(function (c, i) { c.classList.toggle('show', i === n); });
-      var ds = dots.children;
-      for (var i = 0; i < ds.length; i++) ds[i].classList.toggle('on', i === n);
-    }
-    show(0);
-    if (cards.length > 1) {
-      setInterval(function () {
-        cur = (cur + 1) % cards.length;
-        show(cur);
-      }, ROTATE_MS);
-    }
   }
 
   if (SHEET_CSV_URL.indexOf('http') !== 0) return showEmpty(true);
@@ -246,7 +360,7 @@
             }
           }
           out.push({
-            msg: msg.length > 280 ? msg.slice(0, 277) + '…' : msg,
+            msg: msg.length > MAX_CHARS ? msg.slice(0, MAX_CHARS - 1) + '…' : msg,
             name: iName !== -1 ? (row[iName] || '').trim().slice(0, 40) : '',
             town: iTown !== -1 ? (row[iTown] || '').trim().slice(0, 40) : '',
             when: when
