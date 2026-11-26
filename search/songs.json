@@ -1,24 +1,7 @@
 {
  "generated_by": "update_site_from_summary.py",
  "page": "https://longcreeklights.remotefalcon.com/remote-falcon",
- "sets": {
-  "Kids": {
-   "slug": "kids",
-   "members": [
-    "Can't Stop the Feeling!",
-    "Deck the Halls · Mario",
-    "Disney Princesses Medley",
-    "Into the Unknown"
-   ]
-  },
-  "Movies": {
-   "slug": "movies",
-   "members": [
-    "For Good",
-    "Let It Go"
-   ]
-  }
- },
+ "sets": {},
  "songs": [
   {
    "title": "12 Days of Christmas",
@@ -164,14 +147,14 @@
    "versions": 0,
    "group": "",
    "group_slug": "",
-   "set": "Kids",
-   "set_slug": "kids",
+   "set": "",
+   "set_slug": "",
    "tags": []
   },
   {
    "title": "Carol Of The Bells",
-   "display": "Carol of the Bells · Instrumental (David Foster)",
-   "artist": "David Foster",
+   "display": "Carol of the Bells",
+   "artist": "David Foster (instrumental)",
    "category": "Instrumental",
    "slug": "carolofthebells",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20Of%20The%20Bells.jpg",
@@ -184,8 +167,8 @@
   },
   {
    "title": "Carol of the Bells (Metal Version)",
-   "display": "Carol of the Bells · Metal (Jonathan Young)",
-   "artist": "Jonathan Young",
+   "display": "Carol of the Bells",
+   "artist": "Jonathan Young (metal version)",
    "category": "Instrumental",
    "slug": "carolofthebellsmetalversion",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20of%20the%20Bells%20(Metal%20Version).jpg",
@@ -200,7 +183,7 @@
   },
   {
    "title": "Carol of the Bells by Pentatonix",
-   "display": "Carol of the Bells · Pentatonix",
+   "display": "Carol of the Bells",
    "artist": "Pentatonix",
    "category": "Contemporary",
    "slug": "carolofthebellsbypentatonix",
@@ -342,16 +325,16 @@
   },
   {
    "title": "Deck the Halls - Mario",
-   "display": "Deck the Halls · Mario",
-   "artist": "Kidzone",
+   "display": "Deck the Halls",
+   "artist": "Kidzone (Mario)",
    "category": "Novelty",
    "slug": "deckthehallsmario",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Deck%20the%20Halls%20-%20Mario.jpg",
    "versions": 0,
    "group": "",
    "group_slug": "",
-   "set": "Kids",
-   "set_slug": "kids",
+   "set": "",
+   "set_slug": "",
    "tags": []
   },
   {
@@ -378,8 +361,8 @@
    "versions": 0,
    "group": "",
    "group_slug": "",
-   "set": "Kids",
-   "set_slug": "kids",
+   "set": "",
+   "set_slug": "",
    "tags": []
   },
   {
@@ -452,8 +435,8 @@
    "versions": 0,
    "group": "",
    "group_slug": "",
-   "set": "Movies",
-   "set_slug": "movies",
+   "set": "",
+   "set_slug": "",
    "tags": []
   },
   {
@@ -583,8 +566,8 @@
    "versions": 0,
    "group": "",
    "group_slug": "",
-   "set": "Kids",
-   "set_slug": "kids",
+   "set": "",
+   "set_slug": "",
    "tags": []
   },
   {
@@ -653,8 +636,8 @@
    "versions": 0,
    "group": "",
    "group_slug": "",
-   "set": "Movies",
-   "set_slug": "movies",
+   "set": "",
+   "set_slug": "",
    "tags": []
   },
   {
@@ -701,7 +684,7 @@
   },
   {
    "title": "Little Drummer Boy by For King and Country",
-   "display": "Little Drummer Boy · for KING & COUNTRY",
+   "display": "Little Drummer Boy",
    "artist": "for KING & COUNTRY",
    "category": "Contemporary",
    "slug": "littledrummerboybyforkingandcountry",
@@ -715,7 +698,7 @@
   },
   {
    "title": "Little Drummer Boy by Pentatonix",
-   "display": "Little Drummer Boy · Pentatonix",
+   "display": "Little Drummer Boy",
    "artist": "Pentatonix",
    "category": "Contemporary",
    "slug": "littledrummerboybypentatonix",
@@ -729,7 +712,7 @@
   },
   {
    "title": "Little Drummer Boy by TobyMac",
-   "display": "Little Drummer Boy · TobyMac",
+   "display": "Little Drummer Boy",
    "artist": "TobyMac",
    "category": "Contemporary",
    "slug": "littledrummerboybytobymac",
@@ -829,7 +812,7 @@
   },
   {
    "title": "Oh Holy Night - South Park",
-   "display": "O Holy Night · South Park",
+   "display": "O Holy Night",
    "artist": "Eric Cartman (South Park)",
    "category": "Contemporary",
    "slug": "ohholynightsouthpark",
@@ -989,8 +972,8 @@
   },
   {
    "title": "Sleigh Ride (Instrumental)",
-   "display": "Sleigh Ride · Instrumental (101 Strings)",
-   "artist": "101 Strings Orchestra",
+   "display": "Sleigh Ride",
+   "artist": "101 Strings Orchestra (instrumental)",
    "category": "Instrumental",
    "slug": "sleighrideinstrumental",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sleigh%20Ride%20(Instrumental).jpg",
@@ -1307,7 +1290,7 @@
   },
   {
    "title": "Sleigh Ride by Pentatonix",
-   "display": "Sleigh Ride · Pentatonix",
+   "display": "Sleigh Ride",
    "artist": "Pentatonix",
    "category": "Contemporary",
    "slug": "sleighridebypentatonix",
