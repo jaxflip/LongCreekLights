@@ -14,6 +14,7 @@
   input { width:100%; font:inherit; font-size:16px; font-weight:700; color:var(--text); padding:12px 40px 12px 14px;
     border-radius:12px; border:1.5px solid var(--line); background:rgba(0,0,0,0.35); outline:none; }
   input:focus { border-color:var(--gold); }
+  input::-webkit-search-cancel-button, input::-webkit-search-decoration { -webkit-appearance:none; appearance:none; display:none; }
   input::placeholder { color:var(--muted); font-weight:600; }
   .clear { position:absolute; right:8px; top:50%; transform:translateY(-50%); border:0; background:transparent; color:var(--muted);
     font-size:20px; width:30px; height:30px; cursor:pointer; display:none; }
@@ -32,6 +33,8 @@
   a.row.grp { grid-template-columns:minmax(0,1fr); border-color:rgba(255,209,102,0.5); background:rgba(255,209,102,0.10); }
   a.row.grp .t::after { content:" ›"; color:var(--gold); }
   a.row.ver { margin-left:16px; }
+  a.row.set { grid-template-columns:minmax(0,1fr); border-color:rgba(255,209,102,0.5); background:rgba(255,209,102,0.10); }
+  a.row.set .a { white-space:normal; }
   .empty { text-align:center; color:var(--muted); font-size:13px; padding:18px 8px; }
 </style>
 </head>
@@ -46,7 +49,7 @@
 </div>
 <script>
 (function () {
-  var SONGS = [], PAGE = "";
+  var SONGS = [], PAGE = "", SETS = {};
   var q = document.getElementById("q"), list = document.getElementById("list"),
       meta = document.getElementById("meta"), clr = document.getElementById("clr");
   function norm(s) { return (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim(); }
@@ -71,9 +74,18 @@
     });
     meta.textContent = hits.length ? hits.length + (hits.length === 1 ? " match" : " matches") + " · tap one to jump to it in the list" : "";
     if (!hits.length) { list.innerHTML = '<div class="empty">No song or artist matches “' + esc(raw) + '”.<br>Try fewer letters.</div>'; return; }
-    // songs with several versions: one header (shows them all in the list) + every version under it
+    // songs with several versions: one header (shows them all in the list) + every version under it;
+    // songs inside a Remote Falcon group ("set"): one row for the set — RF lists the set as a single
+    // entry and plays every member when it is requested, so that is where the visitor has to tap
     var rows = [], seen = {};
     hits.forEach(function (s) {
+      if (s.set) {
+        if (seen["set:" + s.set]) return;
+        seen["set:" + s.set] = 1;
+        var def = SETS[s.set] || { slug: s.set_slug, members: [s.display] };
+        rows.push([{ set: s.set, set_slug: def.slug, members: def.members }, "set"]);
+        return;
+      }
       if (!s.group) { rows.push([s, ""]); return; }
       if (seen[s.group]) return;
       seen[s.group] = 1;
@@ -83,6 +95,11 @@
     });
     list.innerHTML = rows.slice(0, 80).map(function (r) {
       var s = r[0];
+      if (r[1] === "set") {
+        return '<a class="row set" target="_top" href="' + esc(PAGE + "#lcl-song-" + s.set_slug) + '">' +
+          '<span><span class="t">' + esc(s.set) + '<span class="b">' + s.members.length + '-song set</span></span>' +
+          '<span class="a" style="display:block">Listed as one entry · plays ' + s.members.map(function (m) { return hi(m, words); }).join(", ") + '</span></span></a>';
+      }
       if (r[1] === "grp") {
         return '<a class="row grp" target="_top" href="' + esc(PAGE + "#lcl-ver-" + s.group_slug) + '">' +
           '<span><span class="t">' + hi(s.group, words) + '<span class="b">' + s.n + ' versions</span></span>' +
@@ -96,9 +113,13 @@
     }).join("");
   }
   q.addEventListener("input", render);
+  q.addEventListener("keydown", function (e) {           /* Enter = open the first result */
+    if (e.key === "Enter") { var first = list.querySelector("a.row"); if (first) { e.preventDefault(); first.click(); } }
+  });
   clr.addEventListener("click", function () { q.value = ""; render(); q.focus(); });
   fetch("songs.json?v=" + Date.now()).then(function (r) { return r.json(); }).then(function (d) {
     PAGE = d.page || "";
+    SETS = d.sets || {};
     SONGS = (d.songs || []).map(function (s) {
       s._name = norm(s.display) + " " + norm(s.title);
       s._hay = " " + s._name + " " + norm(s.artist) + " ";
