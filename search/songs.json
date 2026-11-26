@@ -10,6 +10,8 @@
    "slug": "12daysofchristmas",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/12%20Days%20of%20Christmas.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -20,6 +22,8 @@
    "slug": "12painsofchristmas",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/12%20Pains%20of%20Christmas.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -30,6 +34,8 @@
    "slug": "amadrussianschristmas",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/A%20Mad%20Russians%20Christmas.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -40,6 +46,8 @@
    "slug": "amilliondreams",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/A%20Million%20Dreams.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "New"
    ]
@@ -52,6 +60,8 @@
    "slug": "astartofollow",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/A%20Star%20to%20Follow.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -62,6 +72,8 @@
    "slug": "alliwantforchristmasisyou",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/All%20I%20Want%20For%20Christmas%20is%20You.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "Top Voted"
    ]
@@ -74,6 +86,8 @@
    "slug": "amazinggrace",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Amazing%20Grace.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "New"
    ]
@@ -86,6 +100,8 @@
    "slug": "believer",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Believer.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "Favorite"
    ]
@@ -98,6 +114,8 @@
    "slug": "blindinglights",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Blinding%20Lights.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -108,6 +126,8 @@
    "slug": "cantstopthefeeling",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cant%20Stop%20the%20Feeling.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -118,6 +138,8 @@
    "slug": "carolofthebells",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20Of%20The%20Bells.jpg",
    "versions": 3,
+   "group": "Carol of the Bells",
+   "group_slug": "carolofthebells",
    "tags": []
   },
   {
@@ -128,6 +150,8 @@
    "slug": "carolofthebellsmetalversion",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20of%20the%20Bells%20(Metal%20Version).jpg",
    "versions": 3,
+   "group": "Carol of the Bells",
+   "group_slug": "carolofthebells",
    "tags": [
     "New"
    ]
@@ -140,6 +164,8 @@
    "slug": "carolofthebellsbypentatonix",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20of%20the%20Bells%20by%20Pentatonix.jpg",
    "versions": 3,
+   "group": "Carol of the Bells",
+   "group_slug": "carolofthebells",
    "tags": []
   },
   {
@@ -150,6 +176,8 @@
    "slug": "cartoonnetworkmashup",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cartoon%20Network%20Mashup.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -160,6 +188,8 @@
    "slug": "christmascanon",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Canon.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -170,6 +200,8 @@
    "slug": "christmaseveryday",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Everyday.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -180,6 +212,8 @@
    "slug": "christmastreefarm",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Tree%20Farm.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -190,6 +224,8 @@
    "slug": "christmaswrapping",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Wrapping.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -200,6 +236,8 @@
    "slug": "cozylittlechristmas",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cozy%20Little%20Christmas.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -210,6 +248,8 @@
    "slug": "crazyforchristmas",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Crazy%20for%20Christmas.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "New"
    ]
@@ -222,6 +262,8 @@
    "slug": "danceofthesugarplumfairy",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Dance%20of%20the%20Sugar%20Plum%20Fairy.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -232,6 +274,8 @@
    "slug": "dangerzone",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Danger%20Zone.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -242,6 +286,8 @@
    "slug": "deckthehallsmario",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Deck%20the%20Halls%20-%20Mario.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -252,6 +298,8 @@
    "slug": "defyinggravity",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Defying%20Gravity.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -262,6 +310,8 @@
    "slug": "disneyprincesses",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Disney%20Princesses.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -272,6 +322,8 @@
    "slug": "dominickthedonkey",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Dominick%20the%20Donkey.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "New"
    ]
@@ -284,6 +336,8 @@
    "slug": "encantocompilation",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Encanto%20Compilation.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -294,6 +348,8 @@
    "slug": "feliznavidad",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Feliz%20Navidad.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -304,6 +360,8 @@
    "slug": "fireflies",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Fireflies.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "New"
    ]
@@ -316,6 +374,8 @@
    "slug": "forgood",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/For%20Good.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -326,6 +386,8 @@
    "slug": "godblesstheusa",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/God%20Bless%20the%20USA.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -336,6 +398,8 @@
    "slug": "harktheheraldangelssing",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Hark!%20The%20Herald%20Angels%20Sing.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -346,6 +410,8 @@
    "slug": "harrypotter",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Harry%20Potter.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -356,6 +422,8 @@
    "slug": "heshallreignforevermore",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/He%20Shall%20Reign%20Forevermore.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "Favorite"
    ]
@@ -368,6 +436,8 @@
    "slug": "herecomessantaclaus",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Here%20Comes%20Santa%20Claus.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -378,6 +448,8 @@
    "slug": "heycomelookatmyhouse",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Hey%20Come%20Look%20at%20My%20House.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "Claude Favorite",
     "New"
@@ -391,6 +463,8 @@
    "slug": "howfariwillgo",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/How%20Far%20I%20will%20Go.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -401,6 +475,8 @@
    "slug": "ijustcannotwaittobeking",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/I%20Just%20Cannot%20Wait%20to%20Be%20King.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -411,6 +487,8 @@
    "slug": "intotheunknown",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Into%20the%20Unknown.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -421,6 +499,8 @@
    "slug": "itsbeginningtolookalotlikechristmas",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Its%20Beginning%20To%20Look%20a%20Lot%20Like%20Christmas.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -431,6 +511,8 @@
    "slug": "itsthemostwonderfultimeoftheyear",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Its%20the%20Most%20Wonderful%20Time%20of%20the%20Year.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -441,6 +523,8 @@
    "slug": "jinglebells",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Jingle%20Bells.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -451,6 +535,8 @@
    "slug": "kidonchristmas",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Kid%20on%20Christmas.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -461,6 +547,8 @@
    "slug": "letitgobroadwaymusical",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Let%20It%20Go%20-%20Broadway%20Musical.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -471,6 +559,8 @@
    "slug": "letitsnow",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Let%20It%20Snow.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -481,6 +571,8 @@
    "slug": "lightofchristmas",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Light%20of%20Christmas.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -491,6 +583,8 @@
    "slug": "linusandlucy",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Linus%20And%20Lucy.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -501,6 +595,8 @@
    "slug": "littledrummerboybyforkingandcountry",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20For%20King%20and%20Country.jpg",
    "versions": 3,
+   "group": "Little Drummer Boy",
+   "group_slug": "littledrummerboy",
    "tags": []
   },
   {
@@ -511,6 +607,8 @@
    "slug": "littledrummerboybypentatonix",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20Pentatonix.jpg",
    "versions": 3,
+   "group": "Little Drummer Boy",
+   "group_slug": "littledrummerboy",
    "tags": []
   },
   {
@@ -521,6 +619,8 @@
    "slug": "littledrummerboybytobymac",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20TobyMac.jpg",
    "versions": 3,
+   "group": "Little Drummer Boy",
+   "group_slug": "littledrummerboy",
    "tags": []
   },
   {
@@ -531,6 +631,8 @@
    "slug": "magic",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Magic.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -541,6 +643,8 @@
    "slug": "marydidyouknow",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Mary%20Did%20You%20Know.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -551,6 +655,8 @@
    "slug": "meleikelikimaka",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Melei%20Kelikimaka.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -561,6 +667,8 @@
    "slug": "myfavoritethings",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/My%20Favorite%20Things.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -571,6 +679,8 @@
    "slug": "neverendingstory",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Never%20Ending%20Story.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -581,6 +691,8 @@
    "slug": "neverenough",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Never%20Enough.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "New"
    ]
@@ -593,6 +705,8 @@
    "slug": "ohholynightsouthpark",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Oh%20Holy%20Night%20-%20South%20Park.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -603,6 +717,8 @@
    "slug": "piratesofthecarribean",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Pirates%20of%20the%20Carribean.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "Claude Favorite"
    ]
@@ -615,6 +731,8 @@
    "slug": "queenofthewinternight",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Queen%20of%20the%20Winter%20Night.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -625,6 +743,8 @@
    "slug": "rainingtacos",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Raining%20Tacos.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -635,6 +755,8 @@
    "slug": "remember",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Remember.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -645,6 +767,8 @@
    "slug": "santaisbackintown",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Santa%20is%20Back%20in%20Town.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "New"
    ]
@@ -657,6 +781,8 @@
    "slug": "sarajevo",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sarajevo.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -667,6 +793,8 @@
    "slug": "september",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/September.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -677,6 +805,8 @@
    "slug": "shakethesnowglobe",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Shake%20the%20Snow%20Globe.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "New"
    ]
@@ -689,6 +819,8 @@
    "slug": "shakeupchristmas",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Shake%20Up%20Christmas.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -699,6 +831,8 @@
    "slug": "shiny",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Shiny.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -709,6 +843,8 @@
    "slug": "sleighrideinstrumental",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sleigh%20Ride%20(Instrumental).jpg",
    "versions": 2,
+   "group": "Sleigh Ride",
+   "group_slug": "sleighride",
    "tags": []
   },
   {
@@ -719,6 +855,8 @@
    "slug": "soundingjoy",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sounding%20Joy.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -729,6 +867,8 @@
    "slug": "starwarsfunk",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Star%20Wars%20Funk.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "Favorite"
    ]
@@ -741,6 +881,8 @@
    "slug": "starwarssuite",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Star%20Wars%20Suite.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -751,6 +893,8 @@
    "slug": "takeonme",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Take%20On%20Me.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -761,6 +905,8 @@
    "slug": "theavengersthemeremix",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Avengers%20Theme%20Remix.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "Claude Favorite"
    ]
@@ -773,6 +919,8 @@
    "slug": "thechristmascancan",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Christmas%20Can%20Can.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -783,6 +931,8 @@
    "slug": "thegreatestshowman",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Greatest%20Showman.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -793,6 +943,8 @@
    "slug": "themostwonderfuldayoftheyear",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Most%20Wonderful%20Day%20of%20the%20Year.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "New"
    ]
@@ -805,6 +957,8 @@
    "slug": "thepolarexpress",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Polar%20Express.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -815,6 +969,8 @@
    "slug": "trolls2medley",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Trolls%202%20Medley.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -825,6 +981,8 @@
    "slug": "trollswannahavegoodtimes",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Trolls%20Wanna%20Have%20Good%20Times.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -835,6 +993,8 @@
    "slug": "underneaththetree",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Underneath%20the%20Tree.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -845,6 +1005,8 @@
    "slug": "uptownfunk",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Uptown%20Funk.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -855,6 +1017,8 @@
    "slug": "whatisthisfeeling",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/What%20Is%20This%20Feeling.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -865,6 +1029,8 @@
    "slug": "whenweretogether",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/When%20Were%20Together.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "New"
    ]
@@ -877,6 +1043,8 @@
    "slug": "winterwonderland",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Winter%20Wonderland.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -887,6 +1055,8 @@
    "slug": "wizardsinwinter",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Wizards%20in%20Winter.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -897,6 +1067,8 @@
    "slug": "youareameanonemrgrinch",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20are%20a%20Mean%20One%20Mr%20Grinch.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -907,6 +1079,8 @@
    "slug": "youarewelcome",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20are%20Welcome.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -917,6 +1091,8 @@
    "slug": "youcantstopthebeat",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20Cant%20Stop%20the%20Beat.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": [
     "New"
    ]
@@ -929,6 +1105,8 @@
    "slug": "youmakeitfeellikechristmas",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20Make%20It%20Feel%20Like%20Christmas.jpg",
    "versions": 0,
+   "group": "",
+   "group_slug": "",
    "tags": []
   },
   {
@@ -939,6 +1117,8 @@
    "slug": "sleighridebypentatonix",
    "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sleigh%20Ride%20by%20Pentatonix.jpg",
    "versions": 2,
+   "group": "Sleigh Ride",
+   "group_slug": "sleighride",
    "tags": []
   }
  ]

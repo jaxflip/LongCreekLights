@@ -29,6 +29,9 @@
   .b { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; padding:1px 6px;
     border-radius:999px; border:1px solid var(--line); margin-left:4px; color:var(--gold); vertical-align:1px; }
   mark { background:rgba(255,209,102,0.28); color:inherit; border-radius:3px; padding:0 1px; }
+  a.row.grp { grid-template-columns:minmax(0,1fr); border-color:rgba(255,209,102,0.5); background:rgba(255,209,102,0.10); }
+  a.row.grp .t::after { content:" ›"; color:var(--gold); }
+  a.row.ver { margin-left:16px; }
   .empty { text-align:center; color:var(--muted); font-size:13px; padding:18px 8px; }
 </style>
 </head>
@@ -68,10 +71,25 @@
     });
     meta.textContent = hits.length ? hits.length + (hits.length === 1 ? " match" : " matches") + " · tap one to jump to it in the list" : "";
     if (!hits.length) { list.innerHTML = '<div class="empty">No song or artist matches “' + esc(raw) + '”.<br>Try fewer letters.</div>'; return; }
-    list.innerHTML = hits.slice(0, 60).map(function (s) {
-      var badges = (s.versions > 1 ? '<span class="b">' + s.versions + ' versions</span>' : "") +
-                   (s.tags.indexOf("New") >= 0 ? '<span class="b">New</span>' : "");
-      return '<a class="row' + (s.art ? "" : " noart") + '" target="_top" href="' + esc(PAGE + "#lcl-song-" + s.slug) + '">' +
+    // songs with several versions: one header (shows them all in the list) + every version under it
+    var rows = [], seen = {};
+    hits.forEach(function (s) {
+      if (!s.group) { rows.push([s, ""]); return; }
+      if (seen[s.group]) return;
+      seen[s.group] = 1;
+      var mem = SONGS.filter(function (x) { return x.group === s.group; });
+      rows.push([{ group: s.group, group_slug: s.group_slug, n: mem.length }, "grp"]);
+      mem.forEach(function (x) { rows.push([x, "ver"]); });
+    });
+    list.innerHTML = rows.slice(0, 80).map(function (r) {
+      var s = r[0];
+      if (r[1] === "grp") {
+        return '<a class="row grp" target="_top" href="' + esc(PAGE + "#lcl-ver-" + s.group_slug) + '">' +
+          '<span><span class="t">' + hi(s.group, words) + '<span class="b">' + s.n + ' versions</span></span>' +
+          '<span class="a" style="display:block">Tap to see every version in the list</span></span></a>';
+      }
+      var badges = (s.tags.indexOf("New") >= 0 ? '<span class="b">New</span>' : "");
+      return '<a class="row' + (r[1] ? " " + r[1] : "") + (s.art ? "" : " noart") + '" target="_top" href="' + esc(PAGE + "#lcl-song-" + s.slug) + '">' +
         (s.art ? '<img loading="lazy" alt="" src="' + esc(s.art) + '">' : "") +
         '<span><span class="t">' + hi(s.display, words) + badges + '</span>' +
         '<span class="a" style="display:block">' + hi(s.artist || " ", words) + (s.category ? " · " + esc(s.category) : "") + '</span></span></a>';
