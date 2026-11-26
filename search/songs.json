@@ -1,0 +1,945 @@
+{
+ "generated_by": "update_site_from_summary.py",
+ "page": "https://longcreeklights.remotefalcon.com/remote-falcon",
+ "songs": [
+  {
+   "title": "12 Days of Christmas",
+   "display": "12 Days of Christmas",
+   "artist": "Straight No Chaser",
+   "category": "Medley",
+   "slug": "12daysofchristmas",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/12%20Days%20of%20Christmas.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "12 Pains of Christmas",
+   "display": "12 Pains of Christmas",
+   "artist": "Bob Rivers",
+   "category": "Contemporary",
+   "slug": "12painsofchristmas",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/12%20Pains%20of%20Christmas.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "A Mad Russians Christmas",
+   "display": "A Mad Russians Christmas",
+   "artist": "Trans-Siberian Orchestra",
+   "category": "Instrumental",
+   "slug": "amadrussianschristmas",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/A%20Mad%20Russians%20Christmas.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "A Million Dreams",
+   "display": "A Million Dreams",
+   "artist": "Pink",
+   "category": "Movie & Musical",
+   "slug": "amilliondreams",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/A%20Million%20Dreams.jpg",
+   "versions": 0,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "A Star to Follow",
+   "display": "A Star to Follow",
+   "artist": "Trans-Siberian Orchestra",
+   "category": "Contemporary",
+   "slug": "astartofollow",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/A%20Star%20to%20Follow.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "All I Want For Christmas is You",
+   "display": "All I Want For Christmas is You",
+   "artist": "Mariah Carey",
+   "category": "Contemporary",
+   "slug": "alliwantforchristmasisyou",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/All%20I%20Want%20For%20Christmas%20is%20You.jpg",
+   "versions": 0,
+   "tags": [
+    "Top Voted"
+   ]
+  },
+  {
+   "title": "Amazing Grace",
+   "display": "Amazing Grace",
+   "artist": "The Five Strings and Alex Boyé",
+   "category": "Contemporary",
+   "slug": "amazinggrace",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Amazing%20Grace.jpg",
+   "versions": 0,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "Believer",
+   "display": "Believer",
+   "artist": "Imagine Dragons",
+   "category": "Pop/Rock",
+   "slug": "believer",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Believer.jpg",
+   "versions": 0,
+   "tags": [
+    "Favorite"
+   ]
+  },
+  {
+   "title": "Blinding Lights",
+   "display": "Blinding Lights",
+   "artist": "The Weeknd",
+   "category": "Pop/Rock",
+   "slug": "blindinglights",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Blinding%20Lights.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Cant Stop the Feeling",
+   "display": "Cant Stop the Feeling",
+   "artist": "Justin Timberlake, Anna Kendrick, Gwen Stefani, James Corden, Zooey Deschanel, Ron Funches, Caroline Hjelt, Aino Jawo, Christopher Mintz-Plasse, Kunal Nayyar",
+   "category": "Pop/Rock",
+   "slug": "cantstopthefeeling",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cant%20Stop%20the%20Feeling.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Carol Of The Bells",
+   "display": "Carol of the Bells · Instrumental (David Foster)",
+   "artist": "David Foster",
+   "category": "Instrumental",
+   "slug": "carolofthebells",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20Of%20The%20Bells.jpg",
+   "versions": 3,
+   "tags": []
+  },
+  {
+   "title": "Carol of the Bells (Metal Version)",
+   "display": "Carol of the Bells · Metal (Jonathan Young)",
+   "artist": "Jonathan Young",
+   "category": "Instrumental",
+   "slug": "carolofthebellsmetalversion",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20of%20the%20Bells%20(Metal%20Version).jpg",
+   "versions": 3,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "Carol of the Bells by Pentatonix",
+   "display": "Carol of the Bells · Pentatonix",
+   "artist": "Pentatonix",
+   "category": "Contemporary",
+   "slug": "carolofthebellsbypentatonix",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Carol%20of%20the%20Bells%20by%20Pentatonix.jpg",
+   "versions": 3,
+   "tags": []
+  },
+  {
+   "title": "Cartoon Network Mashup",
+   "display": "Cartoon Network Mashup",
+   "artist": "Various (mashup)",
+   "category": "Movie & Musical",
+   "slug": "cartoonnetworkmashup",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cartoon%20Network%20Mashup.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Christmas Canon",
+   "display": "Christmas Canon",
+   "artist": "Trans-Siberian Orchestra",
+   "category": "Medley",
+   "slug": "christmascanon",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Canon.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Christmas Everyday",
+   "display": "Christmas Everyday",
+   "artist": "Simple Plan",
+   "category": "Contemporary",
+   "slug": "christmaseveryday",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Everyday.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Christmas Tree Farm",
+   "display": "Christmas Tree Farm",
+   "artist": "Taylor Swift",
+   "category": "Contemporary",
+   "slug": "christmastreefarm",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Tree%20Farm.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Christmas Wrapping",
+   "display": "Christmas Wrapping",
+   "artist": "The Waitresses",
+   "category": "Contemporary",
+   "slug": "christmaswrapping",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Christmas%20Wrapping.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Cozy Little Christmas",
+   "display": "Cozy Little Christmas",
+   "artist": "Katy Perry",
+   "category": "Contemporary",
+   "slug": "cozylittlechristmas",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Cozy%20Little%20Christmas.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Crazy for Christmas",
+   "display": "Crazy for Christmas",
+   "artist": "Lindsey Stirling & Bonnie McKee",
+   "category": "Contemporary",
+   "slug": "crazyforchristmas",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Crazy%20for%20Christmas.jpg",
+   "versions": 0,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "Dance of the Sugar Plum Fairy",
+   "display": "Dance of the Sugar Plum Fairy",
+   "artist": "Pentatonix",
+   "category": "Contemporary",
+   "slug": "danceofthesugarplumfairy",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Dance%20of%20the%20Sugar%20Plum%20Fairy.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Danger Zone",
+   "display": "Danger Zone",
+   "artist": "Kenny Loggins",
+   "category": "Pop/Rock",
+   "slug": "dangerzone",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Danger%20Zone.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Deck the Halls - Mario",
+   "display": "Deck the Halls - Mario",
+   "artist": "Kidzone",
+   "category": "Novelty",
+   "slug": "deckthehallsmario",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Deck%20the%20Halls%20-%20Mario.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Defying Gravity",
+   "display": "Defying Gravity",
+   "artist": "Idina Menzel & Kristin Chenoweth",
+   "category": "Movie & Musical",
+   "slug": "defyinggravity",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Defying%20Gravity.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Disney Princesses",
+   "display": "Disney Princesses",
+   "artist": "Various (mashup)",
+   "category": "Movie & Musical",
+   "slug": "disneyprincesses",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Disney%20Princesses.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Dominick the Donkey",
+   "display": "Dominick the Donkey",
+   "artist": "Lou Monte",
+   "category": "Novelty",
+   "slug": "dominickthedonkey",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Dominick%20the%20Donkey.jpg",
+   "versions": 0,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "Encanto Compilation",
+   "display": "Encanto Compilation",
+   "artist": "Various",
+   "category": "Movie & Musical",
+   "slug": "encantocompilation",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Encanto%20Compilation.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Feliz Navidad",
+   "display": "Feliz Navidad",
+   "artist": "José Feliciano",
+   "category": "Contemporary",
+   "slug": "feliznavidad",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Feliz%20Navidad.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Fireflies",
+   "display": "Fireflies",
+   "artist": "Owl City",
+   "category": "Contemporary",
+   "slug": "fireflies",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Fireflies.jpg",
+   "versions": 0,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "For Good",
+   "display": "For Good",
+   "artist": "Kristin Chenoweth & Idina Menzel",
+   "category": "Movie & Musical",
+   "slug": "forgood",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/For%20Good.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "God Bless the USA",
+   "display": "God Bless the USA",
+   "artist": "Lee Greenwood",
+   "category": "Patriotic",
+   "slug": "godblesstheusa",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/God%20Bless%20the%20USA.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Hark! The Herald Angels Sing",
+   "display": "Hark! The Herald Angels Sing",
+   "artist": "Lincoln Brewster",
+   "category": "Contemporary",
+   "slug": "harktheheraldangelssing",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Hark!%20The%20Herald%20Angels%20Sing.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Harry Potter",
+   "display": "Harry Potter",
+   "artist": "John Williams",
+   "category": "Movie & Musical",
+   "slug": "harrypotter",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Harry%20Potter.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "He Shall Reign Forevermore",
+   "display": "He Shall Reign Forevermore",
+   "artist": "Chris Tomlin",
+   "category": "Contemporary",
+   "slug": "heshallreignforevermore",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/He%20Shall%20Reign%20Forevermore.jpg",
+   "versions": 0,
+   "tags": [
+    "Favorite"
+   ]
+  },
+  {
+   "title": "Here Comes Santa Claus",
+   "display": "Here Comes Santa Claus",
+   "artist": "Snoop Dogg & Anna Kendrick",
+   "category": "Medley",
+   "slug": "herecomessantaclaus",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Here%20Comes%20Santa%20Claus.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Hey Come Look at My House",
+   "display": "Hey Come Look at My House",
+   "artist": "Nick Gligor",
+   "category": "Novelty",
+   "slug": "heycomelookatmyhouse",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Hey%20Come%20Look%20at%20My%20House.jpg",
+   "versions": 0,
+   "tags": [
+    "Claude Favorite",
+    "New"
+   ]
+  },
+  {
+   "title": "How Far I will Go",
+   "display": "How Far I will Go",
+   "artist": "Auli'i Cravalho",
+   "category": "Movie & Musical",
+   "slug": "howfariwillgo",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/How%20Far%20I%20will%20Go.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "I Just Cannot Wait to Be King",
+   "display": "I Just Cannot Wait to Be King",
+   "artist": "JD McCrary, Billy Eichner, Seth Rogen & John Oliver",
+   "category": "Movie & Musical",
+   "slug": "ijustcannotwaittobeking",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/I%20Just%20Cannot%20Wait%20to%20Be%20King.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Into the Unknown",
+   "display": "Into the Unknown",
+   "artist": "Panic! At The Disco",
+   "category": "Movie & Musical",
+   "slug": "intotheunknown",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Into%20the%20Unknown.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Its Beginning To Look a Lot Like Christmas",
+   "display": "Its Beginning To Look a Lot Like Christmas",
+   "artist": "Michael Bublé",
+   "category": "Contemporary",
+   "slug": "itsbeginningtolookalotlikechristmas",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Its%20Beginning%20To%20Look%20a%20Lot%20Like%20Christmas.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Its the Most Wonderful Time of the Year",
+   "display": "Its the Most Wonderful Time of the Year",
+   "artist": "Andy Williams",
+   "category": "Traditional",
+   "slug": "itsthemostwonderfultimeoftheyear",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Its%20the%20Most%20Wonderful%20Time%20of%20the%20Year.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Jingle Bells",
+   "display": "Jingle Bells",
+   "artist": "Colton Dixon",
+   "category": "Contemporary",
+   "slug": "jinglebells",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Jingle%20Bells.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Kid on Christmas",
+   "display": "Kid on Christmas",
+   "artist": "Pentatonix feat. Meghan Trainor",
+   "category": "Contemporary",
+   "slug": "kidonchristmas",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Kid%20on%20Christmas.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Let It Go - Broadway Musical",
+   "display": "Let It Go - Broadway Musical",
+   "artist": "Original Broadway Cast of Frozen",
+   "category": "Movie & Musical",
+   "slug": "letitgobroadwaymusical",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Let%20It%20Go%20-%20Broadway%20Musical.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Let It Snow",
+   "display": "Let It Snow",
+   "artist": "Alex G & Robby Word",
+   "category": "Contemporary",
+   "slug": "letitsnow",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Let%20It%20Snow.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Light of Christmas",
+   "display": "Light of Christmas",
+   "artist": "Owl City",
+   "category": "Contemporary",
+   "slug": "lightofchristmas",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Light%20of%20Christmas.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Linus And Lucy",
+   "display": "Linus And Lucy",
+   "artist": "Vince Guaraldi Trio",
+   "category": "Instrumental",
+   "slug": "linusandlucy",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Linus%20And%20Lucy.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Little Drummer Boy by For King and Country",
+   "display": "Little Drummer Boy · for KING & COUNTRY",
+   "artist": "for KING & COUNTRY",
+   "category": "Contemporary",
+   "slug": "littledrummerboybyforkingandcountry",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20For%20King%20and%20Country.jpg",
+   "versions": 3,
+   "tags": []
+  },
+  {
+   "title": "Little Drummer Boy by Pentatonix",
+   "display": "Little Drummer Boy · Pentatonix",
+   "artist": "Pentatonix",
+   "category": "Contemporary",
+   "slug": "littledrummerboybypentatonix",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20Pentatonix.jpg",
+   "versions": 3,
+   "tags": []
+  },
+  {
+   "title": "Little Drummer Boy by TobyMac",
+   "display": "Little Drummer Boy · TobyMac",
+   "artist": "TobyMac",
+   "category": "Contemporary",
+   "slug": "littledrummerboybytobymac",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Little%20Drummer%20Boy%20by%20TobyMac.jpg",
+   "versions": 3,
+   "tags": []
+  },
+  {
+   "title": "Magic",
+   "display": "Magic",
+   "artist": "Lindsey Stirling & David Archuleta",
+   "category": "Contemporary",
+   "slug": "magic",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Magic.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Mary Did You Know",
+   "display": "Mary Did You Know",
+   "artist": "Pentatonix",
+   "category": "Contemporary",
+   "slug": "marydidyouknow",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Mary%20Did%20You%20Know.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Melei Kelikimaka",
+   "display": "Melei Kelikimaka",
+   "artist": "Bing Crosby",
+   "category": "Traditional",
+   "slug": "meleikelikimaka",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Melei%20Kelikimaka.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "My Favorite Things",
+   "display": "My Favorite Things",
+   "artist": "Kelly Clarkson",
+   "category": "Contemporary",
+   "slug": "myfavoritethings",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/My%20Favorite%20Things.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Never Ending Story",
+   "display": "Never Ending Story",
+   "artist": "Limahl",
+   "category": "Pop/Rock",
+   "slug": "neverendingstory",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Never%20Ending%20Story.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Never Enough",
+   "display": "Never Enough",
+   "artist": "Loren Allred",
+   "category": "Movie & Musical",
+   "slug": "neverenough",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Never%20Enough.jpg",
+   "versions": 0,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "Oh Holy Night - South Park",
+   "display": "Oh Holy Night - South Park",
+   "artist": "South Park",
+   "category": "Contemporary",
+   "slug": "ohholynightsouthpark",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Oh%20Holy%20Night%20-%20South%20Park.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Pirates of the Carribean",
+   "display": "Pirates of the Carribean",
+   "artist": "Walt Disney Records",
+   "category": "Movie & Musical",
+   "slug": "piratesofthecarribean",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Pirates%20of%20the%20Carribean.jpg",
+   "versions": 0,
+   "tags": [
+    "Claude Favorite"
+   ]
+  },
+  {
+   "title": "Queen of the Winter Night",
+   "display": "Queen of the Winter Night",
+   "artist": "Trans-Siberian Orchestra",
+   "category": "Instrumental",
+   "slug": "queenofthewinternight",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Queen%20of%20the%20Winter%20Night.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Raining Tacos",
+   "display": "Raining Tacos",
+   "artist": "Parry Gripp",
+   "category": "Novelty",
+   "slug": "rainingtacos",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Raining%20Tacos.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Remember",
+   "display": "Remember",
+   "artist": "Trans-Siberian Orchestra",
+   "category": "Contemporary",
+   "slug": "remember",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Remember.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Santa is Back in Town",
+   "display": "Santa is Back in Town",
+   "artist": "Kurt Russell",
+   "category": "Contemporary",
+   "slug": "santaisbackintown",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Santa%20is%20Back%20in%20Town.jpg",
+   "versions": 0,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "Sarajevo",
+   "display": "Sarajevo",
+   "artist": "Trans-Siberian Orchestra",
+   "category": "Contemporary",
+   "slug": "sarajevo",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sarajevo.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "September",
+   "display": "September",
+   "artist": "Justin Timberlake, Anna Kendrick & Earth, Wind & Fire",
+   "category": "Pop/Rock",
+   "slug": "september",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/September.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Shake the Snow Globe",
+   "display": "Shake the Snow Globe",
+   "artist": "Gwen Stefani",
+   "category": "Contemporary",
+   "slug": "shakethesnowglobe",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Shake%20the%20Snow%20Globe.jpg",
+   "versions": 0,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "Shake Up Christmas",
+   "display": "Shake Up Christmas",
+   "artist": "Train",
+   "category": "Contemporary",
+   "slug": "shakeupchristmas",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Shake%20Up%20Christmas.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Shiny",
+   "display": "Shiny",
+   "artist": "Jemaine Clement",
+   "category": "Movie & Musical",
+   "slug": "shiny",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Shiny.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Sleigh Ride (Instrumental)",
+   "display": "Sleigh Ride · Instrumental (101 Strings)",
+   "artist": "101 Strings Orchestra",
+   "category": "Instrumental",
+   "slug": "sleighrideinstrumental",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sleigh%20Ride%20(Instrumental).jpg",
+   "versions": 2,
+   "tags": []
+  },
+  {
+   "title": "Sounding Joy",
+   "display": "Sounding Joy",
+   "artist": "Ellie Holcomb",
+   "category": "Contemporary",
+   "slug": "soundingjoy",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sounding%20Joy.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Star Wars Funk",
+   "display": "Star Wars Funk",
+   "artist": "Meco",
+   "category": "Movie & Musical",
+   "slug": "starwarsfunk",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Star%20Wars%20Funk.jpg",
+   "versions": 0,
+   "tags": [
+    "Favorite"
+   ]
+  },
+  {
+   "title": "Star Wars Suite",
+   "display": "Star Wars Suite",
+   "artist": "John Williams",
+   "category": "Movie & Musical",
+   "slug": "starwarssuite",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Star%20Wars%20Suite.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Take On Me",
+   "display": "Take On Me",
+   "artist": "a-ha",
+   "category": "Pop/Rock",
+   "slug": "takeonme",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Take%20On%20Me.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "The Avengers Theme Remix",
+   "display": "The Avengers Theme Remix",
+   "artist": "Various",
+   "category": "Movie & Musical",
+   "slug": "theavengersthemeremix",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Avengers%20Theme%20Remix.jpg",
+   "versions": 0,
+   "tags": [
+    "Claude Favorite"
+   ]
+  },
+  {
+   "title": "The Christmas Can Can",
+   "display": "The Christmas Can Can",
+   "artist": "Straight No Chaser",
+   "category": "Medley",
+   "slug": "thechristmascancan",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Christmas%20Can%20Can.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "The Greatest Showman",
+   "display": "The Greatest Showman",
+   "artist": "Various",
+   "category": "Movie & Musical",
+   "slug": "thegreatestshowman",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Greatest%20Showman.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "The Most Wonderful Day of the Year",
+   "display": "The Most Wonderful Day of the Year",
+   "artist": "Glee Cast",
+   "category": "Movie & Musical",
+   "slug": "themostwonderfuldayoftheyear",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Most%20Wonderful%20Day%20of%20the%20Year.jpg",
+   "versions": 0,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "The Polar Express",
+   "display": "The Polar Express",
+   "artist": "Various",
+   "category": "Movie & Musical",
+   "slug": "thepolarexpress",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/The%20Polar%20Express.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Trolls 2 Medley",
+   "display": "Trolls 2 Medley",
+   "artist": "Various",
+   "category": "Movie & Musical",
+   "slug": "trolls2medley",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Trolls%202%20Medley.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Trolls Wanna Have Good Times",
+   "display": "Trolls Wanna Have Good Times",
+   "artist": "Anna Kendrick, Justin Timberlake, James Corden, Ester Dean, Icona Pop, Kenan Thompson & the Pop Trolls",
+   "category": "Movie & Musical",
+   "slug": "trollswannahavegoodtimes",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Trolls%20Wanna%20Have%20Good%20Times.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Underneath the Tree",
+   "display": "Underneath the Tree",
+   "artist": "Kelly Clarkson",
+   "category": "Contemporary",
+   "slug": "underneaththetree",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Underneath%20the%20Tree.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Uptown Funk",
+   "display": "Uptown Funk",
+   "artist": "Mark Ronson feat. Bruno Mars",
+   "category": "Pop/Rock",
+   "slug": "uptownfunk",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Uptown%20Funk.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "What Is This Feeling",
+   "display": "What Is This Feeling",
+   "artist": "Kristin Chenoweth & Idina Menzel",
+   "category": "Movie & Musical",
+   "slug": "whatisthisfeeling",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/What%20Is%20This%20Feeling.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "When Were Together",
+   "display": "When We're Together",
+   "artist": "Kristen Bell",
+   "category": "Movie & Musical",
+   "slug": "whenweretogether",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/When%20Were%20Together.jpg",
+   "versions": 0,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "Winter Wonderland",
+   "display": "Winter Wonderland",
+   "artist": "Selena Gomez & The Scene",
+   "category": "Contemporary",
+   "slug": "winterwonderland",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Winter%20Wonderland.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Wizards in Winter",
+   "display": "Wizards in Winter",
+   "artist": "Trans-Siberian Orchestra",
+   "category": "Instrumental",
+   "slug": "wizardsinwinter",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Wizards%20in%20Winter.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "You are a Mean One Mr Grinch",
+   "display": "You are a Mean One Mr Grinch",
+   "artist": "Lindsey Stirling",
+   "category": "Contemporary",
+   "slug": "youareameanonemrgrinch",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20are%20a%20Mean%20One%20Mr%20Grinch.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "You are Welcome",
+   "display": "You are Welcome",
+   "artist": "Dwayne Johnson",
+   "category": "Movie & Musical",
+   "slug": "youarewelcome",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20are%20Welcome.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "You Cant Stop the Beat",
+   "display": "You Can't Stop the Beat",
+   "artist": "Maddie Baillio",
+   "category": "Movie & Musical",
+   "slug": "youcantstopthebeat",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20Cant%20Stop%20the%20Beat.jpg",
+   "versions": 0,
+   "tags": [
+    "New"
+   ]
+  },
+  {
+   "title": "You Make It Feel Like Christmas",
+   "display": "You Make It Feel Like Christmas",
+   "artist": "Gwen Stefani & Blake Shelton",
+   "category": "Contemporary",
+   "slug": "youmakeitfeellikechristmas",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/You%20Make%20It%20Feel%20Like%20Christmas.jpg",
+   "versions": 0,
+   "tags": []
+  },
+  {
+   "title": "Sleigh Ride by Pentatonix",
+   "display": "Sleigh Ride · Pentatonix",
+   "artist": "Pentatonix",
+   "category": "Christmas",
+   "slug": "sleighridebypentatonix",
+   "art": "https://raw.githubusercontent.com/jaxflip/LongCreekLights/main/Sleigh%20Ride%20by%20Pentatonix.jpg",
+   "versions": 2,
+   "tags": []
+  }
+ ]
+}

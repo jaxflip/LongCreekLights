@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search songs — Long Creek Lights</title>
+<style>
+  :root { --gold:#ffd166; --text:#f5f7fa; --muted:#b9c3d6; --card:rgba(255,255,255,0.07); --line:rgba(255,255,255,0.14); }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:transparent; color:var(--text);
+    font-family:'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+  .wrap { display:flex; flex-direction:column; height:100%; padding:10px 2px 4px; }
+  .box { position:relative; }
+  input { width:100%; font:inherit; font-size:16px; font-weight:700; color:var(--text); padding:12px 40px 12px 14px;
+    border-radius:12px; border:1.5px solid var(--line); background:rgba(0,0,0,0.35); outline:none; }
+  input:focus { border-color:var(--gold); }
+  input::placeholder { color:var(--muted); font-weight:600; }
+  .clear { position:absolute; right:8px; top:50%; transform:translateY(-50%); border:0; background:transparent; color:var(--muted);
+    font-size:20px; width:30px; height:30px; cursor:pointer; display:none; }
+  .meta { font-size:12px; color:var(--muted); margin:8px 4px 6px; min-height:16px; }
+  .list { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-right:2px; }
+  a.row { display:grid; grid-template-columns:44px minmax(0,1fr); gap:10px; align-items:center; text-decoration:none; color:var(--text);
+    background:var(--card); border:1px solid var(--line); border-radius:12px; padding:8px 10px; margin:0 0 6px; }
+  a.row:active { transform:scale(0.985); }
+  a.row.noart { grid-template-columns:minmax(0,1fr); }
+  img { width:44px; height:44px; border-radius:8px; object-fit:cover; background:rgba(255,255,255,0.08); }
+  .t { font-weight:800; font-size:15px; line-height:1.2; }
+  .a { font-size:12.5px; color:var(--muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .b { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; padding:1px 6px;
+    border-radius:999px; border:1px solid var(--line); margin-left:4px; color:var(--gold); vertical-align:1px; }
+  mark { background:rgba(255,209,102,0.28); color:inherit; border-radius:3px; padding:0 1px; }
+  .empty { text-align:center; color:var(--muted); font-size:13px; padding:18px 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="box">
+    <input id="q" type="search" placeholder="Song or artist… e.g. carol, pentatonix" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Search songs or artists">
+    <button class="clear" id="clr" aria-label="Clear search">×</button>
+  </div>
+  <div class="meta" id="meta">Loading the song list…</div>
+  <div class="list" id="list"></div>
+</div>
+<script>
+(function () {
+  var SONGS = [], PAGE = "";
+  var q = document.getElementById("q"), list = document.getElementById("list"),
+      meta = document.getElementById("meta"), clr = document.getElementById("clr");
+  function norm(s) { return (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim(); }
+  function esc(s) { return String(s || "").replace(/[&<>"]/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+  function hi(text, words) {
+    var out = esc(text);
+    words.forEach(function (w) { if (w.length < 2) return;
+      out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function render() {
+    var raw = q.value, words = norm(raw).split(" ").filter(Boolean);
+    clr.style.display = raw ? "block" : "none";
+    if (!words.length) {
+      meta.textContent = SONGS.length + " songs · type part of a song title or an artist";
+      list.innerHTML = ""; return;
+    }
+    var hits = SONGS.filter(function (s) { return words.every(function (w) { return s._hay.indexOf(" " + w) >= 0; }); });
+    hits.sort(function (a, b) {
+      var ap = a._name.indexOf(words[0]) === 0 ? 0 : 1, bp = b._name.indexOf(words[0]) === 0 ? 0 : 1;
+      return ap - bp || a.display.localeCompare(b.display);
+    });
+    meta.textContent = hits.length ? hits.length + (hits.length === 1 ? " match" : " matches") + " · tap one to jump to it in the list" : "";
+    if (!hits.length) { list.innerHTML = '<div class="empty">No song or artist matches “' + esc(raw) + '”.<br>Try fewer letters.</div>'; return; }
+    list.innerHTML = hits.slice(0, 60).map(function (s) {
+      var badges = (s.versions > 1 ? '<span class="b">' + s.versions + ' versions</span>' : "") +
+                   (s.tags.indexOf("New") >= 0 ? '<span class="b">New</span>' : "");
+      return '<a class="row' + (s.art ? "" : " noart") + '" target="_top" href="' + esc(PAGE + "#lcl-song-" + s.slug) + '">' +
+        (s.art ? '<img loading="lazy" alt="" src="' + esc(s.art) + '">' : "") +
+        '<span><span class="t">' + hi(s.display, words) + badges + '</span>' +
+        '<span class="a" style="display:block">' + hi(s.artist || " ", words) + (s.category ? " · " + esc(s.category) : "") + '</span></span></a>';
+    }).join("");
+  }
+  q.addEventListener("input", render);
+  clr.addEventListener("click", function () { q.value = ""; render(); q.focus(); });
+  fetch("songs.json?v=" + Date.now()).then(function (r) { return r.json(); }).then(function (d) {
+    PAGE = d.page || "";
+    SONGS = (d.songs || []).map(function (s) {
+      s._name = norm(s.display) + " " + norm(s.title);
+      s._hay = " " + s._name + " " + norm(s.artist) + " ";
+      return s;
+    });
+    render();
+  }).catch(function () { meta.textContent = "The song list could not be loaded. Scroll down to browse all songs."; });
+})();
+</script>
+</body>
+</html>
